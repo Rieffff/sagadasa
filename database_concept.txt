@@ -1,0 +1,63 @@
+Tabel Master
+
+master_technicians
+
+id (primary key)
+name
+contact_information
+position
+created_at
+updated_at
+
+master_maintenance_items
+
+id (primary key)
+item_name (e.g., Solenoid, Arm, Module Board, etc.)
+description
+created_at
+updated_at
+
+master_locations
+
+id (primary key)
+location_name (e.g., Helipad A-1, Gate Access, etc.)
+address
+created_at
+updated_at
+
+master_contractors
+
+id (primary key)
+contractor_name
+contract_ref
+contact_information
+created_at
+updated_at
+Tabel Transaksi
+daily_reports
+
+id (primary key)
+report_date
+contractor_id (foreign key ke master_contractors)
+location_id (foreign key ke master_locations)
+technician_id (foreign key ke master_technicians)
+activity_details (text)
+status (regular/non-regular)
+created_at
+updated_at
+maintenance_logs
+
+id (primary key)
+report_id (foreign key ke daily_reports)
+maintenance_item_id (foreign key ke master_maintenance_items)
+status_before (text)
+status_after (text)
+created_at
+updated_at
+photos
+
+id (primary key)
+maintenance_log_id (foreign key ke maintenance_logs)
+photo_url
+created_at
+updated_at
