@@ -637,7 +637,12 @@
   <script src="{{ asset('assets/js/data_table.js') }}"></script>
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/customizer.js') }}"></script>
+  
 
+@stack('other-scripts')
+@stack('materials-scripts')
+@stack('locations-scripts')
+@stack('item-scripts')
   
 </body>
 

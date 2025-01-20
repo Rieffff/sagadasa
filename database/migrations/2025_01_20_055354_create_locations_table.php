@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contractors', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('contractor_name');
-            $table->string('contract_ref')->nullable();
-            $table->text('address')->nullable();
-            $table->string('contact_information')->nullable();
+            $table->string('location_name'); // Contoh: Helipad A-1, Gate Access
+            $table->text('address')->nullable(); // Alamat lokasi
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contractors');
+        Schema::dropIfExists('locations');
     }
 };

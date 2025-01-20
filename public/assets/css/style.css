@@ -22871,7 +22871,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .default-data-table thead tr th:nth-child(1) {
-  min-width: 150px;
+  min-width: 20px;
 }
 .default-data-table thead tr th:nth-child(3) {
   min-width: 100px;
@@ -22884,7 +22884,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .row-border-table thead tr th:nth-child(1) {
-  min-width: 150px;
+  min-width: 20px;
 }
 .row-border-table thead tr th:nth-child(2) {
   min-width: 200px;
@@ -22897,7 +22897,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .row-callback-datatable thead tr th:nth-child(1) {
-  min-width: 150px;
+  min-width: 20px;
 }
 .row-callback-datatable thead tr th:nth-child(2) {
   min-width: 200px;

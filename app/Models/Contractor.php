@@ -9,4 +9,10 @@ class Contractor extends Model
 {
     /** @use HasFactory<\Database\Factories\ContractorFactory> */
     use HasFactory;
+    protected $fillable = [
+        'contractor_name',
+        'contract_ref',
+        'address',
+        'contact_information',
+    ];
 }

@@ -14,10 +14,14 @@ class ContractorFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = \App\Models\Contractor::class;
     public function definition(): array
     {
         return [
-            //
+            'contractor_name' => $this->faker->company,
+            'contract_ref' => $this->faker->uuid,
+            'address' => $this->faker->address,
+            'contact_information' => $this->faker->phoneNumber,
         ];
     }
 }

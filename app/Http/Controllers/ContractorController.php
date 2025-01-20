@@ -5,62 +5,65 @@ namespace App\Http\Controllers;
 use App\Models\Contractor;
 use App\Http\Requests\StoreContractorRequest;
 use App\Http\Requests\UpdateContractorRequest;
+use Illuminate\Http\Request;
 
 class ContractorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return view('contractors.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function list()
     {
-        //
+        // return response()->json(Contractor::all());
+        $data = Contractor::all(); // Ganti `Model` dengan model Anda.
+
+        // Tambahkan kolom index manual
+        $data = $data->map(function ($item, $key) {
+            $item->index = $key + 1; // Index dimulai dari 1
+            return $item;
+        });
+
+        return response()->json(['data' => $data]);
+    }
+    public function show($id)
+    {
+        
+        $contractor = Contractor::findOrFail($id);
+        return response()->json($contractor);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreContractorRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'contractor_name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'contract_ref' => 'nullable|string|max:255',
+            'contact_information' => 'nullable|string|max:255',
+        ]);
+
+        $contractor = Contractor::create($validated);
+        return response()->json($contractor);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contractor $contractor)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'contractor_name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'contract_ref' => 'nullable|string|max:255',
+            'contact_information' => 'nullable|string|max:255',
+        ]);
+
+        $contractor = Contractor::findOrFail($id);
+        $contractor->update($validated);
+        return response()->json($contractor);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contractor $contractor)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateContractorRequest $request, Contractor $contractor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contractor $contractor)
-    {
-        //
+        Contractor::destroy($id);
+        return response()->json(['message' => 'Contractor deleted successfully']);
     }
 }

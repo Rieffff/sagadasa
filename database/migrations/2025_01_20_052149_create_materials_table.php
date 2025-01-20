@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contractors', function (Blueprint $table) {
+        Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('contractor_name');
-            $table->string('contract_ref')->nullable();
-            $table->text('address')->nullable();
-            $table->string('contact_information')->nullable();
+            $table->string('material_name');
+            $table->text('description')->nullable();
+            $table->string('unit'); // pcs, liters, etc.
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contractors');
+        Schema::dropIfExists('materials');
     }
 };

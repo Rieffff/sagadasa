@@ -49,15 +49,15 @@ class RolePermissionSeeder extends Seeder
         // Buat user contoh
         $users = [
             [
-                'name' => 'Admin',
-                'email' => 'Admin@gmail.com',
-                'password' => Hash::make('kopihitam123'),
-                'role' => 'admin',
-            ],
-            [
                 'name' => '02 Admin',
                 'email' => 'mmaarif0306@gmai.com',
                 'password' => Hash::make('tohawi'),
+                'role' => 'admin',
+            ],
+            [
+                'name' => 'Admin',
+                'email' => 'Admin@gmail.com',
+                'password' => Hash::make('kopihitam123'),
                 'role' => 'admin',
             ],
             [

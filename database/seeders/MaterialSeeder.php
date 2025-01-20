@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Contractor;
+use App\Models\Material;
 
-class ContractorSeeder extends Seeder
+class MaterialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ContractorSeeder extends Seeder
     public function run(): void
     {
         //
-        Contractor::factory()->count(20)->create();
+        Material::factory(20)->create(); // Generate 20 dummy data
     }
 }

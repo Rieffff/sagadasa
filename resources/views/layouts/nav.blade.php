@@ -16,16 +16,18 @@
           </li>
           <li>
             <a class="" data-bs-toggle="collapse" href="#dashboard" aria-expanded="false">
-              <i class="ph-duotone  ph-house-line"></i>Master
+              <i class="ph-duotone  ph-hard-drives"></i>Master
             </a>
             <ul class="collapse" id="dashboard">
-              <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li>
-              <li><a href="{{ route('daily-report.index') }}">Daily Report</a></li>
+              <li><a href="{{ route('master-contractors.index') }}">Contractors</a></li>
+              <li><a href="{{ route('materials.index') }}">Materials</a></li>
+              <li><a href="{{ route('locations.index') }}">Location</a></li>
+              <li><a href="{{ route('maintenance_items.index') }}">Maintenance Item</a></li>
             </ul>
           </li>
           <li>
             <a class="" data-bs-toggle="collapse" href="#dashboard" aria-expanded="false">
-              <i class="ph-duotone  ph-house-line"></i>Activity
+              <i class="ph-duotone  ph-user-check"></i>Activity
             </a>
             <ul class="collapse" id="dashboard">
               <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li>

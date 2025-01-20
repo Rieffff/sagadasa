@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Contractor;
+use App\Models\MaintenanceItem;
 
-class ContractorSeeder extends Seeder
+class MaintenanceItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ContractorSeeder extends Seeder
     public function run(): void
     {
         //
-        Contractor::factory()->count(20)->create();
+        MaintenanceItem::factory(20)->create(); // Buat 20 data dummy
     }
 }
