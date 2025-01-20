@@ -478,101 +478,25 @@
                               </span>
                             </div>
                             <div class="text-center mt-2">
-                              <h6 class="mb-0"> Laura Monaldo</h6>
+                              <h6 class="mb-0"> {{ auth()->user()->name; }}</h6>
                               <p class="f-s-12 mb-0 text-secondary">lauradesign@gmail.com</p>
                             </div>
                           </li>
 
                           <li class="app-divider-v dotted py-1"></li>
                           <li>
-                            <a class="f-w-500" href="./profile.html" target="_blank">
+                            <a class="f-w-500" href="#" target="_blank">
                               <i class="ph-duotone  ph-user-circle pe-1 f-s-20"></i> Profile Details
                             </a>
                           </li>
                           <li>
-                            <a class="f-w-500" href="./setting.html" target="_blank">
+                            <a class="f-w-500" href="#" target="_blank">
                               <i class="ph-duotone  ph-gear pe-1 f-s-20"></i> Settings
                             </a>
                           </li>
                           <li>
-                            <div class="d-flex align-items-center justify-content-between">
-                              <a class="f-w-500" role="button" href="./setting.html" target="_blank" data-bs-toggle="dropdown"
-                                 aria-expanded="false">
-                                <i class="ph-duotone  ph-eye-slash pe-1 f-s-20"></i> Hide Settings
-                              </a>
-                              <div class="flex-shrink-0">
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input form-check-primary" type="checkbox" id="hideSetting"
-                                         checked>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="d-flex align-items-center justify-content-between" >
-                              <a class="f-w-500" href="#">
-                                <i class="ph-duotone  ph-notification pe-1 f-s-20"></i> Notification
-                              </a>
-                              <div class="flex-shrink-0">
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input form-check-primary" type="checkbox" id="basicSwitch"
-                                         checked>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="d-flex align-items-center justify-content-between">
-                              <div>
-                                <a class="f-w-500" href="#">
-                                  <i class="ph-duotone  ph-detective pe-1 f-s-20"></i> Incognito
-                                </a>
-                              </div>
-                              <div class="flex-shrink-0">
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input form-check-primary" type="checkbox"
-                                         id="incognitoSwitch">
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="app-divider-v dotted py-1"></li>
-                          <li>
-                            <a class="f-w-500" href="./faq.html" target="_blank">
-                              <i class="ph-duotone  ph-question pe-1 f-s-20"></i> Help
-                            </a>
-                          </li>
-                          <li>
-                            <a class="f-w-500" href="./pricing.html" target="_blank">
-                              <i class="ph-duotone  ph-currency-circle-dollar pe-1 f-s-20"></i> Pricing
-                            </a>
-                          </li>
-                          <li>
-                            <a class="mb-0 text-secondary f-w-500" href="./sign_up.html" target="_blank">
-                              <i class="ph-bold  ph-plus pe-1 f-s-20"></i> Add account
-                            </a>
-                          </li>
-                          <li class="app-divider-v dotted py-1"></li>
-                          <li>
-                            <div class="card card-light-primary upgrade-plan">
-                              <div class="card-body">
-                                <div class="text-center">
-                                  <div>
-                                    <h6 class="mb-0 text-dark f-w-600">Free Plan</h6>
-                                    <p class="text-dark mb-0">20k views</p>
-                                  </div>
-                                  <div class="flex-shrink-0 mt-3">
-                                    <a href="pricing.html" target="_blank" role="button" class="btn btn-dark text-white d-block m-auto w-125">Upgrade</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="app-divider-v dotted py-1"></li>
-
-                          <li>
-                            <a class="mb-0 text-danger" href="./sign_in.html" target="_blank">
-                              <i class="ph-duotone  ph-sign-out pe-1 f-s-20"></i> Log Out
+                            <a class="f-w-500" href="{{ route('logout') }}">
+                              <i class="ph-duotone  ph-sign-out pe-1 f-s-20"></i> Sign Out
                             </a>
                           </li>
                         </ul>

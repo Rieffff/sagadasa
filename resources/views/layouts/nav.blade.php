@@ -14,6 +14,7 @@
           <li class="menu-title">
             <span>Dashboard</span>
           </li>
+          @can('view master data')
           <li>
             <a class="" data-bs-toggle="collapse" href="#dashboard" aria-expanded="false">
               <i class="ph-duotone  ph-hard-drives"></i>Master
@@ -25,6 +26,7 @@
               <li><a href="{{ route('maintenance_items.index') }}">Maintenance Item</a></li>
             </ul>
           </li>
+          @endcan
           <li>
             <a class="" data-bs-toggle="collapse" href="#dashboard" aria-expanded="false">
               <i class="ph-duotone  ph-user-check"></i>Activity
