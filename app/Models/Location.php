@@ -11,4 +11,8 @@ class Location extends Model
     use HasFactory;
 
     protected $fillable = ['location_name', 'address'];
+    public function devices()
+    {
+        return $this->hasMany(Device::class, 'id_location');
+    }
 }

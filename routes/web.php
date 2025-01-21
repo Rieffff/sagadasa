@@ -6,6 +6,7 @@ use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MaintenanceItemController;
+use App\Http\Controllers\DeviceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,6 +62,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{maintenanceItem}', [MaintenanceItemController::class, 'update'])->name('maintenance_items.update');
         Route::delete('/destroy/{maintenanceItem}', [MaintenanceItemController::class, 'destroy'])->name('maintenance_items.destroy');
     });
+
+
+    Route::prefix('devices')->group(function () {
+    Route::get('/', [DeviceController::class, 'index'])->name('devices.index');
+    Route::get('/list', [DeviceController::class, 'fetchDevices'])->name('devices.list');
+    Route::post('/store', [DeviceController::class, 'store'])->name('devices.store');
+    Route::put('/update/{device}', [DeviceController::class, 'update'])->name('devices.update');
+    Route::delete('/destroy/{device}', [DeviceController::class, 'destroy'])->name('devices.destroy');
+});
 });
 
 

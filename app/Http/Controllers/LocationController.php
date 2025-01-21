@@ -13,6 +13,11 @@ class LocationController extends Controller
     {
         return view('locations.index');
     }
+    public function fetchLocations()
+    {
+        $locations = Location::with('devices')->get();
+        return response()->json(['data' => $locations]);
+    }
 
     public function list()
     {
