@@ -20,10 +20,11 @@
               <i class="ph-duotone  ph-hard-drives"></i>Master
             </a>
             <ul class="collapse" id="dashboard">
+              <li><a href="{{ route('companies.index') }}">Company</a></li>
               <li><a href="{{ route('master-contractors.index') }}">Contractors</a></li>
               <li><a href="{{ route('materials.index') }}">Materials</a></li>
               <li><a href="{{ route('locations.index') }}">Location</a></li>
-              <li><a href="{{ route('devices.index') }}">Devices</a></li>
+              <li><a href="{{ route('devices.index') }}">Devices</a></li> 
               <li><a href="{{ route('maintenance_items.index') }}">Maintenance Item</a></li>
             </ul>
           </li>

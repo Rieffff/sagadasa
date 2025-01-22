@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MaterialSeeder::class);
         $this->call(LocationSeeder::class);
         $this->call(MaintenanceItemSeeder::class);
-        $this->call(DeviceSeeder::class);
+        $this->call(DeviceSeeder::class); 
+        $this->call(CompanySeeder::class); 
     }
 }

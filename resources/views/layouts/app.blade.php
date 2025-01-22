@@ -568,6 +568,7 @@
 @stack('locations-scripts')
 @stack('item-scripts')
 @stack('devices-scripts')
+@stack('companies-scripts')
   
 </body>
 

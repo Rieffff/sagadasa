@@ -25,9 +25,15 @@ class DeviceController extends Controller
         });
         return response()->json(['data' => $data]);
     }
-
+    public function show($id)
+    {
+        
+        $data = Device::with('location')->findOrFail($id);
+        return response()->json($data);
+    }
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'device_name' => 'required|string|max:255',
             'id_location' => 'required|exists:locations,id',
@@ -39,11 +45,19 @@ class DeviceController extends Controller
 
     public function update(Request $request, Device $device)
     {
-        $validated = $request->validate([
-            'device_name' => 'required|string|max:255',
-            'id_location' => 'required|exists:locations,id',
-        ]);
+        if($request->id_location == 0){
+            $validated = $request->validate([
+                'device_name' => 'required|string|max:255'
+            ]);
+    
 
+        }else{
+            $validated = $request->validate([
+                'device_name' => 'required|string|max:255',
+                'id_location' => 'required|exists:locations,id',
+            ]);
+    
+        }
         $device->update($validated);
         return response()->json(['message' => 'Device updated successfully', 'data' => $device]);
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MaintenanceItemController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\CompanyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,12 +66,22 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('devices')->group(function () {
-    Route::get('/', [DeviceController::class, 'index'])->name('devices.index');
-    Route::get('/list', [DeviceController::class, 'fetchDevices'])->name('devices.list');
-    Route::post('/store', [DeviceController::class, 'store'])->name('devices.store');
-    Route::put('/update/{device}', [DeviceController::class, 'update'])->name('devices.update');
-    Route::delete('/destroy/{device}', [DeviceController::class, 'destroy'])->name('devices.destroy');
-});
+        Route::get('/', [DeviceController::class, 'index'])->name('devices.index');
+        Route::get('/list', [DeviceController::class, 'fetchDevices'])->name('devices.list');
+        Route::get('/show/{device}', [DeviceController::class, 'show'])->name('devices.show');
+        Route::post('/store', [DeviceController::class, 'store'])->name('devices.store');
+        Route::put('/update/{device}', [DeviceController::class, 'update'])->name('devices.update');
+        Route::delete('/destroy/{device}', [DeviceController::class, 'destroy'])->name('devices.destroy');
+    });
+
+    Route::controller(CompanyController::class)->prefix('companies')->group(function () {
+        Route::get('/', 'index')->name('companies.index');
+        Route::get('/list', 'fetch')->name('companies.list');
+        Route::get('/show/{id}', 'show')->name('companies.show');
+        Route::post('/store', 'store')->name('companies.store');
+        Route::put('/update/{id}', 'update')->name('companies.update');
+        Route::delete('/destroy/{id}', 'destroy')->name('companies.destroy');
+    });
 });
 
 
