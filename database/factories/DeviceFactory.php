@@ -21,6 +21,8 @@ class DeviceFactory extends Factory
         return [
             //
             'device_name' => $this->faker->word(), // Nama perangkat
+            'status' => "ok", // Nama perangkat
+            'description' => $this->faker->word(), // Nama perangkat
             'id_location' => Location::factory(),  // Relasi ke lokasi
         ];
     }

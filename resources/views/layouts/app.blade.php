@@ -561,6 +561,42 @@
   <script src="{{ asset('assets/js/data_table.js') }}"></script>
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/customizer.js') }}"></script>
+  <!-- Toatify js-->
+  <script src="{{ asset('assets/vendor/notifications/toastify-js.js') }}"></script>
+  <!-- sweetalert js-->
+  <script src="{{ asset('assets/vendor/sweetalert/sweetalert.js') }}"></script>
+  <script>
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    function pemberitahuan(ikon, pesan){
+      return Toast.fire({icon: ikon,title: pesan });
+    }
+
+    function konfirmasi(){
+      return Swal.fire({
+                title: "Apakah Anda Yakin?",
+                text: "data tidak dapat di pulihkan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Saya yakin !!"
+                });
+    }
+
+    function pesan(judul,pesan,ikon){
+
+      return Swal.fire({ title: judul,text: pesan ,icon: ikon});
+    }
+  </script>
   
 
 @stack('other-scripts')

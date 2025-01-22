@@ -9,7 +9,7 @@ class Device extends Model
 {
     /** @use HasFactory<\Database\Factories\DeviceFactory> */
     use HasFactory;
-    protected $fillable = ['device_name', 'id_location'];
+    protected $fillable = ['device_name', 'status', 'description','id_location'];
 
     public function location()
     {

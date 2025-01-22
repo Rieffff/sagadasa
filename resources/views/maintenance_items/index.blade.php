@@ -132,6 +132,7 @@
                 success: function() {
                     $('#maintenance-itemModal').modal('hide');
                     table.ajax.reload();
+                    pemberitahuan("success","berhasil mengupdate table");
                 }
             });
         });
@@ -150,7 +151,8 @@
 
         $('#Item-table').on('click', '.delete-maintenance-item', function() {
             const id = $(this).data('id');
-            if (confirm('Are you sure you want to delete this maintenance-item?')) {
+            konfirmasi().then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     url: `/maintenance-items/destroy/${id}`,
                     method: 'DELETE',
@@ -159,9 +161,10 @@
                     },
                     success: function() {
                         table.ajax.reload();
+                        pesan("Terhempas","Device berhasil di hapus","success");
                     }
                 });
-            }
+            }});
         });
     });
 </script>

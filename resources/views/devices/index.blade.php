@@ -33,6 +33,7 @@
             <div class="card-header">
             <h5> @yield('title')</h5>
             <button class="btn btn-primary mb-3" id="createDevice">Add Device</button>
+            <button class="btn btn-warning mb-3" id="refreshTable">Refresh Data</button>
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
@@ -41,6 +42,8 @@
                     <tr>
                     <th>NO</th>
                     <th>Device Name</th>
+                    <th>Status</th>
+                    <th>Description</th>
                     <th>Location Name</th>
                     <th>Actions</th>
                     </tr>
@@ -67,6 +70,17 @@
                     <div class="mb-3">
                         <label for="device_name" class="form-label">Device Name</label>
                         <input type="text" class="form-control" id="device_name" name="device_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Status" class="form-label">Device Name</label>
+                        <select class="form-select selectpicker" id="status" name="status" data-live-search="true" required>
+                            <option value="ok">OK</option>
+                            <option value="error">ERROR</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <textarea   class="form-control" id="Description" name="Description" required></textarea >
                     </div>
                     <div class="mb-3">
                         <label for="id_location" class="form-label">Location</label>
@@ -96,6 +110,8 @@
             columns: [
                 { data: 'index', name: 'index', searchable: false}, // Kolom index
                 { data: 'device_name', name: 'device_name'},
+                { data: 'status', name: 'status'},
+                { data: 'description', name: 'description'},
                 { data: 'location.location_name' , name:'location_name'},
                 {
                     data: null,
@@ -112,14 +128,25 @@
                 }
             ]
         });
+        
+        $("#refreshTable").click(function () {
+            table.ajax.reload();
+            pemberitahuan("success","berhasil load data");
+        });
 
-        function loadLocations() {
+        function loadLocations(id_location,status) {
             $.get("{{ route('locations.list') }}", function (response) {
-                let options = '<option value="0">Select Location if you can update location</option>';
+                if(status === undefined){
+                    var options = '<option value="0">Select Location </option>';
+                }else{
+                    
+                    var options = '<option value="'+id_location+'">'+status+'</option>';
+                }
                 response.data.forEach(location => {
                     options += `<option value="${location.id}">${location.location_name}</option>`;
                 });
                 $('#id_location').html(options).selectpicker('refresh');
+                // $('#id_location').val(status);
             });
         }
 
@@ -139,8 +166,9 @@
             $.get(url , function(data) {
                 $('#device_id').val(data.id);
                 $('#device_name').val(data.device_name);
-                $('#device_name').val(data.device_name);
-                loadLocations(); // Refresh locations first
+                $('#status').val(data.status);
+                $('#description').val(data.description);
+                loadLocations(data.id_location, data.location.location_name); // Refresh locations first
                 $('#modalTitle').text('Edit devices');
                 $('#deviceModal').modal('show');
             });
@@ -152,41 +180,61 @@
             const id = $('#device_id').val();
             const url = id ? `/devices/update/${id}` : '/devices/store';
             const method = id ? 'PUT' : 'POST';
+            const idLocation = $('#id_location').val();
+            const device_name= $('#device_name').val();
+            if(id === '' && idLocation === "0" || device_name === '' && idLocation === "0"){
+                Swal.fire({
+                title: "ah anda ini bagaimana sih",
+                text: "Silahkan pilih lokasi terlebih dahulu dan pastikan sudah mengisi device name",
+                icon: "error"
+                });
+            }else{
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: {
+                        device_name: $('#device_name').val(),
+                        id_location: $('#status').val(),
+                        id_location: $('#description').val(),
+                        id_location: $('#id_location').val(),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function() {
+                        $('#deviceModal').modal('hide');
+                        pemberitahuan("success","berhasil mengupdate table");
+                        table.ajax.reload();
+                    }
+                });
+            }
 
-            $.ajax({
-                url: url,
-                method: method,
-                data: {
-                    device_name: $('#device_name').val(),
-                    id_location: $('#id_location').val(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function() {
-                    $('#deviceModal').modal('hide');
-                    table.ajax.reload();
-                }
-            });
+           
         });
 
         // Delete Device
         $('#devices-table').on('click', '.delete-device', function () {
-            if (confirm('Are you sure you want to delete this device?')) {
-                const deviceId = $(this).data('id');
-                $.ajax({
-                    url: `/devices/destroy/${deviceId}`,
-                    method: 'DELETE',
-                    data: { 
-                        _token: '{{ csrf_token() }}'
-                     },
-                    success: function (response) {
-                        alert(response.message);
-                        table.ajax.reload();
-                    },
-                    error: function () {
-                        alert('Failed to delete device!');
-                    }
+            konfirmasi().then((result) => {
+                if (result.isConfirmed) {
+                    const deviceId = $(this).data('id');
+                    $.ajax({
+                        url: `/devices/destroy/${deviceId}`,
+                        method: 'DELETE',
+                        data: { 
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            pesan("Terhempas","Device berhasil di hapus","success");
+                            table.ajax.reload();
+                        },
+                        error: function () {
+                            pesan("Gagal","Device Gagal di hapus","error");
+                        }
+                    });
+                    
+                }
                 });
-            }
+            
+                
+            
         });
     });
 </script>

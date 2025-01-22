@@ -136,6 +136,7 @@
                 success: function() {
                     $('#locationModal').modal('hide');
                     table.ajax.reload();
+                    pemberitahuan("success","berhasil mengupdate table");
                 }
             });
         });
@@ -154,8 +155,9 @@
 
         $('#locations-table').on('click', '.delete-location', function() {
             const id = $(this).data('id');
-            if (confirm('Are you sure you want to delete this location?')) {
-                $.ajax({
+            konfirmasi().then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
                     url: `/locations/destroy/${id}`,
                     method: 'DELETE',
                     data: {
@@ -163,10 +165,12 @@
                     },
                     success: function() {
                         table.ajax.reload();
+                        pesan("Terhempas","Device berhasil di hapus","success");
                     }
-                });
-            }
+                    });
+                }});
         });
     });
+  
 </script>
 @endpush

@@ -14,6 +14,6 @@ class MaterialSeeder extends Seeder
     public function run(): void
     {
         //
-        Material::factory(20)->create(); // Generate 20 dummy data
+        Material::factory(200)->create(); // Generate 20 dummy data
     }
 }

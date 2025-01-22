@@ -140,6 +140,7 @@
                 success: function() {
                     $('#materialModal').modal('hide');
                     table.ajax.reload();
+                    pemberitahuan("success","berhasil mengupdate table");
                 }
             });
         });
@@ -159,7 +160,8 @@
 
         $('#materials-table').on('click', '.delete-material', function() {
             const id = $(this).data('id');
-            if (confirm('Are you sure you want to delete this material?')) {
+            konfirmasi().then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     url: `/materials/destroy/${id}`,
                     method: 'DELETE',
@@ -168,9 +170,11 @@
                     },
                     success: function() {
                         table.ajax.reload();
+                        pesan("Terhempas","Device berhasil di hapus","success");
                     }
                 });
-            }
+            }});
+           
         });
     });
 </script>

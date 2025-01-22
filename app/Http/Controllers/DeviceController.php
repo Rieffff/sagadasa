@@ -36,6 +36,8 @@ class DeviceController extends Controller
         // dd($request);
         $validated = $request->validate([
             'device_name' => 'required|string|max:255',
+            'status' => 'required|string|max:5',
+            'description' => 'required|string|max:255',
             'id_location' => 'required|exists:locations,id',
         ]);
 
@@ -47,13 +49,17 @@ class DeviceController extends Controller
     {
         if($request->id_location == 0){
             $validated = $request->validate([
-                'device_name' => 'required|string|max:255'
+                'device_name' => 'required|string|max:255',
+                'status' => 'required|string|max:5',
+                'description' => 'required|string|max:255',
             ]);
     
 
         }else{
             $validated = $request->validate([
                 'device_name' => 'required|string|max:255',
+                'status' => 'required|string|max:5',
+                'description' => 'required|string|max:255',
                 'id_location' => 'required|exists:locations,id',
             ]);
     

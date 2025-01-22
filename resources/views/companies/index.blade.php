@@ -159,29 +159,32 @@
                 success: function() {
                     $('#companyModal').modal('hide');
                     table.ajax.reload();
+                    pemberitahuan("success","berhasil mengupdate table");
                 }
             });
         });
 
         // Delete company
-        $(companies-table).on('click', '#delete-company', function () {
-            if (confirm('Are you sure you want to delete this company?')) {
-                let companyId = $(this).data('id');
-                $.ajax({
-                    url: `/companies/destroy/${companyId}`,
-                    method: 'DELETE',
-                    data: { 
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        alert(response.message);
-                        table.ajax.reload();
-                    },
-                    error: function () {
-                        alert('Failed to delete company!');
-                    }
+        $("#companies-table").on('click', '#delete-company', function () {
+            konfirmasi().then((result) => {
+                if (result.isConfirmed) {
+                    let companyId = $(this).data('id');
+                    $.ajax({
+                        url: `/companies/destroy/${companyId}`,
+                        method: 'DELETE',
+                        data: { 
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            pesan("Terhempas","Device berhasil di hapus","success");
+                            table.ajax.reload();
+                        },
+                        error: function () {
+                            pesan("Gagal","Device Gagal di hapus","error");
+                        }
+                    });
+                   }
                 });
-            }
         });
     });
 </script>

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('device_name'); // Nama perangkat
+            $table->string('status'); // Nama perangkat
+            $table->string('description'); // Nama perangkat
             $table->foreignId('id_location')->constrained('locations')->onDelete('cascade'); // Relasi ke tabel locations
             $table->timestamps();
         });
