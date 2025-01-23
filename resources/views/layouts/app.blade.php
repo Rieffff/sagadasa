@@ -605,6 +605,7 @@
 @stack('item-scripts')
 @stack('devices-scripts')
 @stack('companies-scripts')
+@stack('users-scripts')
   
 </body>
 

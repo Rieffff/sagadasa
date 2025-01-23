@@ -53,24 +53,40 @@ class RolePermissionSeeder extends Seeder
                 'email' => 'mmaarif0306@gmai.com',
                 'password' => Hash::make('tohawi'),
                 'role' => 'admin',
+                'position' => 'Developer',
+                'contact' => '+86',
             ],
             [
                 'name' => 'Admin',
                 'email' => 'Admin@gmail.com',
                 'password' => Hash::make('kopihitam123'),
                 'role' => 'admin',
+                'position' => 'Admin',
+                'contact' => '+62564648135',
+            ],
+            [
+                'name' => 'Supervisor',
+                'email' => 'di@gmail.com',
+                'password' => Hash::make('weng'),
+                'role' => 'supervisor',
+                'position' => 'Supervisor',
+                'contact' => '+62',
             ],
             [
                 'name' => 'Supervisor',
                 'email' => 'dii@gmail.com',
                 'password' => Hash::make('weng'),
                 'role' => 'supervisor',
+                'position' => 'Supervisor',
+                'contact' => '+6288',
             ],
             [
                 'name' => 'Rosidi technician',
                 'email' => 'diii@gmail.com',
                 'password' => Hash::make('weng'),
                 'role' => 'technician',
+                'position' => 'Technician',
+                'contact' => '+86',
             ],
         ];
 
@@ -81,6 +97,8 @@ class RolePermissionSeeder extends Seeder
                 'email' => $userData['email'],
                 'password' => $userData['password'],
                 'role' => $userData['role'],
+                'position' => $userData['position'],
+                'contact' => $userData['contact'],
             ]);
             $user->assignRole($userData['role']); // Tetapkan role ke user
         }

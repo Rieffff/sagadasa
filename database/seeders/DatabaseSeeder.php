@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         //    buka comand di bawah untuk memasukan semua user 
-        // $this->call(RolePermissionSeeder::class);
+        $this->call(RolePermissionSeeder::class);
         $this->call(ContractorSeeder::class);
         $this->call(MaterialSeeder::class);
         $this->call(LocationSeeder::class);

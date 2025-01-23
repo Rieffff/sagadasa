@@ -8,6 +8,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MaintenanceItemController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -82,6 +84,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', 'update')->name('companies.update');
         Route::delete('/destroy/{id}', 'destroy')->name('companies.destroy');
     });
+
+    // Route::resource('user', UserController::class);
+    Route::get('user/show/{id}', [UserController::class,'show']);
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    Route::get('user/list', [UserController::class, 'list'])->name('user.list');
 });
 
 

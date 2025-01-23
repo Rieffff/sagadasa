@@ -30,18 +30,25 @@
           </li>
           @endcan
           <li>
-            <a class="" data-bs-toggle="collapse" href="#dashboard" aria-expanded="false">
-              <i class="ph-duotone  ph-user-check"></i>Activity
+            <a class="" data-bs-toggle="collapse" href="#dashboard2" aria-expanded="false">
+              <i class="ph-duotone  ph-squares-four"></i>Activity
             </a>
-            <ul class="collapse" id="dashboard">
+            <ul class="collapse" id="dashboard2">
               <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li>
               <li><a href="{{ route('daily-report.index') }}">Daily Report</a></li>
             </ul>
           </li>
           
+          @can('manage users')
+          <li class="no-sub" href="#user">
+            <a class=""  href="{{ route('user.index') }}">
+              <i class="ph-duotone  ph-user"></i> User
+            </a>
+          </li>
+          @endcan
           <li class="no-sub">
             <a class="" href="{{ route('report.index') }}">
-              <i class="ph-duotone  ph-squares-four"></i> Widgets
+              <i class="ph-duotone  ph-files"></i> Report
             </a>
           </li>
 
