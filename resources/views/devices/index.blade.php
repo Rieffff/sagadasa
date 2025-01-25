@@ -80,7 +80,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="Description" class="form-label">Description</label>
-                        <textarea   class="form-control" id="Description" name="Description" required></textarea >
+                        <textarea   class="form-control" id="description" name="Description" required></textarea >
                     </div>
                     <div class="mb-3">
                         <label for="id_location" class="form-label">Location</label>
@@ -194,8 +194,8 @@
                     method: method,
                     data: {
                         device_name: $('#device_name').val(),
-                        id_location: $('#status').val(),
-                        id_location: $('#description').val(),
+                        status: $('#status').val(),
+                        description: $('#description').val(),
                         id_location: $('#id_location').val(),
                         _token: '{{ csrf_token() }}'
                     },
@@ -222,11 +222,11 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            pesan("Terhempas","Device berhasil di hapus","success");
+                            pemberitahuan("success","Device berhasil di hapus");
                             table.ajax.reload();
                         },
-                        error: function () {
-                            pesan("Gagal","Device Gagal di hapus","error");
+                        error: function (response) {
+                            pesan("Gagal",response.responseJSON.message,"error");
                         }
                     });
                     

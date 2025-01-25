@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -24,18 +30,7 @@ class UserController extends Controller
         return view('user.index',compact('data'));
     }
 
-    public function list(){
-
-        $sesId = Auth::User()->id;
-
-        $data = User::where('id', '!=', $sesId)->get();      
-        $data = $data->map(function ($item, $key) {
-            $item->index = $key + 1; // Index dimulai dari 1
-            return $item;
-        });
-        // dd($data);
-        return response()->json($data);
-    }
+    
     public function show($id){
 
        
@@ -57,7 +52,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255',
+            'password' => 'required|string',
+            'position' => 'required|string|max:255',
+            'contact' => 'required|string|max:50',
+        ]);
+        if ($request->position === 'technician') {
+            $position = "Technician";
+        }elseif($request->position === 'supervisor'){
+            $position = "Supervisor";
+        }elseif($request->position === 'admin'){
+            $position = 'Admin';
+        }
+
+        $User = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->position,
+            'position' => $position,
+            'contact' => $request->contact,
+        ]);
+        
+        return response()->json(['message' => 'User created successfully', 'data' => $User]);
     }
 
     /**
@@ -79,13 +98,41 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'contact' => 'required|string|max:50',
+        ]);
+        if ($request->position === 'technician') {
+            $position = "Technician";
+        }elseif($request->position === 'supervisor'){
+            $position = "Supervisor";
+        }elseif($request->position === 'admin'){
+            $position = 'Admin';
+        }
+
+        $User = DB::table('users')
+        ->where('id', $request->id)
+        ->Update([
+            'name' => $request->name,
+            'role' => $request->position,
+            'position' => $position,
+            'contact' => $request->contact,
+        ]);
+        
+        return response()->json(['message' => 'User created successfully', 'data' => $User]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

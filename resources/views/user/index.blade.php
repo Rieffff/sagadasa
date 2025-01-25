@@ -89,20 +89,20 @@
                     <form id="user-form">
                         <input type="hidden" id="user-id">
                         <div class="mb-3">
-                            <label for="user-name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="user-name" required>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" required>
+                            <label for="email" class="form-label" id="labelEmail">Email</label>
+                            <input type="email" class="form-control" id="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label" id="labelPassword">Password</label>
                             <input type="password" class="form-control" id="password" required>
                         </div>
                         <div class="mb-3">
                             <input class="form-check-input mg-2" type="checkbox" value="" id="showPassword">
-                            <label for="showPassword"> Show Password</label>
+                            <label for="showPassword" id="labelShow"> Show Password</label>
                         </div>
                         <div class="mb-3">
                             <label for="user-position" class="form-label">position</label>
@@ -115,14 +115,14 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="user-contact" class="form-label">contact</label>
-                            <input type="text" class="form-control" id="user-contact">
+                            <label for="contact" class="form-label">contact</label>
+                            <input type="text" class="form-control" id="contact">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-user">Save</button>
+                    <button type="button" class="btn btn-primary" id="save-user">Save</button>
                 </div>
             </div>
         </div>
@@ -146,6 +146,12 @@
         $('#add-user').click(function() {
             $('#user-id').val('');
             $('#user-form')[0].reset();
+                $('#labelEmail').show();
+                $('#labelPassword').show();
+                $('#labelShow').show();
+                $('#email').show();
+                $('#password').show();
+                $('#showPassword').show();
             $('#modalTitle').text('Add user');
             $('#userModal').modal('show');
         });
@@ -153,34 +159,50 @@
         
         $('#save-user').click(function() {
             const id = $('#user-id').val();
-            const url = id ? `/users/update/${id}` : '/users/store';
+            const url = id ? `/user/update/${id}` : '/user/store';
             const method = id ? 'PUT' : 'POST';
 
             $.ajax({
                 url: url,
                 method: method,
+                
                 data: {
-                    user_name: $('#user-name').val(),
-                    position: $('#user-position').val(),
-                    contact: $('#user-contact').val(),
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val(),
+                    role: $('#position').text(),
+                    position: $('#position').val(),
+                    contact: $('#contact').val(),
                     _token: '{{ csrf_token() }}'
                 },
                 success: function() {
                     $('#userModal').modal('hide');
-                    table.ajax.reload();
                     pemberitahuan("success","berhasil mengupdate table");
+                    setTimeout(function(){
+                        location.reload();
+                    }, 3000);
+                },
+                error: function (response){
+                    console.log(response);
+                    pesan("error",response.responseJSON.message,"error");
                 }
             });
         });
 
-        $('#users-table').on('click', '.edit-user', function() {
+        $(document).on('click', '.edit-user', function() {
             var id = $(this).data('id');
-            var url = "/users/show/" + id;
+            var url = "/user/show/" + id;
             $.get(url , function(data) {
                 $('#user-id').val(data.id);
-                $('#user-name').val(data.user_name);
-                $('#user-position').val(data.position);
-                $('#user-contact').val(data.contact);
+                $('#name').val(data.name);
+                $('#labelEmail').hide();
+                $('#labelPassword').hide();
+                $('#labelShow').hide();
+                $('#email').hide();
+                $('#password').hide();
+                $('#showPassword').hide();
+                $('#position').val(data.role);
+                $('#contact').val(data.contact);
                 $('#modalTitle').text('Edit user');
                 $('#userModal').modal('show');
             });
@@ -191,14 +213,20 @@
             konfirmasi().then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/users/destroy/${id}`,
+                    url: `/user/destroy/${id}`,
                     method: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function() {
-                        table.ajax.reload();
-                        pesan("Terhempas","Device berhasil di hapus","success");
+                    success: function(response) {
+                        pesan("Terhempas",response.message,"success");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+                    },
+                    error: function (response){
+                        console.log(response);
+                        pesan("error",response.responseJSON.message,"error");
                     }
                 });
             }});

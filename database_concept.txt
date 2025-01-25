@@ -2,7 +2,7 @@
 Berikut adalah versi yang lebih rinci dari struktur database dengan penyesuaian yang Anda minta:
 
 Tabel Master
-master_technicians
+technicians
 
 id (primary key)
 name
@@ -11,7 +11,7 @@ position
 created_at
 updated_at
 
-master_maintenance_items
+maintenance_items
 
 id (primary key)
 item_name (e.g., Solenoid, Arm, Module Board, etc.)
@@ -19,7 +19,7 @@ description
 created_at
 updated_at
 
-master_locations
+locations
 
 id (primary key)
 location_name (e.g., Helipad A-1, Gate Access, etc.)
@@ -27,7 +27,7 @@ address
 created_at
 updated_at
 
-master_contractors
+contractors
 
 id (primary key)
 contractor_name
@@ -37,7 +37,7 @@ contact_information
 created_at
 updated_at
 
-master_materials
+materials
 
 id (primary key)
 material_name
@@ -52,18 +52,20 @@ daily_reports
 
 id (primary key)
 report_date
-contractor_id (foreign key ke master_contractors)
-location_id (foreign key ke master_locations)
-technician_id (foreign key ke master_technicians)
+contractor_id (foreign key ke contractors)
+company_id (foreign key ke companies)
+device_id (foreign key ke devices)
+technician_id (foreign key ke technicians)
 activity_details (text)
 status (e.g., regular/non-regular)
 created_at
 updated_at
+
 maintenance_logs
 
 id (primary key)
 report_id (foreign key ke daily_reports)
-maintenance_item_id (foreign key ke master_maintenance_items)
+maintenance_item_id (foreign key ke maintenance_items)
 status_before (text)
 status_after (text)
 created_at
@@ -72,7 +74,7 @@ material_replacements
 
 id (primary key)
 maintenance_log_id (foreign key ke maintenance_logs)
-material_id (foreign key ke master_materials)
+material_id (foreign key ke materials)
 quantity (decimal)
 description (text)
 created_at

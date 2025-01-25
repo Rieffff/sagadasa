@@ -21,6 +21,7 @@
         @endif</title>
 
   <!--font-awesome-css-->
+  
   <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/all.css') }}">
 
   <!-- Fonts -->
@@ -479,7 +480,7 @@
                             </div>
                             <div class="text-center mt-2">
                               <h6 class="mb-0"> {{ auth()->user()->name; }}</h6>
-                              <p class="f-s-12 mb-0 text-secondary">lauradesign@gmail.com</p>
+                              <p class="f-s-12 mb-0 text-secondary">{{ auth()->user()->email; }}</p>
                             </div>
                           </li>
 
