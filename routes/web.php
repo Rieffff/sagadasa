@@ -10,6 +10,13 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\MaintenanceLogController;
+use App\Http\Controllers\MaterialReplacementController;
+use App\Http\Controllers\PhotoController;
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +98,39 @@ Route::middleware('auth')->group(function () {
     Route::post('user/store', [UserController::class, 'store'])->name('user.store');
     Route::delete('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::put('user/update/{id}', [UserController::class, 'update'])->name('user.update');
+
+
+    Route::prefix('daily-reports')->group(function () {
+        Route::get('/', [DailyReportController::class, 'index']); // Fetch all reports
+        Route::post('/', [DailyReportController::class, 'store']); // Create a report
+        Route::put('/{id}', [DailyReportController::class, 'update']); // Update a report
+        Route::delete('/{id}', [DailyReportController::class, 'destroy']); // Delete a report
+    });
+
+
+    Route::prefix('maintenance-logs')->group(function () {
+        Route::get('/', [MaintenanceLogController::class, 'index']); // Fetch all maintenance logs
+        Route::post('/', [MaintenanceLogController::class, 'store']); // Create a maintenance log
+        Route::put('/{id}', [MaintenanceLogController::class, 'update']); // Update a maintenance log
+        Route::delete('/{id}', [MaintenanceLogController::class, 'destroy']); // Delete a maintenance log
+    });
+
+    Route::prefix('material-replacements')->group(function () {
+        Route::get('/', [MaterialReplacementController::class, 'index']); // Fetch all material replacements
+        Route::post('/', [MaterialReplacementController::class, 'store']); // Create a material replacement
+        Route::put('/{id}', [MaterialReplacementController::class, 'update']); // Update a material replacement
+        Route::delete('/{id}', [MaterialReplacementController::class, 'destroy']); // Delete a material replacement
+    });
+
+
+    Route::prefix('photos')->group(function () {
+        Route::get('/', [PhotoController::class, 'index']); // Fetch all photos
+        Route::post('/', [PhotoController::class, 'store']); // Upload a photo
+        Route::put('/{id}', [PhotoController::class, 'update']); // Update photo details
+        Route::delete('/{id}', [PhotoController::class, 'destroy']); // Delete a photo
+    });
+
+
 });
 
 

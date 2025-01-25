@@ -129,6 +129,7 @@
             ]
         });
         
+        
         $("#refreshTable").click(function () {
             table.ajax.reload();
             pemberitahuan("success","berhasil load data");

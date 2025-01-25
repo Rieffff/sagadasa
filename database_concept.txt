@@ -70,6 +70,7 @@ status_before (text)
 status_after (text)
 created_at
 updated_at
+
 material_replacements
 
 id (primary key)

@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MaintenanceItemSeeder::class);
         $this->call(DeviceSeeder::class); 
         $this->call(CompanySeeder::class); 
+        $this->call(DailyReportSeeder::class); 
+        $this->call(MaintenanceLogSeeder::class); 
+        $this->call(MaterialReplacementSeeder::class); 
+        $this->call(PhotoSeeder::class); 
     }
 }
