@@ -2,12 +2,16 @@
 Berikut adalah versi yang lebih rinci dari struktur database dengan penyesuaian yang Anda minta:
 
 Tabel Master
-technicians
+user
 
 id (primary key)
 name
-contact_information
+email
+email_verified_at
+password
+role
 position
+contact
 created_at
 updated_at
 
@@ -27,6 +31,25 @@ address
 created_at
 updated_at
 
+devices
+
+id (primary key)
+device_name
+status
+description
+id_location(refreces table location)
+created_at
+updated_at
+
+companies
+id (primary key)
+contractor_name
+contact
+address
+default(boolean)
+created_at
+updated_at
+
 contractors
 
 id (primary key)
@@ -37,14 +60,8 @@ contact_information
 created_at
 updated_at
 
-materials
 
-id (primary key)
-material_name
-description
-unit (e.g., pcs, liters, meters, etc.)
-created_at
-updated_at
+
 
 Tabel Transaksi
 
@@ -52,38 +69,108 @@ daily_reports
 
 id (primary key)
 report_date
+work_start
+work_break
+work_stop
+work_reason
+service_data()
 contractor_id (foreign key ke contractors)
 company_id (foreign key ke companies)
-device_id (foreign key ke devices)
-technician_id (foreign key ke technicians)
-activity_details (text)
-status (e.g., regular/non-regular)
+approved_by
 created_at
 updated_at
+
+daily_activity_details 
+
+id(primary key)
+device_id (foreign key ke devices)
+activity_description (text)
+report_id (foreign key ke daily_reports)
+status (e.g., regular/non-regular)
 
 maintenance_logs
 
 id (primary key)
-report_id (foreign key ke daily_reports)
-maintenance_item_id (foreign key ke maintenance_items)
-status_before (text)
-status_after (text)
+report_detail_id (foreign key ke daily_activity_detail)
+photos (string)
+description (text)
+created_at
+updated_at
+
+maintenance_log_afters
+
+id (primary key)
+maintenance_log_id (foreign key ke maintenance_logs)
+photos (string)
+description (text)
 created_at
 updated_at
 
 material_replacements
 
 id (primary key)
-maintenance_log_id (foreign key ke maintenance_logs)
+maintenance_log_after_id (foreign key ke maintenance_log_afters)
 material_id (foreign key ke materials)
 quantity (decimal)
 description (text)
 created_at
 updated_at
-photos
+
+daily_activities
 
 id (primary key)
-maintenance_log_id (foreign key ke maintenance_logs)
-photo_url
+activity
+note
+user_id(refreces table user)
+report_id (foreign key ke daily_reports)
 created_at
 updated_at
+
+daily_problems 
+
+id (primary key)
+problem(text)
+soultion(text)
+activity_id(refreces table daily_activity)
+created_at
+updated_at
+
+man_powers
+id(primary key)
+name
+position
+contact
+report_id(refreces daily_reports)
+user_id(refreces users)
+created_at
+updated_at
+
+maintenance_log_details
+id (primary key)
+maintenance_log_id (foreign key ke maintenance_logs)
+maintenance_item_id (foreign key ke maintenance_items)
+status (string)
+created_at
+updated_at
+
+maintenance_log_after_details
+id (primary key)
+maintenance_log_id (foreign key ke maintenance_log_afters)
+item_name (string)
+status (string)
+created_at
+updated_at
+
+
+
+
+
+logic app by me, copy and paste this to my friend :D (chat GPT) wkwkwkwk
+
+saya telah membuat semua CRUD dari table master dengan larevel dan ajax request menggunakan template admin ra-admin yang menggunakan basic bootstrap, sekarang saya ingin berdiskusi dengan anda untuk pembuatan transactionnya oleh karena itu saya akan memberikan penjelasan sedikit, program ini dibuat untuk memantau kegiatan pekerja di lapangan oleh perusahaan pekerja tersebut adalah pekerja dari contractor yang bertugas untuk melakukan maintenance dan pengecekan keadaan device milik perusaan sistem ini bisa di akses oleh user dengan role admin, super visor dan technician. technician memiliki tugas memberikan laporan berikut rincian tugasnya,
+1. teknisi datang ke lokasi yang sudah di tentukan 
+2 teknisi akan melakukan aktivitas reguler yaitu maintenance device  teknisi akan melakukan laporan ke kantor keadaan device before dengan mengecek keadaan seluruh maintenance item maintenance item itu dapat di pilih beberapa tapi tidak boleh kosong karena mungkin setiap device berbeda maintenance item dan 
+3 ketika selelsai melakukan pengecekan teknisi juga membuat laporan after dan jika ada material yang di replace maka akan melakukan laporan dan memfoto material yang di replace dan teknisi akan memberikan laporan permasalahan di lapangan dan pemecahan masalah tersebut jika ada
+4 setelah selesai teknisi akan melakukan aktivitas non reguler jika ada jika tidak ada tidak masalah laporan kegiatan non reguler akan di kosongi
+
+nah untuk aktivitas reguler dapat di lakukan berulang kali seusai dengan banyak device yang ada di lokasi tersebut pada hari itu nah untuk kegiatan non reguler bisa pindah pindah lokasi seusai dengan kebutuhan dan urgent.

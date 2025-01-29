@@ -14,6 +14,8 @@ use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\MaintenanceLogController;
 use App\Http\Controllers\MaterialReplacementController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\TechnicianReportController;
+use App\Http\Controllers\ReportController;
 
 
 
@@ -27,6 +29,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -43,17 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/contractors/{id}', [ContractorController::class, 'destroy']);
     
     Route::get('/daily-activity', function(){return view('daily-activity.index');})->name('daily-activity.index');
-    Route::get('/daily-report',function(){return view('daily-report.index');})->name('daily-report.index');
+    // Route::get('/daily-report',function(){return view('daily-report.index');})->name('daily-report.index');
     Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 
-    Route::prefix('materials')->group(function () {
-        Route::get('/', [MaterialController::class, 'index'])->name('materials.index');
-        Route::get('/list', [MaterialController::class, 'list'])->name('materials.list');
-        Route::post('/store', [MaterialController::class, 'store'])->name('materials.store');
-        Route::get('/show/{material}', [MaterialController::class, 'show'])->name('materials.show');
-        Route::put('/update/{material}', [MaterialController::class, 'update'])->name('materials.update');
-        Route::delete('/destroy/{material}', [MaterialController::class, 'destroy'])->name('materials.destroy');
-    });
+    // Route::prefix('materials')->group(function () {
+    //     Route::get('/', [MaterialController::class, 'index'])->name('materials.index');
+    //     Route::get('/list', [MaterialController::class, 'list'])->name('materials.list');
+    //     Route::post('/store', [MaterialController::class, 'store'])->name('materials.store');
+    //     Route::get('/show/{material}', [MaterialController::class, 'show'])->name('materials.show');
+    //     Route::put('/update/{material}', [MaterialController::class, 'update'])->name('materials.update');
+    //     Route::delete('/destroy/{material}', [MaterialController::class, 'destroy'])->name('materials.destroy');
+    // });
 
     Route::prefix('locations')->group(function () {
         Route::get('/', [LocationController::class, 'index'])->name('locations.index');
@@ -129,7 +132,12 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [PhotoController::class, 'update']); // Update photo details
         Route::delete('/{id}', [PhotoController::class, 'destroy']); // Delete a photo
     });
+    Route::post('/daily-reports', [DailyReportController::class, 'storeTransaction'])->name('daily-reports.store');
+    Route::get('/daily-report', [DailyReportController::class, 'create'])->name('daily-report.index');
+    Route::post('/technician-reports', [TechnicianReportController::class, 'store'])->name('technician.reports.store');
 
+    
+    Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
 
 });
 

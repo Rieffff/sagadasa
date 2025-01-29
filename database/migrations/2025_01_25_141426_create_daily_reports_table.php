@@ -14,18 +14,15 @@ return new class extends Migration
         Schema::create('daily_reports', function (Blueprint $table) {
             $table->id();
             $table->date('report_date');
-            $table->unsignedBigInteger('contractor_id');
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('device_id');
-            $table->unsignedBigInteger('technician_id');
-            $table->text('activity_details');
-            $table->string('status'); // e.g., regular/non-regular
+            $table->time('work_start');
+            $table->time('work_break')->nullable();
+            $table->time('work_stop');
+            $table->string('service_data')->nullable();
+            $table->string('work_reason')->nullable();
+            $table->string('approved_by')->nullable(); // Tambahan untuk approval
+            $table->foreignId('contractor_id')->constrained('contractors')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('contractor_id')->references('id')->on('contractors');
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('device_id')->references('id')->on('devices');
-            $table->foreign('technician_id')->references('id')->on('technicians');
         });
     }
 

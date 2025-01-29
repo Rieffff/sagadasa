@@ -13,14 +13,11 @@ return new class extends Migration
     {
         Schema::create('material_replacements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('maintenance_log_id');
-            $table->unsignedBigInteger('material_id');
-            $table->decimal('quantity', 10, 2); // e.g., quantity in pcs, liters, meters, etc.
-            $table->text('description')->nullable(); // Optional description
+            $table->foreignId('maintenance_log_after_id')->constrained('maintenance_log_afters')->onDelete('cascade');
+            $table->string('material_name'); // Menggunakan string, bukan foreign key
+            $table->decimal('quantity', 8, 2);
+            $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('maintenance_log_id')->references('id')->on('maintenance_logs')->onDelete('cascade');
-            $table->foreign('material_id')->references('id')->on('materials');
         });
     }
 

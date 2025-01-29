@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('maintenance_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('report_id');
-            $table->unsignedBigInteger('maintenance_item_id');
-            $table->text('status_before');
-            $table->text('status_after');
+            $table->foreignId('report_detail_id')->constrained('daily_activity_details')->onDelete('cascade');
+            $table->string('photos')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('report_id')->references('id')->on('daily_reports')->onDelete('cascade');
-            $table->foreign('maintenance_item_id')->references('id')->on('maintenance_items');
         });
     }
 

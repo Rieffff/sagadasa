@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Material;
 
-class MaterialSeeder extends Seeder
+class DailyProblemsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +13,5 @@ class MaterialSeeder extends Seeder
     public function run(): void
     {
         //
-        Material::factory(200)->create(); // Generate 20 dummy data
     }
 }

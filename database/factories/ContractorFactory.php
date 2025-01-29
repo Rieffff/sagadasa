@@ -19,7 +19,7 @@ class ContractorFactory extends Factory
     {
         return [
             'contractor_name' => $this->faker->company,
-            'contract_ref' => $this->faker->uuid,
+            'logo' => "sagadasa.png",
             'address' => $this->faker->address,
             'contact_information' => $this->faker->phoneNumber,
         ];

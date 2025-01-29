@@ -14,6 +14,6 @@ class MaintenanceItemSeeder extends Seeder
     public function run(): void
     {
         //
-        MaintenanceItem::factory(200)->create(); // Buat 20 data dummy
+        MaintenanceItem::factory(5)->create(); // Buat 20 data dummy
     }
 }

@@ -18,9 +18,10 @@ class CompanyFactory extends Factory
     {
         return [
             //
-            'company_name' => $this->faker->company,
+            'company_name' => "RDMPJO - BALIKPAPAN",
             'contact' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
+            'logo' => "RDMPJO.png",
         ];
     }
 }

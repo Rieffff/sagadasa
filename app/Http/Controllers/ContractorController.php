@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contractor;
-use App\Http\Requests\StoreContractorRequest;
-use App\Http\Requests\UpdateContractorRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContractorController extends Controller
 {
@@ -16,8 +15,7 @@ class ContractorController extends Controller
 
     public function list()
     {
-        // return response()->json(Contractor::all());
-        $data = Contractor::all(); // Ganti `Model` dengan model Anda.
+        $data = Contractor::all();
 
         // Tambahkan kolom index manual
         $data = $data->map(function ($item, $key) {
@@ -27,9 +25,9 @@ class ContractorController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
     public function show($id)
     {
-        
         $contractor = Contractor::findOrFail($id);
         return response()->json($contractor);
     }
@@ -39,31 +37,64 @@ class ContractorController extends Controller
         $validated = $request->validate([
             'contractor_name' => 'required|string|max:255',
             'address' => 'required|string',
-            'contract_ref' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Logo tidak wajib
             'contact_information' => 'nullable|string|max:255',
         ]);
 
+        if ($request->hasFile('logo')) {
+            // Simpan file ke storage dan ambil nama file
+            $file = $request->file('logo');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/logos', $fileName);
+            $validated['logo'] = $fileName;
+        }
+
         $contractor = Contractor::create($validated);
-        return response()->json($contractor);
+
+        return response()->json(['success' => true, 'contractor' => $contractor]);
     }
 
     public function update(Request $request, $id)
     {
+        
+        $contractor = Contractor::findOrFail($id);
+
         $validated = $request->validate([
             'contractor_name' => 'required|string|max:255',
             'address' => 'required|string',
-            'contract_ref' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'contact_information' => 'nullable|string|max:255',
         ]);
+        
+        if ($request->hasFile('logo')) {
+            // Hapus file lama jika ada
+            if ($contractor->logo && Storage::exists('public/logos/' . $contractor->logo)) {
+                Storage::delete('public/logos/' . $contractor->logo);
+            }
 
-        $contractor = Contractor::findOrFail($id);
+            // Simpan file baru
+            $file = $request->file('logo');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/logos', $fileName);
+            $validated['logo'] = $fileName;
+        }
+
         $contractor->update($validated);
-        return response()->json($contractor);
+
+        return response()->json(['success' => true, 'contractor' => $contractor]);
     }
 
     public function destroy($id)
     {
-        Contractor::destroy($id);
+        $contractor = Contractor::findOrFail($id);
+
+        // Hapus file logo jika ada
+        if ($contractor->logo && Storage::exists('public/logos/' . $contractor->logo)) {
+            Storage::delete('public/logos/' . $contractor->logo);
+        }
+
+        $contractor->delete();
+
         return response()->json(['message' => 'Contractor deleted successfully']);
     }
 }

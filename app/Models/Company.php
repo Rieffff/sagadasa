@@ -13,6 +13,7 @@ class Company extends Model
         'company_name',
         'contact',
         'address',
+        'logo',
     ];
 
     protected $attributes = [

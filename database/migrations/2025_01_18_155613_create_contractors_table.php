@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contractors', function (Blueprint $table) {
             $table->id();
             $table->string('contractor_name');
-            $table->string('contract_ref')->nullable();
+            $table->string('logo')->nullable();
             $table->text('address')->nullable();
             $table->string('contact_information')->nullable();
             $table->timestamps();

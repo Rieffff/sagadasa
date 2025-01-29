@@ -24,10 +24,10 @@ class RolePermissionSeeder extends Seeder
             'edit master data',   // Untuk admin
             'delete master data',   // Untuk admin
             'view master data',   // Untuk admin
-            'add activity',   // Untuk admin
-            'edit activity',   // Untuk admin
-            'delete activity',   // Untuk admin
-            'view activity',   // Untuk admin
+            'add activity',   
+            'edit activity',   
+            'delete activity',   
+            'view activity',   
            
         ];
 

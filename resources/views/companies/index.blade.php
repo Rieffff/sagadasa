@@ -77,7 +77,10 @@
                         <label for="address" class="form-label">address</label>
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
-                    
+                    <div class="mb-3">
+                            <label for="logo" class="form-label">Logo</label>
+                            <input type="file" class="form-control" id="logo">
+                        </div>
                     <input type="hidden" id="company_id">
                 </div>
                 <div class="modal-footer">
@@ -135,6 +138,7 @@
                 $('#company_id').val(data.id);
                 $('#company_name').val(data.company_name);
                 $('#address').val(data.address);
+                $('#logo').val(data.logo);
                 $('#contact').val(data.contact);
                 $('#modalTitle').text('Edit companies');
                 $('#companyModal').modal('show');
@@ -142,24 +146,37 @@
         });
 
         // Save or Update company
+        
+
         $('#submitBtn').click(function() {
-            const id = $('#company_id').val();
-            const url = id ? `/companies/update/${id}` : '/companies/store';
-            const method = id ? 'PUT' : 'POST';
+            const id = $('#company-id').val();
+            const url = id ? `/companies/${id}` : '/companies/store';
+            const method = id ? 'POST' : 'POST'; // Gunakan POST untuk PUT (Override _method untuk Laravel)
+            const formData = new FormData();
+
+            formData.append('company_name', $('#company_name').val());
+            formData.append('address', $('#address').val());
+            formData.append('logo', $('#logo')[0].files[0]);
+            formData.append('contact', $('#contact').val());
+            formData.append('_token', '{{ csrf_token() }}'); // Tambahkan token CSRF
+            if (id) {
+                formData.append('_method', 'PUT'); // Override ke PUT untuk Laravel
+            }
 
             $.ajax({
                 url: url,
                 method: method,
-                data: {
-                    company_name: $('#company_name').val(),
-                    address: $('#address').val(),
-                    contact: $('#contact').val(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function() {
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(response) {
                     $('#companyModal').modal('hide');
                     table.ajax.reload();
-                    pemberitahuan("success","berhasil mengupdate table");
+                    pemberitahuan("success", "Berhasil menyimpan data.");
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    pesan('error',response.responseJSON.message, "error");
                 }
             });
         });

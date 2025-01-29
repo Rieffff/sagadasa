@@ -3,10 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\DailyReport;
-use App\Models\Contractor;
-use App\Models\Company;
-use App\Models\Device;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,12 +20,14 @@ class DailyReportFactory extends Factory
         return [
             //
             'report_date' => $this->faker->date(),
-            'contractor_id' => Contractor::factory(),
-            'company_id' => Company::factory(),
-            'device_id' => Device::factory(),
-            'technician_id' => User::factory(),
-            'activity_details' => $this->faker->paragraph(),
-            'status' => $this->faker->randomElement(['regular', 'non-regular']),
+            'work_start' => $this->faker->time(),
+            'work_break' => $this->faker->time(),
+            'work_stop' => $this->faker->time(),
+            'work_reason' => $this->faker->sentence(),
+            'service_data' => $this->faker->text(),
+            'contractor_id' => \App\Models\Contractor::factory(),
+            'company_id' => \App\Models\Company::factory(),
+            'approved_by' => $this->faker->name(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

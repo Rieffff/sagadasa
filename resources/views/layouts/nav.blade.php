@@ -2,7 +2,7 @@
 <nav>
       <div class="app-logo">
         <a class="logo d-inline-block" href="{{ route('dashboard') }}">
-          <img src="{{ asset('assets/images/logo/1.png') }}" alt="#">
+          <img src="{{ asset('assets/images/logo/sagadasa.png') }}" alt="#">
         </a>
 
         <span class="bg-light-primary toggle-semi-nav">
@@ -22,7 +22,6 @@
             <ul class="collapse" id="dashboard">
               <li><a href="{{ route('companies.index') }}">Company</a></li>
               <li><a href="{{ route('master-contractors.index') }}">Contractors</a></li>
-              <li><a href="{{ route('materials.index') }}">Materials</a></li>
               <li><a href="{{ route('locations.index') }}">Location</a></li>
               <li><a href="{{ route('devices.index') }}">Devices</a></li> 
               <li><a href="{{ route('maintenance_items.index') }}">Maintenance Item</a></li>

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photos', function (Blueprint $table) {
+        Schema::create('daily_activities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('maintenance_log_id');
-            $table->string('photo_url'); // URL atau path ke file foto
+            $table->string('activity');
+            $table->text('note')->nullable();
+            $table->string('user_name'); // Menggunakan string, bukan foreign key
+            $table->foreignId('report_id')->constrained('daily_reports')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('maintenance_log_id')->references('id')->on('maintenance_logs')->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('daily_activities');
     }
 };

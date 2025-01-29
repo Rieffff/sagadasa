@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('contact');
             $table->text('address');
+            $table->string('logo');
             $table->boolean('default')->default(0); // Nilai default otomatis 0
             $table->timestamps();
         });

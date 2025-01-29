@@ -9,38 +9,46 @@ class DailyReport extends Model
 {
     /** @use HasFactory<\Database\Factories\DailyReportFactory> */
     use HasFactory;
+   
     protected $fillable = [
         'report_date',
+        'work_start',
+        'work_break',
+        'work_stop',
+        'service_data',
+        'work_reason',
+        'approved_by',
         'contractor_id',
         'company_id',
-        'device_id',
-        'technician_id',
-        'activity_details',
-        'status',
     ];
 
+    // Relasi ke Contractors
     public function contractor()
     {
         return $this->belongsTo(Contractor::class);
     }
 
+    // Relasi ke Companies
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function device()
+    // Relasi ke DailyActivityDetails
+    public function activityDetails()
     {
-        return $this->belongsTo(Device::class);
+        return $this->hasMany(DailyActivityDetail::class, 'report_id');
     }
 
-    public function technician()
+    // Relasi ke ManPowers
+    public function manPowers()
     {
-        return $this->belongsTo(Technician::class);
+        return $this->hasMany(ManPower::class, 'report_id');
     }
 
-    public function maintenanceLogs()
+    // Relasi ke DailyActivities
+    public function dailyActivities()
     {
-        return $this->hasMany(MaintenanceLog::class, 'report_id');
+        return $this->hasMany(DailyActivity::class, 'report_id');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\MaintenanceLog;
-use App\Models\Material;
 use App\Models\MaterialReplacement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,10 +19,10 @@ class MaterialReplacementFactory extends Factory
     {
         return [
             //
-            'maintenance_log_id' => MaintenanceLog::factory(),
-            'material_id' => Material::factory(),
-            'quantity' => $this->faker->randomFloat(2, 1, 100), // Random quantity
-            'description' => $this->faker->sentence(),
+            'maintenance_log_after_id' => \App\Models\MaintenanceLogAfter::factory(),
+            'material_name' => $this->faker->text(),
+            'quantity' => $this->faker->randomFloat(2, 1, 10),
+            'description' => $this->faker->text(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

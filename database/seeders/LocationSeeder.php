@@ -15,6 +15,6 @@ class LocationSeeder extends Seeder
     public function run(): void
     {
         //
-        Location::factory(20)->create(); // Buat 20 data dummy
+        Location::factory(5)->create(); // Buat 20 data dummy
     }
 }

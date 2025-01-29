@@ -14,18 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
+        
         //    buka comand di bawah untuk memasukan semua user 
-        $this->call(RolePermissionSeeder::class);
+        // $this->call(MaterialSeeder::class);
+        $this->call(CompanySeeder::class);
         $this->call(ContractorSeeder::class);
-        $this->call(MaterialSeeder::class);
+        $this->call(RolePermissionSeeder::class);
         $this->call(LocationSeeder::class);
         $this->call(MaintenanceItemSeeder::class);
         $this->call(DeviceSeeder::class); 
-        $this->call(CompanySeeder::class); 
-        $this->call(DailyReportSeeder::class); 
-        $this->call(MaintenanceLogSeeder::class); 
-        $this->call(MaterialReplacementSeeder::class); 
-        $this->call(PhotoSeeder::class); 
+        $this->call(DailyReportSeeder::class);
     }
 }

@@ -10,19 +10,16 @@ class MaterialReplacement extends Model
     /** @use HasFactory<\Database\Factories\MaterialReplacementFactory> */
     use HasFactory;
     protected $fillable = [
-        'maintenance_log_id',
-        'material_id',
+        'maintenance_log_after_id',
+        'material_name',
         'quantity',
         'description',
     ];
 
-    public function maintenanceLog()
+    // Relasi ke MaintenanceLogAfter
+    public function maintenanceLogAfter()
     {
-        return $this->belongsTo(MaintenanceLog::class, 'maintenance_log_id');
+        return $this->belongsTo(MaintenanceLogAfter::class, 'maintenance_log_after_id');
     }
 
-    public function material()
-    {
-        return $this->belongsTo(Material::class);
-    }
 }

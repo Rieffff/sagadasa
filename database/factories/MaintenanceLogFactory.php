@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\DailyReport;
-use App\Models\MaintenanceItem;
-use App\Models\MaintenanceLog;
 
+use App\Models\MaintenanceLog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,10 +20,9 @@ class MaintenanceLogFactory extends Factory
     {
         return [
             //
-            'report_id' => DailyReport::factory(),
-            'maintenance_item_id' => MaintenanceItem::factory(),
-            'status_before' => $this->faker->sentence(),
-            'status_after' => $this->faker->sentence(),
+            'report_detail_id' => \App\Models\DailyActivityDetail::factory(),
+            'photos' => $this->faker->imageUrl(),
+            'description' => $this->faker->text(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

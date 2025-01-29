@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('maintenance_log_afters', function (Blueprint $table) {
             $table->id();
-            $table->string('material_name');
+            $table->foreignId('maintenance_log_id')->constrained('maintenance_logs')->onDelete('cascade');
+            $table->string('photos')->nullable();
             $table->text('description')->nullable();
-            $table->string('unit'); // pcs, liters, etc.
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('maintenance_log_afters');
     }
 };
