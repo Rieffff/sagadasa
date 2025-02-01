@@ -10,4 +10,6 @@ class MaintenanceItem extends Model
     /** @use HasFactory<\Database\Factories\MaintenanceItemFactory> */
     use HasFactory;
     protected $fillable = ['item_name', 'description'];
+
+   
 }

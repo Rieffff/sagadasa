@@ -14,6 +14,7 @@ class MaintenanceLogDetail extends Model
         'item_name',
         'status',
         'contact',
+        'maintenance_item_id',
     ];
 
     // Relasi ke DailyReports
@@ -21,4 +22,5 @@ class MaintenanceLogDetail extends Model
     {
         return $this->belongsTo(maintenanceLog::class, 'maintenance_log_id');
     }
+    
 }

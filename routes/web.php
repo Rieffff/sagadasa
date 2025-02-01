@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::get('/home', function(){return view('blank');})->name('dashboard');
-    Route::get('/report', function(){return view('report');})->name('report.index');
+    Route::get('/report', [ReportController::class, 'daily'])->name('report.index');
     Route::get('/pdf', function(){return view('pdf');})->name('report.pdf');
 
     Route::get('/contractors', [ContractorController::class, 'index'])->name('master-contractors.index');
@@ -138,6 +138,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
+    Route::get('/daily-report2/{id}/pdf', [ReportController::class, 'generatePDF2']);
 
 });
 

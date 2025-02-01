@@ -18,7 +18,7 @@ class ContractorFactory extends Factory
     public function definition(): array
     {
         return [
-            'contractor_name' => $this->faker->company,
+            'contractor_name' => "CV. SAGADASA OPTIMA SOLUSI",
             'logo' => "sagadasa.png",
             'address' => $this->faker->address,
             'contact_information' => $this->faker->phoneNumber,

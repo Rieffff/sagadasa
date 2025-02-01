@@ -27,4 +27,8 @@ class MaintenanceLogAfter extends Model
     {
         return $this->hasMany(MaterialReplacement::class, 'maintenance_log_after_id');
     }
+    public function maintenanceLogAfterDetail()
+    {
+        return $this->hasMany(MaintenanceLogAfterDetail::class, 'maintenance_log_after_id');
+    }
 }

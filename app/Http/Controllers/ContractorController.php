@@ -45,7 +45,7 @@ class ContractorController extends Controller
             // Simpan file ke storage dan ambil nama file
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/logos', $fileName);
+            $file->move(storage_path('app/public/logos'), $fileName);
             $validated['logo'] = $fileName;
         }
 
@@ -75,7 +75,7 @@ class ContractorController extends Controller
             // Simpan file baru
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/logos', $fileName);
+            $file->move(storage_path('app/public/logos'), $fileName);
             $validated['logo'] = $fileName;
         }
 

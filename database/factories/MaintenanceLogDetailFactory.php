@@ -20,8 +20,8 @@ class MaintenanceLogDetailFactory extends Factory
         return [
             //
             'maintenance_log_id' => \App\Models\MaintenanceLog::factory(),
-            'maintenance_item_id' => \App\Models\MaintenanceItem::factory(),
-            'status' => $this->faker->randomElement(['pending', 'completed']),
+            'maintenance_item_id' => $this->faker->randomElement(['Solenoid', 'Arm', 'Module board', 'Electrical', 'Controller', 'Reader']),
+            'status' => $this->faker->randomElement(['OK', 'ERROR']),
             'created_at' => now(),
             'updated_at' => now(),
         ];

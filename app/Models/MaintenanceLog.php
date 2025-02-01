@@ -28,6 +28,10 @@ class MaintenanceLog extends Model
     {
         return $this->belongsTo(MaintenanceItem::class);
     }
+    public function maintenanceLogDetail()
+    {
+        return $this->hasMany(MaintenanceLogDetail::class);
+    }
 
     // Relasi ke MaintenanceLogAfter
     public function maintenanceAfter()

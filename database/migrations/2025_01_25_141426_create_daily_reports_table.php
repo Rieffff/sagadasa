@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->date('report_date');
             $table->time('work_start');
-            $table->time('work_break')->nullable();
+            $table->integer('work_break')->nullable();
             $table->time('work_stop');
             $table->string('service_data')->nullable();
             $table->string('work_reason')->nullable();
+            $table->string('location')->nullable();
+            $table->string('detail_activity')->nullable();
+            $table->enum('po',['Yes','No'])->default('Yes')->nullable();
             $table->string('approved_by')->nullable(); // Tambahan untuk approval
             $table->foreignId('contractor_id')->constrained('contractors')->onDelete('cascade');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');

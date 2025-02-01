@@ -23,7 +23,7 @@ class DailyReportSeeder extends Seeder
     public function run(): void
     {
         //
-        DailyReport::factory()->count(10)->create()->each(function ($report) {
+        DailyReport::factory()->count(1)->create()->each(function ($report) {
             // Buat 3 aktivitas harian untuk setiap laporan
             DailyActivityDetail::factory()->count(3)->create([
                 'report_id' => $report->id

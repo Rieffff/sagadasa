@@ -43,7 +43,7 @@ class CompanyController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/logos', $fileName);
+            $file->move(storage_path('app/public/logos'), $fileName);
             $validated['logo'] = $fileName;
         }
 
@@ -72,7 +72,7 @@ class CompanyController extends Controller
             // Simpan logo baru
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/logos', $fileName);
+            $file->move(storage_path('app/public/logos'), $fileName);
             $validated['logo'] = $fileName;
         }
 

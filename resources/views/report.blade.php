@@ -34,54 +34,39 @@ Report
             <h5>Default Datatable</h5>
             <p>DataTables has most features enabled by default, so all you need to do to use it with your own
                 tables is to call the construction function: <code>$().DataTable();</code>. </p>
+                <a href="{{ url('/daily-report2/1/pdf') }}" target="_blank"><button class="btn btn-primary"><i class="ph-duotone  ph-file-pdf"></i></button></a>
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
                 <table id="example" class="display app-data-table default-data-table">
                 <thead>
                     <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Date</th>
+                    <th>Activity</th>
+                    <th>Location</th>
+                    <th>Contractor</th>
+                    <th>Start Time</th>
                     <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($data as $row)
                     <tr>
-                    <td>Tiger Nixon</td>
-                    <td><span class="badge text-light-primary">System Architect</span></td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>$3674.55</td>
-                    <td>$320,800</td>
+                    <td>{{$row->report_date}}</td>
+                    <td><span class="badge text-light-primary">{{$row->detail_activity}}</span></td>
+                    <td>{{$row->location}}</td>
+                    <td>{{$row->contractor->contractor_name}}</td>
+                    <td>{{$row->work_start}} - {{$row->work_stop}}</td>
                     <td>
-                        <button type="button" class="btn btn-light-success icon-btn b-r-4">
-                        <i class="ti ti-edit text-success"></i> 
-                        </button>
+                        <a href="{{ url('/daily-report/'.$row->id.'/pdf') }}" target="_blank"><button type="button" class="btn btn-light-primary icon-btn b-r-4">
+                        <i class="ph ph-file-pdf text-primary"></i> 
+                        </button></a>
                         <button type="button" class="btn btn-light-danger icon-btn b-r-4 delete-btn">
                         <i class="ti ti-trash"></i>
                         </button>
                     </td>
                     </tr>
-                    <tr>
-                    <td>Garrett Winters</td>
-                    <td><span class="badge text-light-success">Accountant</span></td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011-07-25</td>
-                    <td>$170,750</td>
-                    <td>
-                        <button type="button" class="btn btn-light-success icon-btn b-r-4">
-                        <i class="ti ti-edit text-success"></i> 
-                        </button>
-                        <button type="button" class="btn btn-light-danger icon-btn b-r-4 delete-btn">
-                        <i class="ti ti-trash"></i>
-                        </button>
-                    </td>
-                    </tr>
+                    @endforeach
                 </tbody>
                 </table>
             </div>
