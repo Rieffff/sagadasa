@@ -38,12 +38,12 @@ class DailyReportSeeder extends Seeder
                     ]);
 
                     // Buat 2 detail maintenance sebelum maintenance selesai
-                    MaintenanceLogDetail::factory()->count(2)->create([
+                    MaintenanceLogDetail::factory()->count(6)->create([
                         'maintenance_log_id' => $maintenanceLog->id
                     ]);
 
                     // Buat 2 detail maintenance setelah maintenance selesai
-                    MaintenanceLogAfterDetail::factory()->count(2)->create([
+                    MaintenanceLogAfterDetail::factory()->count(6)->create([
                         'maintenance_log_after_id' => $afterLog->id
                     ]);
 

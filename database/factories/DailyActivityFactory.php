@@ -19,7 +19,7 @@ class DailyActivityFactory extends Factory
     {
         return [
             //
-            'activity' => $this->faker->sentence(),
+            'activity' => $this->faker->randomElement(['Maintenance', 'Building','Survey']),
             'note' => $this->faker->paragraph(),
             'user_name' => fake()->name(),
             'report_id' => \App\Models\DailyReport::factory(),

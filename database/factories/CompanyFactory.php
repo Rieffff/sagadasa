@@ -20,7 +20,7 @@ class CompanyFactory extends Factory
             //
             'company_name' => "RDMPJO - BALIKPAPAN",
             'contact' => $this->faker->phoneNumber,
-            'address' => $this->faker->address,
+            'address' => "Balikpapan Kalimantan Timur",
             'logo' => "RDMPJO.png",
         ];
     }

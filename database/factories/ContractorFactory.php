@@ -20,7 +20,7 @@ class ContractorFactory extends Factory
         return [
             'contractor_name' => "CV. SAGADASA OPTIMA SOLUSI",
             'logo' => "sagadasa.png",
-            'address' => $this->faker->address,
+            'address' => "Balikpapan Kalimantan Timur ",
             'contact_information' => $this->faker->phoneNumber,
         ];
     }

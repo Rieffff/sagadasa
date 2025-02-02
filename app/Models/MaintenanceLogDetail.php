@@ -22,5 +22,10 @@ class MaintenanceLogDetail extends Model
     {
         return $this->belongsTo(maintenanceLog::class, 'maintenance_log_id');
     }
+
+    public function maintenanceItem()
+    {
+        return $this->belongsTo(MaintenanceItem::class, 'maintenance_item_id');
+    }
     
 }

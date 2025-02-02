@@ -17,8 +17,8 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'location_name' => $this->faker->company(),
-            'address' => $this->faker->address(),
+            'location_name' => $this->faker->randomElement(['Helipad-A', 'Helipad','Helipad-756','GATE ACCESS']),
+            'address' => "",
         ];
     }
 }

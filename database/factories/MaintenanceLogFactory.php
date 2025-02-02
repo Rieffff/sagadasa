@@ -21,7 +21,7 @@ class MaintenanceLogFactory extends Factory
         return [
             //
             'report_detail_id' => \App\Models\DailyActivityDetail::factory(),
-            'photos' => $this->faker->imageUrl(),
+            'photos' => $this->faker->randomElement(['before-1.png', 'before-2.png','before-3.png']),
             'description' => $this->faker->text(),
             'created_at' => now(),
             'updated_at' => now(),

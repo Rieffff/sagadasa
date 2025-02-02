@@ -11,5 +11,8 @@ class MaintenanceItem extends Model
     use HasFactory;
     protected $fillable = ['item_name', 'description'];
 
-   
+    public function maintenanceLogDetails()
+    {
+        return $this->hasMany(MaintenanceLogDetail::class, 'maintenance_item_id');
+    }
 }

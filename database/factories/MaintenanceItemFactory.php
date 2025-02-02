@@ -18,8 +18,8 @@ class MaintenanceItemFactory extends Factory
     {
         return [
             //
-            'item_name' => $this->faker->word(),
-            'description' => $this->faker->sentence(),
+            'item_name' => $this->faker->randomElement(['Solenoid', 'Arm','Module Board','Electrical','Controller','Reader']),
+            'description' => " ",
         ];
     }
 }

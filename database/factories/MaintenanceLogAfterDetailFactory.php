@@ -20,8 +20,8 @@ class MaintenanceLogAfterDetailFactory extends Factory
         return [
             //
             'maintenance_log_after_id' => \App\Models\MaintenanceLogAfter::factory(),
-            'item_name' => $this->faker->word(),
-            'status' => $this->faker->randomElement(['ok', 'damaged']),
+            'item_name' => $this->faker->randomElement(['Solenoid', 'Arm', 'Module board', 'Electrical', 'Controller', 'Reader']),
+            'status' => $this->faker->randomElement(['ok', 'error']),
             'created_at' => now(),
             'updated_at' => now(),
         ];

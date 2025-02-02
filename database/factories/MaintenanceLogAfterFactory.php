@@ -19,7 +19,7 @@ class MaintenanceLogAfterFactory extends Factory
     {
         return [
             'maintenance_log_id' => \App\Models\MaintenanceLog::factory(),
-            'photos' => $this->faker->imageUrl(),
+            'photos' => $this->faker->randomElement(['after-1.png', 'after-2.png','after-3.png']),
             'description' => $this->faker->text(),
             'created_at' => now(),
             'updated_at' => now(),

@@ -45,7 +45,7 @@ class ReportController extends Controller
 
 
     
-        // return response()->json($report);
+        return response()->json($report);
         // return view('reports.daily_report',compact(
         //     'report',
         //     'regularActivitiesActivity',
@@ -56,21 +56,21 @@ class ReportController extends Controller
         //     'maintenanceAfters',
         //     'maintenanceLogsNonregular'));
 
-        $pdf = Pdf::loadView('reports.daily_report', compact(
-            'report',
-            'regularActivitiesActivity',
-            'regularActivitiesRegular',
-            'regularActivitiesNonregular',
-            'maintenanceLogsActivity',
-            'maintenanceLogsRegular',
-            'maintenanceAfters',
-            'maintenanceLogsNonregular'))
-            ->setPaper('a4', 'portrait')
-            ->setOptions([
-                'enable-local-file-access' => true, 
-                'disable-smart-shrinking' => true,
-            ]);
-        return $pdf->download("Dom_Report_{$report->report_date}.pdf");
+        // $pdf = Pdf::loadView('reports.daily_report', compact(
+        //     'report',
+        //     'regularActivitiesActivity',
+        //     'regularActivitiesRegular',
+        //     'regularActivitiesNonregular',
+        //     'maintenanceLogsActivity',
+        //     'maintenanceLogsRegular',
+        //     'maintenanceAfters',
+        //     'maintenanceLogsNonregular'))
+        //     ->setPaper('a4', 'portrait')
+        //     ->setOptions([
+        //         'enable-local-file-access' => true, 
+        //         'disable-smart-shrinking' => true,
+        //     ]);
+        // return $pdf->download("Dom_Report_{$report->report_date}.pdf");
     
     }
 

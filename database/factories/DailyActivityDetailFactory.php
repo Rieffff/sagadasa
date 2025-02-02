@@ -22,7 +22,7 @@ class DailyActivityDetailFactory extends Factory
             'device_id' => \App\Models\Device::factory(),
             'activity_description' => $this->faker->paragraph(),
             'report_id' => \App\Models\DailyReport::factory(),
-            'status' => $this->faker->randomElement(['regular', 'non-regular']),
+            'status' => $this->faker->randomElement(['regular', 'non-regular','Activity']),
             'created_at' => now(),
             'updated_at' => now(),
         ];
