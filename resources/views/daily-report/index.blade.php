@@ -33,108 +33,198 @@ Daily Report
                 <div class="card-body p-15">
 
                     <!-- Multi-Step Form -->
-                    <form id="technicianReportForm" >
+                    <form id="reportForm" action="route('daily_reports.store')" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <!-- Step 1: contractors and companies Selection -->
-                        <div class="step" id="step-1">
-                            <div class ="card-header">
-                                <h5>Step 1: Contractor</h5>
+                        <!-- Step 1  -->
+                        <div id="step1" class="step step-1">
+                            <h4>Step 1: Daily Report</h4>
+                            <div class="mb-3">
+                                <label for="report_date" class="form-label">Report Date</label>
+                                <input type="date" class="form-control" id="report_date" name="report_date" required>
                             </div>
-                            <div class="form-group">
-                                <label for="company_id">Company</label>
-                                <select name="company_id" id="company_id" class="form-control" required>
-                                    @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}" {{ $company->default ? '1' : '0' }}>
-                                            {{ $company->company_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="company_id">contractor</label>
-                                <select name="contractor_id" id="contractor_id" class="form-control" required>
-                                    @foreach ($contractors as $contractor)
-                                        <option value="{{ $contractor->id }}" {{ $contractor->default ? '1' : '0' }}>
-                                            {{ $contractor->contractor_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="location_id">Location</label>
-                                <select name="location_id" id="location_id" class="form-control" required>
-                                    <option value="">Select a location</option>
-                                    @foreach ($locations as $location)
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <select class="form-control" id="location" name="location" required>
+                                    <option value="">----Pilih Lokasi----</option>
+                                    @foreach($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <br>
-                            <div class="form-group">
+                            
+                            <div class="mb-3">
+                                <label class="form-label">PO</label><br>
+                                <input type="radio" name="po" value="Yes" checked> Yes
+                                <input type="radio" name="po" value="No"> No
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Approved By</label>
+                                <input type="text" class="form-control" name="approved_by" value="{{ Auth::user()->name }}" readonly>
+                            </div>
+                            
+                            <h5>Daily Activities</h5>
+                            <div id="dailyActivities">
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="activity[]" placeholder="Activity">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="note[]" placeholder="Note">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-activity">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="addActivity">Add Activity</button>
+                            
+                            <h5>Man Powers</h5>
+                            <div id="manPowers">
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="man_powers[]">
+                                            @foreach($technicians as $technician)
+                                                <option value="{{ $technician->id }}">{{ $technician->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-manpower">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="addManPower">Add Man Power</button>
+                            <div class="">
+                                <hr>
                                 <button type="button" class="btn btn-primary next-step">Next</button>
                             </div>
                         </div>
-
-                        <!-- Step 2: device and maintenance Photo -->
-                        <div class="step d-none" id="step-2">
-                            <div class ="card-header">
-                                <h5>Step 1: select Device</h5>
+                        <!-- Step 2 -->
+                        <div id="step2" class="step step-2">
+                            <h4>Step 2: Daily Activity Details</h4>
+                            <div class="mb-3">
+                                <input type="hidden" id="device_id" name="device_id" value="">
+                                <label for="activity_description" class="form-label">Activity Description</label>
+                                <input type="text" class="form-control" name="activity_description" required>
                             </div>
-                            <div class="form-group">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <span>Device di Lapangan</span>
-                                    <button type="button" class="btn btn-primary btn-sm" id="addDevice">Tambah Aktivitas</button>
+                            
+                            <div id="Activity">
+                                <h5>Activity Details </h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
+                                        <input type="hidden" name="status[]" value="activity">
+                                        <input type="file" class="form-control" name="photos[]">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="description[]" placeholder="Description">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-activity">Remove</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body" id="deviceList">
-                                <!-- Dynamic Activity Fields -->
+                            <button type="button" class="btn btn-primary" id="addMaintenance">Add Activity</button>
+                            <div class="">
+                            
+                                <hr>
+                                <button type="button" class="btn btn-secondary prev-step">Back</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div  class="step step-3">
+                            <h4>Step 3: Reguler Activity</h4>
+                            <div class="mb-3">
+                                <input type="hidden" id="device_id" name="device_id" value="">
+                                <label for="activity_description" class="form-label">Activity Description</label>
+                                <input type="text" class="form-control" name="activity_description" required>
                             </div>
                             
-
+                            <h5>Maintenance Log</h5>
+                            <div id="dailyReguler">
+                                <div class="row mb-3">
+                                    <div class="mb-3">
+                                        <hr>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label for="device_id">Device</label>
+                                            <select name="deviceReguler[]" id="deviceReguler[]" class="form-control deviceReguler0">
+                                            
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="text-center mb-3">
+                                                <h6>Before</h6>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="hidden" name="statusBefore[]" value="activity">
+                                            <input type="file" class="form-control" name="photosBefore[]">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="descriptionBefore[]" placeholder="Description">
+                                        </div>
+                                        <label>Maintenance Items:</label>
+                                        @foreach($maintenanceItems as $item)
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="form-check">
+                                                    <input type="hidden" name="maintenance_item_namesBefore[]" value="{{ $item->item_name }}">
+                                                    <input type="radio" name="maintenance_item_statusBefore[]" value="ok">   <span class="radiomark outline-primary ms-2"></span>
+                                                    <span class="text-primary">{{ $item->item_name }} OK </span>
+                                                    <input type="radio" name="maintenance_item_statusBefore[]" value="error">   <span class="radiomark outline-danger ms-2"></span>
+                                                    <span class="text-danger">{{ $item->item_name }} Error</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="text-center mb-3">
+                                                <h6>after</h6>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="hidden" name="statusBefore[]" value="activity">
+                                            <input type="file" class="form-control" name="photosBefore[]">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="descriptionBefore[]" placeholder="Description">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-maintenance">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary addReguler" id="addReguler">Add Reguler Activity</button>
+                            <div class="">
                             
+                                <hr>
+                                <button type="button" class="btn btn-secondary prev-step">Back</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
+                        </div>
+                        <!-- Step 4: Daily Activity Details (Non-Regular) -->
+                        <div id="step3" class="step step-4">
+                            <h4>Daily Activity Details - Non-Regular</h4>
                             <div class="form-group">
-                                <label for="status">Status</label>
-                                <select name="status" id="status" class="form-control" required>
-                                    <option value="regular">Regular</option>
-                                    <option value="non-regular">Non-Regular</option>
+                                <label for="device_id_non_reg">Device</label>
+                                <select name="device_id_non_reg" id="device_id_non_reg" class="form-control">
+                                    @foreach($devices as $device)
+                                        <option value="{{ $device->id }}">{{ $device->device_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <br>
-                            <br>
-                            <button type="button" class="btn btn-secondary prev-step">Back</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
-                        </div>
-
-                        <!-- Step 3: Maintenance Check -->
-                        <div class="step d-none" id="step-3">
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Device Status</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="" disabled selected>Select Status</option>
-                                    <option value="OK">OK</option>
-                                    <option value="Error">Error</option>
-                                </select>
+                            <div id="maintenance-log-container-non-reg">
+                                <button type="button" class="btn btn-primary add-maintenance-log-non-reg">Add Maintenance Log</button>
                             </div>
-                            <div class="mb-3 d-none" id="error-details">
-                                <label for="error_description" class="form-label">Error Description</label>
-                                <textarea class="form-control" id="error_description" name="error_description" rows="3"></textarea>
-                                <label for="error_photo" class="form-label mt-2">Error Photo</label>
-                                <input type="file" class="form-control" id="error_photo" name="error_photo" accept="image/*">
+                            <div class="">
+                            
+                                <hr>
+                                <button type="button" class="btn btn-secondary prev-step">Back</button>
+                                <!-- <button type="button" class="btn btn-primary next-step">Next</button> -->
                             </div>
-                            <button type="button" class="btn btn-secondary prev-step">Back</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
-                        </div>
-
-                        <!-- Step 4: Non-Regular Activity -->
-                        <div class="step d-none" id="step-4">
-                            <h4>Step 4: Non-Regular Activity (Optional)</h4>
-                            <div class="mb-3">
-                                <label for="non_regular_activity" class="form-label">Describe Non-Regular Activity</label>
-                                <textarea class="form-control" id="non_regular_activity" name="non_regular_activity" rows="4"></textarea>
-                            </div>
-                            <button type="button" class="btn btn-secondary prev-step">Back</button>
-                            <button type="submit" class="btn btn-success">Submit Report</button>
                         </div>
                     </form>
                 </div>
@@ -144,113 +234,153 @@ Daily Report
 </div>
 
 </main>
-<script id="deviceTemplate" type="text/template">
-    <div class="device-item card mb-3">
-        <div class="card-body">
-            <button type="button" class="btn-close float-end removeDevice"></button>
-            <div class="form-group">
-                <label for="device_id">Device</label>
-                <select name="device_id" id="device_id" class="form-control" required>
-                    <option value="">Select a device</option>
-                    @foreach ($devices as $device)
-                        <option value="{{ $device->id }}">{{ $device->device_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="activity_details">Activity Details</label>
-                <textarea name="activity_details" id="activity_details" class="form-control" rows="4" required></textarea>
-            </div>
 
-            <div class="mb-3">
-                <label for="maintenance_item_id" class="form-label">Item Maintenance</label>
-                <select class="form-select" name="activities[][maintenance_item_id]" required>
-                    <option value="" disabled selected>Pilih Item</option>
-                    @foreach ($maintenanceItems as $item)
-                        <option value="{{ $item->id }}">{{ $item->item_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="status_before" class="form-label">Status Sebelum</label>
-                <textarea class="form-control" name="activities[][status_before]" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="status_after" class="form-label">Status Sesudah</label>
-                <textarea class="form-control" name="activities[][status_after]" rows="3" required></textarea>
-            </div>
-            <h4>Step 3: Maintenance Check</h4>
-            <div class="mb-3">
-                <label for="before_photo" class="form-label">Before Photo</label>
-                <input type="file" class="form-control" id="before_photo" name="before_photo" accept="image/*" required>
-            </div>
-            <div class="mb-3">
-                <label for="after_photo" class="form-label">After Photo</label>
-                <input type="file" class="form-control" id="after_photo" name="after_photo" accept="image/*" required>
-            </div>
-        </div>
-    </div>
-</script>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+@endsection
+
+@push('other-scripts')
 <script>
-    $(document).ready(function () {
+$(document).ready(function() {
 
-        $('#addDevice').click(function() {
-            const deviceTemplate = $('#deviceTemplate').html();
-            $('#deviceList').append(deviceTemplate);
-        });
+    function loadLocations(idLocation,optionSelect) {
+        
+        $.ajax({
+            url: `{{ url('getDevices') }}/${idLocation}`, // Perbaikan URL
+            method: "GET",
+            success: function(response) {
+                var options = `<option value="">Pilih Perangkat</option>`; // Value kosong tanpa spasi
 
-        // Remove device
-        $(document).on('click', '.removeDevice', function() {
-            $(this).closest('.device-item').remove();
-        });
-        let currentStep = 1;
+                response.data.forEach(device => {
+                    options += `<option value="${device.id}">${device.device_name}</option>`;
+                });
 
-        // Show next step
-        $('.next-step').click(function () {
-            $(`#step-${currentStep}`).addClass('d-none');
-            currentStep++;
-            $(`#step-${currentStep}`).removeClass('d-none');
-        });
-
-        // Show previous step
-        $('.prev-step').click(function () {
-            $(`#step-${currentStep}`).addClass('d-none');
-            currentStep--;
-            $(`#step-${currentStep}`).removeClass('d-none');
-        });
-
-        // Toggle error details
-        $('#status').change(function () {
-            if ($(this).val() === 'Error') {
-                $('#error-details').removeClass('d-none');
-            } else {
-                $('#error-details').addClass('d-none');
+                $(optionSelect).html(options).selectpicker('refresh'); // Perbaikan refresh
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                alert("Terjadi kesalahan saat mengambil perangkat.");
             }
         });
+    }
 
-        // Submit form
-        $('#technicianReportForm').submit(function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
+    $("#location").change(function() {
+        var id_location = $(this).val(); // Gunakan `$(this).val()` untuk efisiensi
+        if (id_location) {
+            pemberitahuan("success", "Ganti lokasi: " + id_location);
+            loadLocations(id_location, '.deviceReguler0');
+        }
+    });
+    
 
-            $.ajax({
-                url: '{{ route("technician.reports.store") }}',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert('Report submitted successfully!');
-                    window.location.reload();
-                },
-                error: function (xhr) {
-                    alert('An error occurred, please try again.');
-                    console.error(xhr.responseJSON);
-                }
-            });
+    $(document).ready(function() {
+        let currentStep = 1;
+        function showStep(step) {
+            $('.step').hide();
+            $('.step-' + step).show();
+        }
+        showStep(currentStep);
+
+        $('.next-step').click(function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+
+        $('.prev-step').click(function() {
+            currentStep--;
+            showStep(currentStep);
         });
     });
+    $('#addActivity').click(function() {
+        $('#dailyActivities').append('<div class="row mb-3">' +
+            '<div class="col-md-5"><input type="text" class="form-control" name="activity[]" placeholder="Activity"></div>' +
+            '<div class="col-md-5"><input type="text" class="form-control" name="note[]" placeholder="Note"></div>' +
+            '<div class="col-md-2"><button type="button" class="btn btn-danger remove-activity">Remove</button></div>' +
+            '</div>');
+    });
+    $(document).on('click', '.remove-activity', function() {
+        $(this).closest('.row').remove();
+    });
+    let i = 0;
+    $('#addReguler').click(function() {
+        i = i + 1;
+        let LogHtml = `
+                    <div class="row mb-3">
+                        <div class="mb-3">
+                            <hr>
+                            <h6>Reguler Activity #${i}</h6>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="device_id">Device</label>
+                                <select name="deviceReguler[]" id="deviceReguler[]" class="form-control deviceReguler${i}">
+                                
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="text-center mb-3">
+                                    <h6>Before</h6>
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" name="statusBefore[]" value="activity">
+                                <input type="file" class="form-control" name="photosBefore[]">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="descriptionBefore[]" placeholder="Description">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="text-center mb-3">
+                                    <h6>after</h6>
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" name="statusBefore[]" value="activity">
+                                <input type="file" class="form-control" name="photosBefore[]">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="descriptionBefore[]" placeholder="Description">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger remove-maintenance">Remove</button>
+                        </div>
+                    </div>`;
+        $('#dailyReguler').append(LogHtml);
+        var id_location = $("#location").val(); // Gunakan `$(this).val()` untuk efisiensi
+        if (id_location) {
+            pemberitahuan("success", "Ganti lokasi: " + id_location);
+            loadLocations(id_location, '.deviceReguler'+i);
+        }
+    });
+    $(document).on('click', '.remove-reguler', function() {
+        $(this).closest('.row').remove();
+    });
+    
+    $('#addManPower').click(function() {
+        $('#manPowers').append('<div class="row mb-3">' +
+            '<div class="col-md-5"><select class="form-control" name="man_powers[]">' +
+            '@foreach($technicians as $technician)<option value="{{ $technician->id }}">{{ $technician->name }}</option>@endforeach' +
+            '</select></div>' +
+            '<div class="col-md-2"><button type="button" class="btn btn-danger remove-manpower">Remove</button></div>' +
+            '</div>');
+    });
+    $(document).on('click', '.remove-manpower', function() {
+        $(this).closest('.row').remove();
+    });
+    
+    $('#addMaintenance').click(function() {
+        $('#Activity').append('<div class="row mb-3">' +
+            '<div class="col-md-5"><input type="file" class="form-control" name="photos[]"></div>' +
+            '<div class="col-md-5"><input type="text" class="form-control" name="description[]" placeholder="Description"></div>' +
+            '<div class="col-md-2"><button type="button" class="btn btn-danger remove-maintenance">Remove</button></div>' +
+            '</div>');
+    });
+    $(document).on('click', '.remove-maintenance', function() {
+        $(this).closest('.row').remove();
+    });
+
+    
+});
 </script>
-@endsection
+@endpush

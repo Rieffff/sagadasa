@@ -18,24 +18,48 @@ class DailyReportController extends Controller
 {
     public function index()
     {
-        $reports = DailyReport::with(['contractor', 'company', 'device', 'user'])->get();
-        return response()->json($reports);
+        $contractors = Contractor::all();
+        $companies = Company::all();
+        $locations = Location::all();
+        return view('daily_reports.index', compact('contractors', 'companies','locations'));
+    }
+
+    public function getData()
+    {
+        $data = DailyReport::with(['contractor', 'company'])->get();
+        $data = $data->map(function ($item, $key) {
+            $item->index = $key + 1; // Index dimulai dari 1
+            return $item;
+        });
+        return response()->json(['data' => $data]);
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'report_date' => 'required|date',
+            'work_start' => 'required',
+            'work_stop' => 'required',
+            'work_break' => 'required',
+            'service_data' => 'required',
+            'work_reason' => 'required',
+            'location' => 'required',
+            'detail_activity' => 'required',
+            'po' => 'required',
+            'approved_by' => 'required',
             'contractor_id' => 'required|exists:contractors,id',
             'company_id' => 'required|exists:companies,id',
-            'device_id' => 'required|exists:devices,id',
-            'user_id' => 'required|exists:technicians,id',
-            'activity_details' => 'required|string',
-            'status' => 'required|string',
         ]);
 
-        $report = DailyReport::create($data);
-        return response()->json(['message' => 'Daily report created successfully', 'data' => $report]);
+        DailyReport::create($request->all());
+
+        return response()->json(['message' => 'Daily Report berhasil ditambahkan']);
+    }
+
+    public function show($id)
+    {
+        $report = DailyReport::with(['dailyActivities', 'dailyActivityDetails', 'manPowers'])->findOrFail($id);
+        return view('daily_reports.show', compact('report'));
     }
 
     public function update(Request $request, $id)
@@ -91,7 +115,7 @@ class DailyReportController extends Controller
     {
         // Ambil data kontraktor, teknisi, dan item maintenance dari database
         $contractors = Contractor::all();
-        $technicians = User::all();
+        $technicians = User::where('position','=','Technician')->get();
         $maintenanceItems = MaintenanceItem::all();
         $devices = Device::all();
         $companies = Company::all();
@@ -99,5 +123,11 @@ class DailyReportController extends Controller
 
         // Kirim data ke view
         return view('daily-report.index', compact('contractors', 'technicians', 'maintenanceItems','devices','companies', 'locations'));
+    }
+
+    public function getDevices($id){
+        $device = Device::where('id_location','=',$id)->get();
+
+        return response()->json(['data' => $device]);
     }
 }

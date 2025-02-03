@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('maintenance_log_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('maintenance_log_id')->constrained('maintenance_logs')->onDelete('cascade');
-            $table->foreignId('maintenance_item_id')->constrained('maintenance_items')->onDelete('cascade');
+            $table->string('maintenance_item_id');
             $table->string('status');
             $table->timestamps();
         });

@@ -20,6 +20,18 @@ use App\Models\MaintenanceLogAfterDetail;
 class ReportController extends Controller
 {
     //
+    public function deleteReport($id)
+    {
+        $report = DailyReport::find($id);
+
+        if (!$report) {
+            return response()->json(['message' => 'Report not found'], 404);
+        }
+
+        $report->delete();
+
+        return response()->json(['message' => 'Report deleted successfully']);
+    }
     public function generatePDF($id)
     {
         $report = DailyReport::with([
@@ -45,7 +57,7 @@ class ReportController extends Controller
 
 
     
-        return response()->json($report);
+        // return response()->json($report);
         // return view('reports.daily_report',compact(
         //     'report',
         //     'regularActivitiesActivity',
@@ -56,21 +68,21 @@ class ReportController extends Controller
         //     'maintenanceAfters',
         //     'maintenanceLogsNonregular'));
 
-        // $pdf = Pdf::loadView('reports.daily_report', compact(
-        //     'report',
-        //     'regularActivitiesActivity',
-        //     'regularActivitiesRegular',
-        //     'regularActivitiesNonregular',
-        //     'maintenanceLogsActivity',
-        //     'maintenanceLogsRegular',
-        //     'maintenanceAfters',
-        //     'maintenanceLogsNonregular'))
-        //     ->setPaper('a4', 'portrait')
-        //     ->setOptions([
-        //         'enable-local-file-access' => true, 
-        //         'disable-smart-shrinking' => true,
-        //     ]);
-        // return $pdf->download("Dom_Report_{$report->report_date}.pdf");
+        $pdf = Pdf::loadView('reports.daily_report', compact(
+            'report',
+            'regularActivitiesActivity',
+            'regularActivitiesRegular',
+            'regularActivitiesNonregular',
+            'maintenanceLogsActivity',
+            'maintenanceLogsRegular',
+            'maintenanceAfters',
+            'maintenanceLogsNonregular'))
+            ->setPaper('a4', 'portrait')
+            ->setOptions([
+                'enable-local-file-access' => true, 
+                'disable-smart-shrinking' => true,
+            ]);
+        return $pdf->download("Dom_Report_{$report->report_date}.pdf");
     
     }
 
@@ -123,10 +135,50 @@ class ReportController extends Controller
             'activityDetails.maintenanceLogs.maintenanceAfter.materialReplacements',
             'manPowers',
             'dailyActivities',
-        ])->get();
+        ])->orderBy('created_at','desc')->get();
+        // $data;
 
         return view('report',compact('data'));
         // return response()->json($data);
+    }
+
+    public function show($id)
+    {
+        $report = DailyReport::with([
+            'contractor',
+            'company',
+            'activityDetails.device.location',
+            'activityDetails.maintenanceLogs.maintenanceLogDetail',
+            'activityDetails.maintenanceLogs.maintenanceAfter.maintenanceLogAfterDetail',
+            'activityDetails.maintenanceLogs.maintenanceAfter.materialReplacements',
+            'manPowers',
+            'dailyActivities',
+        ])->findOrFail($id);
+        $regularActivitiesActivity = $report->activityDetails->where('status', 'activity');
+        $regularActivitiesRegular = $report->activityDetails->where('status', 'regular');
+        $regularActivitiesNonregular = $report->activityDetails->where('status', 'non-regular');
+
+        $maintenanceLogsActivity = $regularActivitiesActivity->flatMap->maintenanceLogs;
+        $maintenanceLogsRegular = $regularActivitiesRegular->flatMap->maintenanceLogs;
+        $maintenanceLogsNonregular = $regularActivitiesNonregular->flatMap->maintenanceLogs;
+
+
+        $maintenanceAfters = $maintenanceLogsRegular->flatMap->maintenanceAfter;
+
+
+    
+        // return response()->json($report);
+        return view('reports.show',compact(
+            'report',
+            'regularActivitiesActivity',
+            'regularActivitiesRegular',
+            'regularActivitiesNonregular',
+            'maintenanceLogsActivity',
+            'maintenanceLogsRegular',
+            'maintenanceAfters',
+            'maintenanceLogsNonregular'));
+        // $pdf = Pdf::loadView('reports.daily_report', compact('report'))->setPaper('a4', 'portrait');
+        // return $pdf->download("Daily_Report_.pdf");
     }
     
 }

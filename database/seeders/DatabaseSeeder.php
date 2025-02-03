@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
         
         //    buka comand di bawah untuk memasukan semua user 
         // $this->call(MaterialSeeder::class);
-        $this->call(CompanySeeder::class);
-        $this->call(ContractorSeeder::class);
-        $this->call(RolePermissionSeeder::class);
-        $this->call(LocationSeeder::class);
-        $this->call(MaintenanceItemSeeder::class);
-        $this->call(DeviceSeeder::class); 
+        // $this->call(CompanySeeder::class);
+        // $this->call(ContractorSeeder::class);
+        // $this->call(RolePermissionSeeder::class);
+        // $this->call(LocationSeeder::class);
+        // $this->call(MaintenanceItemSeeder::class);
+        // $this->call(DeviceSeeder::class); 
         $this->call(DailyReportSeeder::class);
     }
 }

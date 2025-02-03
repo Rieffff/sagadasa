@@ -1,0 +1,134 @@
+    Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('role');
+            $table->string('position');
+            $table->string('contact');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+         Schema::create('contractors', function (Blueprint $table) {
+            $table->id();
+            $table->string('contractor_name');
+            $table->string('logo')->nullable();
+            $table->text('address')->nullable();
+            $table->string('contact_information')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('locations', function (Blueprint $table) {
+            $table->id();
+            $table->string('location_name'); // Contoh: Helipad A-1, Gate Access
+            $table->text('address')->nullable(); // Alamat lokasi
+            $table->timestamps();
+        });
+
+        Schema::create('maintenance_items', function (Blueprint $table) {
+            $table->id();
+            $table->string('item_name'); // Contoh: Solenoid, Arm, Module Board
+            $table->text('description')->nullable(); // Deskripsi item
+            $table->timestamps();
+        });
+
+        Schema::create('devices', function (Blueprint $table) {
+            $table->id();
+            $table->string('device_name'); // Nama perangkat
+            $table->string('status'); // Nama perangkat
+            $table->string('description'); // Nama perangkat
+            $table->foreignId('id_location')->constrained('locations')->onDelete('cascade'); // Relasi ke tabel locations
+            $table->timestamps();
+        });
+
+        Schema::create('companies', function (Blueprint $table) {
+            $table->id();
+            $table->string('company_name');
+            $table->string('contact');
+            $table->text('address');
+            $table->string('logo');
+            $table->boolean('default')->default(0); // Nilai default otomatis 0
+            $table->timestamps();
+        });
+
+ 
+        Schema::create('daily_reports', function (Blueprint $table) {
+            $table->id();
+            $table->date('report_date');
+            $table->time('work_start');
+            $table->integer('work_break')->nullable();
+            $table->time('work_stop');
+            $table->string('service_data')->nullable();
+            $table->string('work_reason')->nullable();
+            $table->string('location')->nullable();
+            $table->string('detail_activity')->nullable();
+            $table->enum('po',['Yes','No'])->default('Yes')->nullable();
+            $table->string('approved_by')->nullable(); // Tambahan untuk approval
+            $table->foreignId('contractor_id')->constrained('contractors')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+
+        Schema::create('daily_activity_details', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('report_id')->constrained('daily_reports')->onDelete('cascade');
+            $table->foreignId('device_id')->constrained('devices')->onDelete('cascade');
+            $table->text('activity_description');
+            $table->enum('status', ['regular', 'non-regular','activity'])->default('regular');
+            $table->timestamps();
+        });
+
+        Schema::create('maintenance_log_afters', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('maintenance_log_id')->constrained('maintenance_logs')->onDelete('cascade');
+            $table->string('photos')->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('daily_activities', function (Blueprint $table) {
+            $table->id();
+            $table->string('activity');
+            $table->text('note')->nullable();
+            $table->string('user_name'); // Menggunakan string, bukan foreign key
+            $table->foreignId('report_id')->constrained('daily_reports')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('man_powers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Nama tenaga kerja
+            $table->string('position'); // Jabatan
+            $table->string('notes')->nullable(); // Kontak (opsional)
+            $table->foreignId('report_id')->constrained('daily_reports')->onDelete('cascade'); // Relasi ke daily_reports
+            $table->foreignId('user_id')->constrained('users')->onDelete('restrict'); // Relasi ke daily_reports
+            $table->timestamps();
+        });
+
+        Schema::create('maintenance_log_details', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('maintenance_log_id')->constrained('maintenance_logs')->onDelete('cascade');
+            $table->string('maintenance_item_id');
+            $table->string('status');
+            $table->timestamps();
+        });
+
+        Schema::create('maintenance_log_after_details', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('maintenance_log_after_id')->constrained('maintenance_log_afters')->onDelete('cascade');
+            $table->string('item_name');
+            $table->string('status');
+            $table->timestamps();
+        });
+
+        Schema::create('daily_problems', function (Blueprint $table) {
+            $table->id();
+            $table->text('problem');
+            $table->text('solution')->nullable();
+            $table->foreignId('activity_id')->constrained('daily_activities')->onDelete('cascade');
+            $table->string('reported_by'); // Tambahan untuk mencatat siapa yang melaporkan masalah
+            $table->timestamps();
+        });

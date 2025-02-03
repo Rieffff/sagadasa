@@ -11,6 +11,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\DailyActivityDetailController;
 use App\Http\Controllers\MaintenanceLogController;
 use App\Http\Controllers\MaterialReplacementController;
 use App\Http\Controllers\PhotoController;
@@ -103,12 +104,12 @@ Route::middleware('auth')->group(function () {
     Route::put('user/update/{id}', [UserController::class, 'update'])->name('user.update');
 
 
-    Route::prefix('daily-reports')->group(function () {
-        Route::get('/', [DailyReportController::class, 'index']); // Fetch all reports
-        Route::post('/', [DailyReportController::class, 'store']); // Create a report
-        Route::put('/{id}', [DailyReportController::class, 'update']); // Update a report
-        Route::delete('/{id}', [DailyReportController::class, 'destroy']); // Delete a report
-    });
+    // Route::prefix('daily-reports')->group(function () {
+    //     Route::get('/', [DailyReportController::class, 'index']); // Fetch all reports
+    //     Route::post('/', [DailyReportController::class, 'store']); // Create a report
+    //     Route::put('/{id}', [DailyReportController::class, 'update']); // Update a report
+    //     Route::delete('/{id}', [DailyReportController::class, 'destroy']); // Delete a report
+    // });
 
 
     Route::prefix('maintenance-logs')->group(function () {
@@ -139,6 +140,28 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
     Route::get('/daily-report2/{id}/pdf', [ReportController::class, 'generatePDF2']);
+    Route::get('/report/{id}/show', [ReportController::class, 'show']);
+    Route::delete('/report/delete/{id}', [ReportController::class, 'deleteReport']); // Delete a deleteReport
+    Route::get('/getDevices/{id}', [DailyReportController::class, 'getDevices']);
+
+    Route::get('/daily-reports', [DailyReportController::class, 'index'])->name('daily_reports.index');
+    Route::get('/daily-reports/data', [DailyReportController::class, 'getData'])->name('daily_reports.data');
+    Route::post('/daily-reports/store', [DailyReportController::class, 'store'])->name('daily_reports.store');
+
+    Route::get('/daily-report-detail/{id}', [DailyActivityDetailController::class, 'index']);
+    Route::get('/daily-report-detail/data/{id}', [DailyActivityDetailController::class, 'getData']);
+    Route::post('/daily-activity-details/store', [DailyActivityDetailController::class, 'store'])->name('daily-activity-details.store');
+    Route::get('/daily-activity-details/show/{id}', [DailyActivityDetailController::class, 'show'])->name('daily-activity-details.show');
+    Route::put('/daily-activity-details/update/{id}', [DailyActivityDetailController::class, 'update'])->name('daily-activity-details.update');
+    Route::delete('/daily-activity-details/destroy/{id}', [DailyActivityDetailController::class, 'destroy'])->name('daily-activity-details.destroy');
+    
+    Route::get('/log/{id}', [MaintenanceLogController::class, 'index']);
+    Route::get('/log/data/{id}', [MaintenanceLogController::class, 'getData']);
+
+
+
+
+
 
 });
 

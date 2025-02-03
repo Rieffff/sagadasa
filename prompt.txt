@@ -1,0 +1,16 @@
+sekarang saya ingin buat add form nya, untuk contoh sudah saya lampirkan saya ingin menggunakan form template pada form blade dan untuk jquery add element nya saya ingin seperti di daily report 
+
+oke untuk alurnya
+step 1 mengisi seluruh isi yang ada di table schema daily_reports nah untuk isian location pada tabel daily report ini di ambilkan dari table location dan pada field "po" cukup berikan radio button yes dan no dan pada filed approved guakan 
+session user yang di isi dengan field name untuk filed yang lain sepertinya anda sudah paham apa yang harus anda lakukan 
+masih pada form wizard step 1  saya ingin membuat isian untuk table daily_activities pada field activity dan note inputan biasa saja untuk user_name silahkan gunakan session user saja 
+untuk mengisi table man_powers buatkan jquery add element yang isinya nama dari table user tapi yang memiliki position Technician saya ingin 1 report_id isi bisa lebih dari 1 man powers
+
+nah pada form wizard step ke 2 
+saya ingin form wizard ini mengisi table daily_activiti_details dengan status activity nah di table activity terdapat field device_id saya ingin device id tersebut di filter berdasarkan location yang sudah di pilih di form wizard tapi tidak perlu di tampilkan langsung saja pilih 1 id device yang sesuai dengan location yang sudah di pilih sebelumnya
+buatkan inputan untuk activity description dan input hidden untuk status dengan value "activity" dan buatkan saya jquery add element untuk menambahakan isi dari table maintenance_log yang isinya cuma foto dan description
+
+untuk form wizard step ke 3 saya ingin anda membuat seperti form wizard step 2 form wizard ini untuk megisi table maintenance log juga untuk daily_activiti_details dengan status reguler tetapi kali ini tampilkan device nya dan juga setiap menambahkan element tampilkan seleuruh isi table maintenance item dengan di sampingnya radio button  ok dan error jangan lupa input untuk description untuk mengisi table maintenance log details saya lupa di dalam table maintenance_log_details ada sebuah field maintenance_item_id tetapi tipenya string itu cukup isi dengan nama dari maintenance item jadi selain radio button tentunya anda perlu menambahkan input type hiden untuk mengisi data tersebut dengan name dari maintenance item
+dan juga jangan lupa input untuk table maintenance_log_afters yang sama persis seperti maintenance log  dan maintenance_log_after_details juga di tambahkan setiap kali menambahakan element
+
+form wizard ke 4 sama dengan ke 3 cuma kali ini untuk daily_activiti_details dengan status non reguler

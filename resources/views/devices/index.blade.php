@@ -33,7 +33,7 @@
             <div class="card-header">
             <h5> @yield('title')</h5>
             <button class="btn btn-primary mb-3" id="createDevice">Add Device</button>
-            <button class="btn btn-warning mb-3" id="refreshTable">Refresh Data</button>
+            <!-- <button class="btn btn-warning mb-3" id="refreshTable">Refresh Data</button> -->
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
@@ -41,10 +41,10 @@
                 <thead>
                     <tr>
                     <th>NO</th>
+                    <th>Location Name</th>
                     <th>Device Name</th>
                     <th>Status</th>
                     <th>Description</th>
-                    <th>Location Name</th>
                     <th>Actions</th>
                     </tr>
                 </thead>
@@ -70,14 +70,15 @@
                     <div class="mb-3">
                         <label for="device_name" class="form-label">Device Name</label>
                         <input type="text" class="form-control" id="device_name" name="device_name" required>
+                        <input type="hidden" class="form-control" id="status" name="status" value="ok">
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="Status" class="form-label">Device Name</label>
                         <select class="form-select selectpicker" id="status" name="status" data-live-search="true" required>
                             <option value="ok">OK</option>
                             <option value="error">ERROR</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="Description" class="form-label">Description</label>
                         <textarea   class="form-control" id="description" name="Description" required></textarea >
@@ -109,10 +110,10 @@
                 },
             columns: [
                 { data: 'index', name: 'index', searchable: false}, // Kolom index
+                { data: 'location.location_name' , name:'location_name'},
                 { data: 'device_name', name: 'device_name'},
                 { data: 'status', name: 'status'},
                 { data: 'description', name: 'description'},
-                { data: 'location.location_name' , name:'location_name'},
                 {
                     data: null,
                     render: function(data, type, row) {

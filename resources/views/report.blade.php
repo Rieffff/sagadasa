@@ -41,6 +41,7 @@ Report
                 <table id="example" class="display app-data-table default-data-table">
                 <thead>
                     <tr>
+                    <th>no</th>
                     <th>Date</th>
                     <th>Activity</th>
                     <th>Location</th>
@@ -52,18 +53,22 @@ Report
                 <tbody>
                     @foreach($data as $row)
                     <tr>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{$row->report_date}}</td>
                     <td><span class="badge text-light-primary">{{$row->detail_activity}}</span></td>
                     <td>{{$row->location}}</td>
                     <td>{{$row->contractor->contractor_name}}</td>
                     <td>{{$row->work_start}} - {{$row->work_stop}}</td>
                     <td>
-                        <a href="{{ url('/daily-report/'.$row->id.'/pdf') }}" target="_blank"><button type="button" class="btn btn-light-primary icon-btn b-r-4">
-                        <i class="ph ph-file-pdf text-primary"></i> 
+                        <!-- <a href="{{ url('/daily-report/'.$row->id.'/pdf') }}" target="_blank"><button type="button" class="btn btn-light-primary icon-btn b-r-4">
+                        <i class="ti ti-printer text-primary"></i> 
+                        </button></a> -->
+                        <a href="{{ url('/report/'.$row->id.'/show') }}" ><button type="button" class="btn btn-light-primary icon-btn b-r-4">
+                        <i class="ti ti-eye text-primary"></i> 
                         </button></a>
-                        <button type="button" class="btn btn-light-danger icon-btn b-r-4 delete-btn">
-                        <i class="ti ti-trash"></i>
-                        </button>
+                        <!-- <button type="button" class="btn btn-light-danger icon-btn b-r-4 delete-btn" datadata-id="{{ $row->id }}">
+                            <i class="ti ti-trash"></i>
+                        </button> -->
                     </td>
                     </tr>
                     @endforeach

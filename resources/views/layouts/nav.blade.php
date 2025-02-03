@@ -2,10 +2,10 @@
 <nav>
       <div class="app-logo">
         <a class="logo d-inline-block" href="{{ route('dashboard') }}">
-          <img src="{{ asset('assets/images/logo/sagadasa.png') }}" alt="#">
+          <img src="{{ asset('assets/images/logo/sagadasa2.png') }}" alt="#">
         </a>
 
-        <span class="bg-light-primary toggle-semi-nav">
+            <span class="bg-light-primary toggle-semi-nav">
           <i class="ti ti-chevrons-right f-s-20"></i>
         </span>
       </div>
