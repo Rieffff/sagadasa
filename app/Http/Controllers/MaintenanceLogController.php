@@ -18,6 +18,7 @@ use App\Models\MaintenanceItem;
 use App\Models\MaintenanceLogAfterDetail;
 use App\Http\Requests\StoreMaintenanceLogRequest;
 use App\Http\Requests\UpdateMaintenanceLogRequest;
+use Illuminate\Support\Facades\DB;
 
 class MaintenanceLogController extends Controller
 {
@@ -81,62 +82,114 @@ class MaintenanceLogController extends Controller
         return response()->json(['message' => 'Maintenance log deleted successfully']);
     }
 
-    public function create(){
+    public function create($id){
         $maintenance_items = MaintenanceItem::all();
         $device = Device::all();
-        return view('maintenance.form',compact('maintenance_items','device'));
+        $detail_id = $id;
+        return view('maintenance.form',compact('maintenance_items','device','detail_id'));
     }
     public function store2(Request $request)
     {
         $request->validate([
-            'log_date' => 'required|date',
+            'detail_id' => 'required|exists:daily_activity_details,id',
+            'photos' => 'nullable|image|max:2048',
             'description' => 'required|string',
-            'maintenance_item_id' => 'required|array',
-            'status' => 'required|array',
-            'photos' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'after_description' => 'nullable|string',
-            'item_name' => 'nullable|array',
-            'replacement_status' => 'nullable|array'
+            'after_log_description' => 'nullable|string',
+            'after_photos' => 'nullable|image|max:2048',
         ]);
 
-        // Simpan Maintenance Log
-        $log = MaintenanceLog::create([
-            'log_date' => $request->log_date,
-            'description' => $request->description
-        ]);
+        try {
 
-        // Simpan Maintenance Log Details
-        foreach ($request->maintenance_item_id as $index => $item_id) {
-            MaintenanceLogDetail::create([
-                'maintenance_log_id' => $log->id,
-                'maintenance_item_id' => $item_id,
-                'status' => $request->status[$index]
-            ]);
-        }
+            // dump($request->material_description[0]);
+            DB::beginTransaction();
 
-        // Simpan Maintenance Log After
-        $logAfter = MaintenanceLogAfter::create([
-            'maintenance_log_id' => $log->id,
-            'description' => $request->after_description
-        ]);
-
-        // Simpan Foto Jika Ada
-        if ($request->hasFile('photos')) {
-            $path = $request->file('photos')->store('maintenance_photos', 'public');
-            $logAfter->update(['photos' => $path]);
-        }
-
-        // Simpan Maintenance Log After Details
-        if (!empty($request->item_name)) {
-            foreach ($request->item_name as $index => $name) {
-                MaintenanceLogAfterDetail::create([
-                    'maintenance_log_after_id' => $logAfter->id,
-                    'item_name' => $name,
-                    'status' => $request->replacement_status[$index]
-                ]);
+            // 1️⃣ Simpan foto pertama (sebelum perbaikan)
+            
+            if ($request->hasFile('photos')) {
+                $file = $request->file('photos');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('public/reportImg', $fileName); // Simpan ke storage
+                $photos = $fileName; // Simpan path yang bisa diakses
             }
-        }
+            // echo $fileName;
 
-        return redirect()->back()->with('success', 'Maintenance log has been saved successfully.');
+            // 2️⃣ Simpan data ke maintenance_logs
+            $maintenanceLog = MaintenanceLog::create([
+                'report_detail_id' => $request->detail_id,
+                'photos' => $photos,
+                'description' => $request->description,
+            ]);
+            
+            // 3️⃣ Simpan data ke maintenance_log_details
+            $pe = 0;
+            if ($request->has('maintenance_item_id')) {
+                foreach ($request->maintenance_item_id as $item) {
+                    
+                    $logDetail = MaintenanceLogDetail::create([
+                        'maintenance_log_id' => $maintenanceLog->id,
+                        'maintenance_item_id' => $item,
+                        'status' => $request->status[$pe],
+                    ]);
+                    
+
+                    $pe++;
+                }
+            }
+
+            // 4️⃣ Simpan foto kedua (setelah perbaikan)
+            if ($request->hasFile('after_photos')) {
+                $file2 = $request->file('after_photos');
+                $fileName2 = time() . '_after_' . $file2->getClientOriginalName();
+                $filePath2 = $file2->storeAs('public/reportImg', $fileName2); // Simpan ke storage
+                $photos2 = $fileName2; // Simpan path yang bisa diakses
+            }
+
+            // 5️⃣ Simpan data ke maintenance_log_afters
+            $maintenanceLogAfter = MaintenanceLogAfter::create([
+                'maintenance_log_id' => $maintenanceLog->id,
+                'description' => $request->after_description ?? null,
+                'photos' => $photos2,
+            ]);
+
+            // 6️⃣ Simpan data ke maintenance_log_after_details
+            $pee = 0;
+            if ($request->has('item_name')) {
+                foreach ($request->item_name as $item) {
+                    $logAfterDetail = MaintenanceLogAfterDetail::create([
+                        'maintenance_log_after_id' => $maintenanceLogAfter->id,
+                        'item_name' => $item,
+                        'status' => $request->status_after[$pee],
+                    ]);
+                    $pee++;
+                }
+            }
+
+            // 7️⃣ Simpan data ke material_replacements
+            $peee = 0;
+            if ($request->has('material_name')) {
+                foreach ($request->material_name as $material) {
+                    $material = MaterialReplacement::create([
+                        'maintenance_log_after_id' => $maintenanceLogAfter->id,
+                        'material_name' => $material,
+                        'quantity' => "1",
+                        'description' => $request->material_description[$peee] ?? null,
+                    ]);
+                    $peee++;
+                }
+            }
+
+            DB::commit();
+            
+            return redirect()->route('log', [$request->detail_id]);
+            // // return response()->json(['message' => 'Maintenance Log successfully added!'], 201);
+            // return redirect()->back();
+            echo "<br>PEEEE<br>";
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo $e->getMessage();
+            // return redirect()->back()->with('message' , );   
+            // return response()->json(['error' => 'Failed to save maintenance log', 'message' => $e->getMessage()], 500);
+        }
+        dd($request);
     }
 }

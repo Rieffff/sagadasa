@@ -158,10 +158,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/daily-activity-details/update/{id}', [DailyActivityDetailController::class, 'update'])->name('daily-activity-details.update');
     Route::delete('/daily-activity-details/destroy/{id}', [DailyActivityDetailController::class, 'destroy'])->name('daily-activity-details.destroy');
     
-    Route::get('/log/{id}', [MaintenanceLogController::class, 'index']);
+    Route::get('/log/{id}', [MaintenanceLogController::class, 'index'])->name('log');
     Route::get('/log/data/{id}', [MaintenanceLogController::class, 'getData']);
     Route::post('/maintenance/store', [MaintenanceLogController::class, 'store2'])->name('maintenance_logs.store');
-    Route::get('/maintenance/form', [MaintenanceLogController::class, 'create'])->name('maintenance_logs.form');
+    Route::get('/maintenance/form/{id}', [MaintenanceLogController::class, 'create'])->name('maintenance_logs.form');
 
 
 
