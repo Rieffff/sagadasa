@@ -24,6 +24,9 @@ use App\Http\Controllers\ReportController;
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('/form', function () {
+//     return view('maintenance.form');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -114,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('maintenance-logs')->group(function () {
         Route::get('/', [MaintenanceLogController::class, 'index']); // Fetch all maintenance logs
-        Route::post('/', [MaintenanceLogController::class, 'store']); // Create a maintenance log
+        // Route::post('/', [MaintenanceLogController::class, 'store']); // Create a maintenance log
         Route::put('/{id}', [MaintenanceLogController::class, 'update']); // Update a maintenance log
         Route::delete('/{id}', [MaintenanceLogController::class, 'destroy']); // Delete a maintenance log
     });
@@ -157,6 +160,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/log/{id}', [MaintenanceLogController::class, 'index']);
     Route::get('/log/data/{id}', [MaintenanceLogController::class, 'getData']);
+    Route::post('/maintenance/store', [MaintenanceLogController::class, 'store2'])->name('maintenance_logs.store');
+    Route::get('/maintenance/form', [MaintenanceLogController::class, 'create'])->name('maintenance_logs.form');
 
 
 
