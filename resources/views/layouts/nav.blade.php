@@ -33,9 +33,9 @@
               <i class="ph-duotone  ph-squares-four"></i>Activity
             </a>
             <ul class="collapse" id="dashboard2">
-              <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li>
+              <!-- <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li> -->
               <li><a href="{{ route('daily-report.index') }}">Daily Report Ajax</a></li>
-              <li><a href="{{ route('daily_reports.index') }}">Daily Report simple</a></li>
+              <!-- <li><a href="{{ route('daily_reports.index') }}">Daily Report simple</a></li> -->
             </ul>
           </li>
           

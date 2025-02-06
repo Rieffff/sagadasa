@@ -143,7 +143,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
     Route::get('/daily-report2/{id}/pdf', [ReportController::class, 'generatePDF2']);
-    Route::get('/report/{id}/show', [ReportController::class, 'show']);
+    Route::get('/report/{encryptedId}/show', [ReportController::class, 'show'])->name('report.show');
     Route::delete('/report/delete/{id}', [ReportController::class, 'deleteReport']); // Delete a deleteReport
     Route::get('/getDevices/{id}', [DailyReportController::class, 'getDevices']);
 
@@ -167,7 +167,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-
+    Route::post('/report/encrypt-id', [ReportController::class, 'encryptId'])->name('report.encrypt-id');
 });
 
 

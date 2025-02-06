@@ -63,9 +63,9 @@ Report
                         <!-- <a href="{{ url('/daily-report/'.$row->id.'/pdf') }}" target="_blank"><button type="button" class="btn btn-light-primary icon-btn b-r-4">
                         <i class="ti ti-printer text-primary"></i> 
                         </button></a> -->
-                        <a href="{{ url('/report/'.$row->id.'/show') }}" ><button type="button" class="btn btn-light-primary icon-btn b-r-4">
+                        <button type="button" id="show-data" data-id="{{ $row->id }}" class="btn btn-light-primary icon-btn b-r-4">
                         <i class="ti ti-eye text-primary"></i> 
-                        </button></a>
+                        </button>
                         <!-- <button type="button" class="btn btn-light-danger icon-btn b-r-4 delete-btn" datadata-id="{{ $row->id }}">
                             <i class="ti ti-trash"></i>
                         </button> -->
@@ -83,3 +83,28 @@ Report
 </main>
 
 @endsection
+@push('item-scripts')
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#show-data', function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('report.encrypt-id') }}",
+                type: "POST",
+                data: { id: id,
+                        _token: '{{ csrf_token() }}' },
+                success: function(response) {
+                    var url = "{{ route('report.show', ':encryptedId') }}".replace(':encryptedId', response.encryptedId);
+                    window.location.href = url;
+                }, error(e){
+                    
+                    pesan("succes",e.responseJSON.message,"success")
+                }
+            });
+        });
+        // kene line anyar Developer line wkwkwk
+    });
+</script>
+
+@endpush
+

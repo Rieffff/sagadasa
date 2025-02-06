@@ -119,10 +119,10 @@
                     render: function(data, type, row) {
                         return `
                         @can("edit master data")
-                            <button class="btn btn-warning btn-sm edit-device" id="edit-device" data-id="${row.id}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
+                            <button class="btn btn-light-success icon-btn b-r-4 edit-device" id="edit-device" data-id="${row.id}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
                         @endcan
                         @can("delete master data")
-                            <button class="btn btn-danger btn-sm delete-device" id="delete-device" data-id="${row.id}"><i class="ph-duotone  ph-trash"></i></button>
+                            <button class="btn btn-light-danger icon-btn b-r-4 delete-device" id="delete-device" data-id="${row.id}"><i class="ph-duotone  ph-trash"></i></button>
                         @endcan
                         `;
                     }

@@ -15,6 +15,7 @@ use App\Models\ManPower;
 use App\Models\MaintenanceLogDetail;
 use App\Models\MaintenanceItem;
 use App\Models\MaintenanceLogAfterDetail;
+use Illuminate\Support\Facades\Crypt;
 
 
 class ReportController extends Controller
@@ -142,8 +143,9 @@ class ReportController extends Controller
         // return response()->json($data);
     }
 
-    public function show($id)
+    public function show($encryptedId)
     {
+        $id = Crypt::decryptString($encryptedId);
         $report = DailyReport::with([
             'contractor',
             'company',
@@ -157,7 +159,7 @@ class ReportController extends Controller
         $regularActivitiesActivity = $report->activityDetails->where('status', 'activity');
         $regularActivitiesRegular = $report->activityDetails->where('status', 'regular');
         $regularActivitiesNonregular = $report->activityDetails->where('status', 'non-regular');
-
+// dump($regularActivitiesActivity);
         $maintenanceLogsActivity = $regularActivitiesActivity->flatMap->maintenanceLogs;
         $maintenanceLogsRegular = $regularActivitiesRegular->flatMap->maintenanceLogs;
         $maintenanceLogsNonregular = $regularActivitiesNonregular->flatMap->maintenanceLogs;
@@ -167,7 +169,7 @@ class ReportController extends Controller
 
 
     
-        // return response()->json($report);
+        // return response()->json($maintenanceLogsRegular);
         return view('reports.show',compact(
             'report',
             'regularActivitiesActivity',
@@ -177,8 +179,13 @@ class ReportController extends Controller
             'maintenanceLogsRegular',
             'maintenanceAfters',
             'maintenanceLogsNonregular'));
-        // $pdf = Pdf::loadView('reports.daily_report', compact('report'))->setPaper('a4', 'portrait');
-        // return $pdf->download("Daily_Report_.pdf");
+        
+    }
+
+    public function encryptId(Request $request)
+    {
+        $encryptedId = Crypt::encryptString($request->id);
+        return response()->json(['encryptedId' => $encryptedId]);
     }
     
 }

@@ -20,7 +20,22 @@ class DailyActivityDetailFactory extends Factory
         return [
             //
             'device_id' => \App\Models\Device::factory(),
-            'activity_description' => $this->faker->paragraph(),
+            'activity_description' => $this->faker->randomElement([ 
+                "Crack Sealing",
+                "Surface Cleaning",
+                "Perimeter Light Inspection",
+                "Floodlight Testing",
+                "Wind Cone Illumination Check",
+                "H Marking Repainting",
+                "Wind Cone Inspection",
+                "Vegetation Trimming",
+                "Obstacle Light Inspection",
+                "Fire Extinguisher Inspection",
+                "First Aid Kit Check",
+                "Sensor Calibration",
+                "Debris Removal",
+                "Security Gate Check"
+            ]),
             'report_id' => \App\Models\DailyReport::factory(),
             'status' => $this->faker->randomElement(['regular', 'non-regular','Activity']),
             'created_at' => now(),

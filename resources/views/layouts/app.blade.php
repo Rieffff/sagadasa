@@ -38,6 +38,10 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/simplebar/simplebar.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
+  <!-- flatpickr css -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datepikar/flatpickr.min.css') }}">
+  <!-- glight css -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/glightbox/glightbox.min.css') }}">
 
 </head>
 
@@ -563,10 +567,23 @@
   <script src="{{ asset('assets/js/data_table.js') }}"></script>
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/customizer.js') }}"></script>
+  <!--js-->
+  <script src="{{ asset('assets/vendor/datepikar/flatpickr.js') }}"></script>
+  <script src="{{ asset('assets/js/date_picker.js') }}"></script>
+  <!-- js -->
+  <script src="{{ asset('assets/js/form_wizard_2.js') }}"></script>
+  
   <!-- Toatify js-->
   <script src="{{ asset('assets/vendor/notifications/toastify-js.js') }}"></script>
   <!-- sweetalert js-->
   <script src="{{ asset('assets/vendor/sweetalert/sweetalert.js') }}"></script>
+  
+  <!-- Glight js -->
+  <script src="{{ asset('assets/vendor/glightbox/glightbox.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/masonry/masonry.pkgd.min.js') }}"></script>
+  
+  <!-- js -->
+  <script src="{{ asset('assets/js/glightbox.js') }}"></script>
   <script>
     const Toast = Swal.mixin({
       toast: true,
