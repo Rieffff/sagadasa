@@ -32,7 +32,7 @@
         <div class="card ">
             <div class="card-header">
             <h5> @yield('title')</h5>
-            <button class="btn btn-primary mb-3" id="createcompany">Add company</button>
+            <!-- <button class="btn btn-primary mb-3" id="createcompany">Add company</button> -->
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
@@ -76,6 +76,9 @@
                     <div class="mb-3">
                         <label for="address" class="form-label">address</label>
                         <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <img  class="h-10 w-10" id="logos"> 
                     </div>
                     <div class="mb-3">
                             <label for="logo" class="form-label">Logo</label>
@@ -138,7 +141,8 @@
                 $('#company_id').val(data.id);
                 $('#company_name').val(data.company_name);
                 $('#address').val(data.address);
-                $('#logo').val(data.logo);
+                // $('#logo').val(data.logo);
+                
                 $('#contact').val(data.contact);
                 $('#modalTitle').text('Edit companies');
                 $('#companyModal').modal('show');

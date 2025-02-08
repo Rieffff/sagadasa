@@ -11,8 +11,16 @@
       </div>
       <div class="app-nav" id="app-simple-bar">
         <ul class="main-nav p-0 mt-2">
-          <li class="menu-title">
-            <span>Dashboard</span>
+          <li class="no-sub" href="#dashboard3" >
+            <a class=""  href="{{ route('dashboard') }}" id="dashboard3">
+              <i class="ph-duotone  ph-house"></i> Dashboard
+            </a>
+          </li>
+          @can('manage users')
+          <li class="no-sub" href="#user">
+            <a class=""  href="{{ route('user.index') }}">
+              <i class="ph-duotone  ph-user"></i> User
+            </a>
           </li>
           @can('view master data')
           <li>
@@ -34,17 +42,12 @@
             </a>
             <ul class="collapse" id="dashboard2">
               <!-- <li><a href="{{ route('daily-activity.index') }}">Daily Activity</a></li> -->
-              <li><a href="{{ route('daily-report.index') }}">Daily Report Ajax</a></li>
+              <li><a href="{{ route('daily-report.index') }}">Daily Report</a></li>
               <!-- <li><a href="{{ route('daily_reports.index') }}">Daily Report simple</a></li> -->
             </ul>
           </li>
           
-          @can('manage users')
-          <li class="no-sub" href="#user">
-            <a class=""  href="{{ route('user.index') }}">
-              <i class="ph-duotone  ph-user"></i> User
-            </a>
-          </li>
+          
           @endcan
           <li class="no-sub">
             <a class="" href="{{ route('report.index') }}">

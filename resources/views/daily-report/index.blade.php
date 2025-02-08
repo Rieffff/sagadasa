@@ -38,6 +38,24 @@ Daily Report
                         <div id="step1" class="step step-1">
                             <h4 class="text-secondary">Step 1: Daily Report</h4>
                             <div class="dotted-2-secondary b-r-20 p-3 mb-3">
+                            <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contactor" class="form-label ">Select Contractor</label>
+                                        <select class="form-control form-select" name="contactor">
+                                            @foreach($contractors as $row)
+                                                <option value="{{ $row->id }}">{{ $row->contractor_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="report_date" class="form-label ">Select Company</label>
+                                        <select class="form-control form-select" name="contactor">
+                                            @foreach($companies as $row)
+                                                <option value="{{ $row->id }}">{{ $row->company_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row feachers-list">
                                     <div class="col-md-5">
                                         <div class="mb-3">
@@ -57,27 +75,23 @@ Daily Report
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="row feachers-list">
-                                    <div class="col-md-5 mb-3 mt-3">
-                                            <div class="form-check form-switch d-flex">
-                                                <input class="form-check-input" type="checkbox" name="po" id="basic-switch-1">
-                                                <label class="form-check-label ms-2" for="basic-switch-1">PO</label>
-                                            </div>
-                                        </div>
-                                    <div class="col-md-7 mb-3">
+                                    <div class="col-md-5 mb-3">
+                                        <input class="form-check-input" type="hidden" name="po" value="Yes" >
                                         <input type="text" class="form-control"  value="" name="detail_activity"  placeholder="Activity (ex. Maintenance)" >
+                                    </div>
+                                    <div class="col-md-7 mb-3">
                                         <input type="hidden" class="form-control" name="approved_by" value="{{ Auth::user()->name }}">
+                                        <input class="form-control" type="number" name="work_break" placeholder="Work Break (hours)" >
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <input class="form-control date-time-picker flatpickr-input active" type="text" name="work_start" placeholder="Work Start" >
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <input class="form-control date-time-picker flatpickr-input active" type="text" name="work_stop" placeholder="Work Stop" >
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <input class="form-control" type="number" name="work_break" placeholder="Work Break (hours)" >
                                     </div>
                                 </div>
                                 <div class="row">
@@ -88,22 +102,7 @@ Daily Report
                                         <textarea class="form-control" rows="5" cols="5" name="work_reason" placeholder="Work Reason"></textarea>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <select class="form-control form-select" name="contactor">
-                                            @foreach($contractors as $row)
-                                                <option value="{{ $row->id }}">{{ $row->contractor_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <select class="form-control form-select" name="contactor">
-                                            @foreach($companies as $row)
-                                                <option value="{{ $row->id }}">{{ $row->company_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                             
                             <!-- <h5>Daily Activities</h5>
@@ -330,7 +329,7 @@ Daily Report
 
 $(document).ready(function() {
 
-    
+
     $(document).on("click", ".remove-maintenance", function () {
         $(this).closest(".cloneLog").remove();
     });
@@ -359,7 +358,7 @@ $(document).ready(function() {
     $("#location").change(function() {
         var id_location = $(this).val(); // Gunakan `$(this).val()` untuk efisiensi
         if (id_location) {
-            pemberitahuan("success", "Ganti lokasi: " + id_location);
+            pemberitahuan("success", "Ganti lokasi: ");
             loadLocations(id_location, '.deviceReguler0');
         }
     });
