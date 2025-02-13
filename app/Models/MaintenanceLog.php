@@ -11,7 +11,6 @@ class MaintenanceLog extends Model
     use HasFactory;
     protected $fillable = [
         'report_detail_id',
-        'maintenance_item_id',
         'photos',
         'status',
         'description',
@@ -24,10 +23,6 @@ class MaintenanceLog extends Model
     }
 
     // Relasi ke MaintenanceItems
-    public function maintenanceItem()
-    {
-        return $this->belongsTo(MaintenanceItem::class);
-    }
     public function maintenanceLogDetail()
     {
         return $this->hasMany(MaintenanceLogDetail::class);

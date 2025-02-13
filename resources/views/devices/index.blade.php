@@ -43,7 +43,6 @@
                     <th>NO</th>
                     <th>Location Name</th>
                     <th>Device Name</th>
-                    <th>Status</th>
                     <th>Description</th>
                     <th>Actions</th>
                     </tr>
@@ -112,7 +111,6 @@
                 { data: 'index', name: 'index', searchable: false}, // Kolom index
                 { data: 'location.location_name' , name:'location_name'},
                 { data: 'device_name', name: 'device_name'},
-                { data: 'status', name: 'status'},
                 { data: 'description', name: 'description'},
                 {
                     data: null,

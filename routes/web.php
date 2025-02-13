@@ -17,13 +17,14 @@ use App\Http\Controllers\MaterialReplacementController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TechnicianReportController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ExportController;
 
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // Route::get('/form', function () {
 //     return view('maintenance.form');
 // });
@@ -107,12 +108,12 @@ Route::middleware('auth')->group(function () {
     Route::put('user/update/{id}', [UserController::class, 'update'])->name('user.update');
 
 
-    // Route::prefix('daily-reports')->group(function () {
+    Route::prefix('reportAll')->group(function () {
     //     Route::get('/', [DailyReportController::class, 'index']); // Fetch all reports
-    //     Route::post('/', [DailyReportController::class, 'store']); // Create a report
+        Route::post('/', [DailyReportController::class, 'store2'])->name('reportAll.store'); // Create a report
     //     Route::put('/{id}', [DailyReportController::class, 'update']); // Update a report
     //     Route::delete('/{id}', [DailyReportController::class, 'destroy']); // Delete a report
-    // });
+    });
 
 
     Route::prefix('maintenance-logs')->group(function () {
@@ -143,6 +144,9 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
     Route::get('/daily-report2/{id}/pdf', [ReportController::class, 'generatePDF2']);
+    Route::get('/daily-reports/{id}/export', [ExportController::class, 'exportDailyReports'])->name('export.daily-reports');
+    Route::get('/coba/{id}/export', [ExportController::class, 'exportDailyReports2'])->name('export.coba');
+
     Route::get('/report/{encryptedId}/show', [ReportController::class, 'show'])->name('report.show');
     Route::delete('/report/delete/{id}', [ReportController::class, 'deleteReport']); // Delete a deleteReport
     Route::get('/getDevices/{id}', [DailyReportController::class, 'getDevices']);

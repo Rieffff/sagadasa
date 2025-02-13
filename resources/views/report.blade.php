@@ -54,7 +54,7 @@ Report
                     @foreach($data as $row)
                     <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$row->report_date}}</td>
+                    <td>{{ date('d F Y', strtotime( $row->report_date)) }}</td>
                     <td><span class="badge text-light-primary">{{$row->detail_activity}}</span></td>
                     <td>{{$row->location}}</td>
                     <td>{{$row->contractor->contractor_name}}</td>

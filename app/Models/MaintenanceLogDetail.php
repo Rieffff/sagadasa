@@ -11,9 +11,7 @@ class MaintenanceLogDetail extends Model
     use HasFactory;
     protected $fillable = [
         'maintenance_log_id',
-        'item_name',
         'status',
-        'contact',
         'maintenance_item_id',
     ];
 

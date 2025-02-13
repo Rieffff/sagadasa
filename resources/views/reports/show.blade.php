@@ -58,6 +58,16 @@ Daily Report
                             <button type="button" class="btn btn-danger icon-btn b-r-22 delete-btn me-3" data-id="{{ $report->id }}" >
                                         <i class="ti ti-trash  f-s-18"> </i>
                             </button>
+                            <a href="{{ route('export.daily-reports', ['id' => $report->id]) }}">
+                                <button type="button" class="btn btn-whatsapp  icon-btn b-r-22 me-3">
+                                    <i class="ph-light ph-file-xls  f-s-18"> </i>
+                                </button>
+                            </a>
+                            <a href="{{ url('/daily-report/'.$report->id.'/pdf') }}">
+                                <button type="button" class="btn btn-snapchat  icon-btn b-r-22 me-3">
+                                    <i class="ph-light ph-file-pdf f-s-18"></i> 
+                                </button>
+                            </a>
                         </div>
                         <div>
                             <a href="{{ url('/daily-report/'.$report->id.'/pdf') }}">
@@ -65,6 +75,7 @@ Daily Report
                                     <i class="ti ti-download f-s-18"></i> 
                                 </button>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -77,20 +88,20 @@ Daily Report
                 <h5>@yield('title')</h5>
                 </div>
                 <div class="card-body">
-                <div class="ticket-details-content">
-                    <div class="mb-3">
-                        <h6>Work Time</h6>
-                        <p class="text-secondary f-s-16">Start At {{ $report->work_start }} to {{ $report->work_stop }}</p>
+                    <div class="ticket-details-content">
+                        <div class="mb-3">
+                            <h6>Work Time</h6>
+                            <p class="text-secondary f-s-16">Start At {{ $report->work_start }} to {{ $report->work_stop }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6>Work Reason</h6>
+                            <p class="text-secondary f-s-16">{{ $report->work_reason }}</p>
+                        </div>
+                        <div class="mb-3">
+                        <h6>Service Data</h6>
+                        <p class="text-secondary">{{ $report->service_data }}</p>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <h6>Work Reason</h6>
-                        <p class="text-secondary f-s-16">{{ $report->work_reason }}</p>
-                    </div>
-                    <div class="mb-3">
-                    <h6>Service Data</h6>
-                    <p class="text-secondary">{{ $report->service_data }}</p>
-                    </div>
-                </div>
                 </div>
             </div>
             <!-- loop this  -->
@@ -99,134 +110,63 @@ Daily Report
                     <h5>Detail Activity</h5>
                 </div>
                 @foreach($regularActivitiesActivity as $activity)
-                    @foreach($activity->maintenanceLogs as $log)
+                @foreach($activity->maintenanceLogs as $log)
                 <div class="card-body">
                     <div class="ticket-comment-box mb-3">
                         <div class="d-flex justify-content-between position-relative flex-wrap">
                             <div class="h-45 w-45 d-flex-center b-r-50 bg-success overflow-hidden position-absolute">
-                            <a href="{{ asset('storage/reportImg/' . $log->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $log->photos) }}" alt="" class="img-fluid"></a>
+                                <a href="{{ asset('storage/reportImg/' . $log->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $log->photos) }}" alt="" class="img-fluid"></a>
                             </div>
                             <div class="flex-grow-1 ps-2 pe-2 ms-5">
                                 <h6 class="mb-0">Before {{ $report->detail_activity }}  in {{ $report->location }}</h6>
                                 <p class="text-muted f-s-14">{{ date('d F Y', strtotime( $report->report_date)) }}</p>
                                 <p class="text-dark mb-1"> {{ $log->description }} at {{ $report->work_start }}</b></p>
-                                
-                            </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach
-                    @endforeach
-                    <!-- endloop -->
-                    <div class="app-divider-v justify-content-center">
-                        <h5>Regular Activity</h5>
-                    </div>
+                </div>
+                @endforeach
+                @endforeach
+                <!-- endloop -->
+            </div>
+            <!-- loop this  -->
+            <div class="card">
+                <div class="app-divider-v justify-content-center">
+                    <h5>Regular Activity</h5>
+                </div>
                 @foreach($regularActivitiesRegular as $activity)
                 @foreach($activity->maintenanceLogs as $log)
-                    <!-- loop this  -->
-                    <div class="card-body">
-                        <div class="ticket-comment-box mb-3">
-                            <div class="d-flex justify-content-between position-relative flex-wrap">
-                                <div class="h-45 w-45 d-flex-center b-r-50 bg-success overflow-hidden position-absolute">
-                                <a href="{{ asset('storage/reportImg/' . $log->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $log->photos) }}" alt="" class="img-fluid"></a>
-                                </div>
-                            <div class="flex-grow-1 ps-2 pe-2 ms-5">
-                                <h6 class="mb-0">Before {{ $activity->activity_description }}</h6>
-                                <p class="text-muted f-s-14">{{ $report->detail_activity }} of {{ optional($activity->device)->device_name }} </p>
-                                <p class="text-dark mb-3"> {{ $log->description }}</b></p>
-                                
-                            </div>
-                            <div class="ms-5">
-                                <p>Log Maintenance</p>
-                            </div>
-                            </div>
-                            <ul class="d-flex flex-wrap ms-5">
-                                <li class="me-3 w-250 mb-3">
-                                    <div class="ticket-details-comment p-3 w-100">
-                                        @foreach($log->maintenanceLogDetail as $detail)
-                                            <p class="mb-0 text-secondary">{{$detail->maintenance_item_id}} : {{$detail->status}}</p>
-                                        @endforeach
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        @php
-                            $afterLog = $log->maintenanceAfter; // Ambil Maintenance After dari Maintenance Log
-                        @endphp
-                        <div class="ticket-comment-box mb-3">
-                            <div class="d-flex justify-content-between position-relative flex-wrap">
-                            <div class="h-45 w-45 d-flex-center b-r-50 bg-primary overflow-hidden position-absolute">
-                            <a href="{{ asset('storage/reportImg/' . $afterLog->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $afterLog->photos) }}" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="flex-grow-1 ps-2 pe-2 ms-5">
-                                <h6 class="mb-0">After {{ $activity->activity_description }}</h6>
-                                <p class="text-muted f-s-14">{{ $report->detail_activity }} of {{ optional($activity->device)->device_name }}</p>
-                                <p class="text-dark mb-3">{{optional($afterLog)->description}}</p>
-                            </div>
-                            <div class="ms-5">
-                                <p>Log Maintenance</p>
-                            </div>
-                            </div>
-                            <ul class="d-flex flex-wrap ms-5">
-                                <li class="me-3 w-250 mb-3">
-                                    <div class="ticket-details-comment p-3 w-100">
-                                        @php
-                                            $afterLogs = $log->maintenanceAfter->maintenanceLogAfterDetail; // Ambil Maintenance After dari Maintenance Log
-                                        @endphp
-                                        @foreach($afterLogs As $row)
-                                            <p class="mb-0 text-secondary">{{ $row->item_name}} : {{$row->status}}</p>
-                                        @endforeach
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- endloop -->
-                    <div class="app-divider-v text-secondary">
-                        <span class="badge text-bg-secondary">Next Record</span>
-                    </div>
-                        @endforeach
-                    @endforeach
-
-                    
-                        <div class="app-divider-v justify-content-center">
-                            <h5>Non-Regular Activity</h5>
-                        </div>
-                    @foreach($regularActivitiesNonregular as $activity)
-                        @foreach($activity->maintenanceLogs as $log)
-                    <!-- loop this  -->
-                        
-                        <div class="card-body">
-                        <div class="ticket-comment-box mb-3">
-                            <div class="d-flex justify-content-between position-relative flex-wrap">
+                <!-- loop this  -->
+                <div class="card-body">
+                    <div class="ticket-comment-box mb-3">
+                        <div class="d-flex justify-content-between position-relative flex-wrap">
                             <div class="h-45 w-45 d-flex-center b-r-50 bg-success overflow-hidden position-absolute">
-                            <a href="{{ asset('storage/reportImg/' . $log->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $log->photos) }}" alt="" class="img-fluid"></a>
+                                <a href="{{ asset('storage/reportImg/' . $log->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $log->photos) }}" alt="" class="img-fluid"></a>
                             </div>
                             <div class="flex-grow-1 ps-2 pe-2 ms-5">
                                 <h6 class="mb-0">Before {{ $activity->activity_description }}</h6>
                                 <p class="text-muted f-s-14">{{ $report->detail_activity }} of {{ optional($activity->device)->device_name }} </p>
                                 <p class="text-dark mb-3"> {{ $log->description }}</b></p>
-                                
                             </div>
                             <div class="ms-5">
                                 <p>Log Maintenance</p>
                             </div>
-                            </div>
-                            <ul class="d-flex flex-wrap ms-5">
-                                <li class="me-3 w-250 mb-3">
-                                    <div class="ticket-details-comment p-3 w-100">
-                                        @foreach($log->maintenanceLogDetail as $detail)
-                                            <p class="mb-0 text-secondary">{{$detail->maintenance_item_id}} : {{$detail->status}}</p>
-                                        @endforeach
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
-                        @php
-                            $afterLog = $log->maintenanceAfter; // Ambil Maintenance After dari Maintenance Log
-                        @endphp
-                        <div class="ticket-comment-box mb-3">
-                            <div class="d-flex justify-content-between position-relative flex-wrap">
+                        <ul class="d-flex flex-wrap ms-5">
+                            <li class="me-3 w-250 mb-3">
+                                <div class="ticket-details-comment p-3 w-100">
+                                    @foreach($log->maintenanceLogDetail as $detail)
+                                        <p class="mb-0 text-secondary">{{$detail->maintenance_item_id}} : {{$detail->status}}</p>
+                                    @endforeach
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    @php
+                        $afterLog = $log->maintenanceAfter; // Ambil Maintenance After dari Maintenance Log
+                    @endphp
+                    <div class="ticket-comment-box mb-3">
+                        <div class="d-flex justify-content-between position-relative flex-wrap">
                             <div class="h-45 w-45 d-flex-center b-r-50 bg-primary overflow-hidden position-absolute">
                             <a href="{{ asset('storage/reportImg/' . $afterLog->photos) }}" class="glightbox" data-glightbox="type: image; zoomable: true;"><img src="{{ asset('storage/reportImg/' . $afterLog->photos) }}" alt="" class="img-fluid"></a>
                             </div>
@@ -238,30 +178,29 @@ Daily Report
                             <div class="ms-5">
                                 <p>Log Maintenance</p>
                             </div>
-                            </div>
-                            <ul class="d-flex flex-wrap ms-5">
-                                <li class="me-3 w-250 mb-3">
-                                    <div class="ticket-details-comment p-3 w-100">
-                                        @php
-                                            $afterLogs = $log->maintenanceAfter->maintenanceLogAfterDetail; // Ambil Maintenance After dari Maintenance Log
-                                        @endphp
-                                        @foreach($afterLogs As $row)
-                                            <p class="mb-0 text-secondary">{{ $row->item_name}} : {{$row->status}}</p>
-                                        @endforeach
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
-                        </div>
-                        <div class="app-divider-v text-secondary">
-                            <span class="badge text-bg-secondary">Next Record</span>
-                        </div>
-                        @endforeach
-                    @endforeach
-                    
-                 </div>
+                        <ul class="d-flex flex-wrap ms-5">
+                            <li class="me-3 w-250 mb-3">
+                                <div class="ticket-details-comment p-3 w-100">
+                                    @php
+                                        $afterLogs = $log->maintenanceAfter->maintenanceLogAfterDetail; // Ambil Maintenance After dari Maintenance Log
+                                    @endphp
+                                    @foreach($afterLogs As $row)
+                                        <p class="mb-0 text-secondary">{{ $row->item_name}} : {{$row->status}}</p>
+                                    @endforeach
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <!-- endloop -->
-            
+                <div class="app-divider-v text-secondary">
+                    <span class="badge text-bg-secondary">Next Record</span>
+                </div>
+                @endforeach
+                @endforeach
+                <!-- endloop -->
+            </div>
         </div>   
     </div>
 </main>

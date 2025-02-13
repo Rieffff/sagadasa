@@ -16,6 +16,7 @@ class DailyReport extends Model
         'work_break',
         'work_stop',
         'service_data',
+        'detail_activity',
         'location',
         'work_reason',
         'approved_by',

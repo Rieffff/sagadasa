@@ -16,6 +16,8 @@ use App\Models\MaintenanceLogDetail;
 use App\Models\MaintenanceItem;
 use App\Models\MaintenanceLogAfterDetail;
 use Illuminate\Support\Facades\Crypt;
+use App\Exports\DailyReportsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class ReportController extends Controller
@@ -125,6 +127,11 @@ class ReportController extends Controller
         // $pdf = Pdf::loadView('reports.daily_report', compact('report'))->setPaper('a4', 'portrait');
         // return $pdf->download("Daily_Report_.pdf");
     }
+
+
+    // excel
+   
+    // end excel
 
     public function daily(){
         $data = DailyReport::with([

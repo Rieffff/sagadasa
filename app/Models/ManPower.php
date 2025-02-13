@@ -15,6 +15,7 @@ class ManPower extends Model
         'position',
         'contact',
         'report_id',
+        'user_id',
     ];
 
     // Relasi ke DailyReports

@@ -19,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
             'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+            'Image' => Intervention\Image\Facades\Image::class,
+        
         ];
     })
     ->withExceptions(function (Exceptions $exceptions) {

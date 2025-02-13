@@ -77,8 +77,8 @@
                         <label for="address" class="form-label">address</label>
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
-                    <div class="mb-3">
-                        <img  class="h-10 w-10" id="logos"> 
+                    <div class=" col-4 mb-3">
+                        <img  class="w-100 rounded" id="logos"  src="" alt="Company Logo" style="display:none;" /> 
                     </div>
                     <div class="mb-3">
                             <label for="logo" class="form-label">Logo</label>
@@ -105,8 +105,20 @@
                     url: '/companies/list'
                 },
             columns: [
-                { data: 'index', name: 'index', searchable: false}, // Kolom index
-                { data: 'company_name', name: 'company_name'},
+                { data: 'index', name: 'index', searchable: false},
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return `
+                        <div class="d-flex align-items-center ">
+                            <div class="h-30 w-30 d-flex-center b-r-50 overflow-hidden me-2 text-bg-secondary simple-table-avtar">
+                                <a href="{{asset('assets/images/logo/${row.logo}')}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/${row.logo}')}}" alt="" class="img-fluid"></a>
+                            </div>
+                            <p>${row.company_name}</p>
+                        </div>
+                        `;
+                    }
+                },
                 { data: 'contact' , name:'contact'},
                 { data: 'address', name: 'address'},
                 {
@@ -142,6 +154,14 @@
                 $('#company_name').val(data.company_name);
                 $('#address').val(data.address);
                 // $('#logo').val(data.logo);
+                var logoUrl = 'assets/images/logo/' + data.logo;  // Endpoint untuk gambar
+        
+                if (logoUrl) {
+                    // Menampilkan gambar di modal
+                    $('#logos').attr('src', logoUrl).show(); // Menampilkan gambar
+                } else {
+                    $('#logos').hide(); // Menyembunyikan gambar jika tidak ada
+                }
                 
                 $('#contact').val(data.contact);
                 $('#modalTitle').text('Edit companies');

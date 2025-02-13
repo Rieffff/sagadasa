@@ -29,9 +29,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/light/style.css" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datatable/jquery.dataTables.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/tabler-icons/tabler-icons.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/phosphor-duotone.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/phosphor-light.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/phosphor-bold.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/photoshoper.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/phosphoe-fill.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/phosphor/phosphor-thin.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/animation/animate.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/flag-icons-master/flag-icon.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
@@ -562,6 +569,7 @@
   <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/simplebar/simplebar.js') }}"></script>
   <script src="{{ asset('assets/vendor/phosphor/phosphor.js') }}"></script>
+  <script src="{{ asset('assets/js/phosphor.js') }}"></script>
   <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/datatable/jquery.dataTables.min.js') }}"></script> 
   <script src="{{ asset('assets/js/data_table.js') }}"></script>
@@ -575,6 +583,7 @@
   
   <!-- Toatify js-->
   <script src="{{ asset('assets/vendor/notifications/toastify-js.js') }}"></script>
+  <script src="{{ asset('assets/js/tooltips_popovers.js')}}"></script>
   <!-- sweetalert js-->
   <script src="{{ asset('assets/vendor/sweetalert/sweetalert.js') }}"></script>
   
