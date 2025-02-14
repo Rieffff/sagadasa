@@ -62,6 +62,7 @@ class ExportController extends Controller
             ->whereRaw("DATE_FORMAT(report_date, '%Y-%m') = ?", [$targetMonth])
             ->orderBy('report_date', 'asc')
             ->pluck('id');
+        $item = MaintenanceItem::all();
 
         // Cari posisi dari ID yang dikirim dalam daftar hasil query
         $indexNumber = $thisReport->search($id);
@@ -80,6 +81,7 @@ class ExportController extends Controller
         // Kemasan semua data ke dalam array sebelum dikirim ke Export Class
         $data = [
             'report'                     => $report,
+            'item'                     => $item,
             'regularActivitiesActivity'   => $regularActivitiesActivity,
             'regularActivitiesRegular'    => $regularActivitiesRegular,
             'regularActivitiesNonregular' => $regularActivitiesNonregular,
@@ -133,6 +135,7 @@ class ExportController extends Controller
             ->whereRaw("DATE_FORMAT(report_date, '%Y-%m') = ?", [$targetMonth])
             ->orderBy('report_date', 'asc')
             ->pluck('id');
+            $item = MaintenanceItem::all();
 
         // Cari posisi dari ID yang dikirim dalam daftar hasil query
         $indexNumber = $thisReport->search($id);
@@ -150,6 +153,7 @@ class ExportController extends Controller
         // return response()->json($report);
         return view('reports.excel',compact(
             'report',
+            'item',
             'regularActivitiesActivity',
             'regularActivitiesRegular',
             'regularActivitiesNonregular',

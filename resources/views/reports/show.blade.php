@@ -52,26 +52,26 @@ Daily Report
                 <div class="card-body">
                     <div class="file-upload-btn mt-3 mr-2">
                         <div class="d-flex">
-                            <button type="button" id="printBtn" class="btn btn-primary  icon-btn b-r-22 me-3 print-btn" onclick="window.print()"> 
+                            <button type="button" id="printBtn" class="btn bg-outline-warning  icon-btn b-r-22 me-3 print-btn" onclick="window.print()"> 
                                 <i class="ti ti-printer f-s-18"></i>
                             </button>
-                            <button type="button" class="btn btn-danger icon-btn b-r-22 delete-btn me-3" data-id="{{ $report->id }}" >
+                            <button type="button" class="btn bg-outline-danger icon-btn b-r-22 delete-btn me-3" data-id="{{ $report->id }}" >
                                         <i class="ti ti-trash  f-s-18"> </i>
                             </button>
                             <a href="{{ route('export.daily-reports', ['id' => $report->id]) }}">
-                                <button type="button" class="btn btn-whatsapp  icon-btn b-r-22 me-3">
+                                <button type="button" class="btn bg-outline-success  icon-btn b-r-22 me-3">
                                     <i class="ph-light ph-file-xls  f-s-18"> </i>
                                 </button>
                             </a>
                             <a href="{{ url('/daily-report/'.$report->id.'/pdf') }}">
-                                <button type="button" class="btn btn-snapchat  icon-btn b-r-22 me-3">
+                                <button type="button" class="btn bg-outline-primary  icon-btn b-r-22 me-3">
                                     <i class="ph-light ph-file-pdf f-s-18"></i> 
                                 </button>
                             </a>
                         </div>
                         <div>
                             <a href="{{ url('/daily-report/'.$report->id.'/pdf') }}">
-                                <button type="button" class="btn btn-success icon-btn b-r-22 me-3">
+                                <button type="button" class="btn bg-outline-info icon-btn b-r-22 me-3">
                                     <i class="ti ti-download f-s-18"></i> 
                                 </button>
                             </a>
