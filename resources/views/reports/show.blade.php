@@ -68,6 +68,9 @@ Daily Report
                                     <i class="ph-light ph-file-pdf f-s-18"></i> 
                                 </button>
                             </a>
+                                <button type="button" class="btn bg-outline-secondary  icon-btn b-r-22 me-3 btn-form-show" >
+                                    <i class="ti ti-eye f-s-18"></i> 
+                                </button>
                         </div>
                         <div>
                             <a href="{{ url('/daily-report/'.$report->id.'/pdf') }}">
@@ -95,11 +98,14 @@ Daily Report
                         </div>
                         <div class="mb-3">
                             <h6>Work Reason</h6>
-                            <p class="text-secondary f-s-16">{{ $report->work_reason }}</p>
+                            <p class="text-secondary f-s-16 " id="label-hidden">{{ $report->work_reason }}</p>
+                            <textarea name="work_reason" class="form form-control input-hidden" >{{ $report->work_reason }}</textarea>
+                            <input type="hidden" name="report_id" value="{{ $report->id }}">
                         </div>
                         <div class="mb-3">
                         <h6>Service Data</h6>
                         <p class="text-secondary">{{ $report->service_data }}</p>
+                        <textarea name="service_data" class="form form-control input-hidden" >{{ $report->service_data }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -121,6 +127,8 @@ Daily Report
                                 <h6 class="mb-0">Before {{ $report->detail_activity }}  in {{ $report->location }}</h6>
                                 <p class="text-muted f-s-14">{{ date('d F Y', strtotime( $report->report_date)) }}</p>
                                 <p class="text-dark mb-1"> {{ $log->description }} at {{ $report->work_start }}</b></p>
+                                <textarea name="activity_description[{{ $log->id }}]" class="form form-control input-hidden" id="">{{ $log->description }}</textarea>
+                                <input type="hidden" name="Log_id[]" value="{{ $log->id }}">
                             </div>
                         </div>
                     </div>
@@ -147,6 +155,8 @@ Daily Report
                                 <h6 class="mb-0">Before {{ $activity->activity_description }}</h6>
                                 <p class="text-muted f-s-14">{{ $report->detail_activity }} of {{ optional($activity->device)->device_name }} </p>
                                 <p class="text-dark mb-3"> {{ $log->description }}</b></p>
+                                <textarea name="activity_description[{{ $log->id }}]" class="form form-control input-hidden" id="">{{ $log->description }}</textarea>
+                                <input type="hidden" name="Log_id[]" value="{{ $log->id }}">
                             </div>
                             <div class="ms-5">
                                 <p>Log Maintenance</p>
@@ -174,6 +184,8 @@ Daily Report
                                 <h6 class="mb-0">After {{ $activity->activity_description }}</h6>
                                 <p class="text-muted f-s-14">{{ $report->detail_activity }} of {{ optional($activity->device)->device_name }}</p>
                                 <p class="text-dark mb-3">{{optional($afterLog)->description}}</p>
+                                <textarea name="after_description[{{ $afterLog->id }}]" class="form form-control input-hidden" id="">{{ $afterLog->description }}</textarea>
+                                <input type="hidden" name="afterLog_id[]" value="{{ $afterLog->id }}">
                             </div>
                             <div class="ms-5">
                                 <p>Log Maintenance</p>
@@ -210,8 +222,17 @@ Daily Report
 @push('item-scripts')
 <script>
     $(document).ready(function() {
-        $(document).on('click','.print-btn', function(){
-            
+        
+        $("#button-eyes").click(function () {
+            $(".input-hidden").each(function (index) {
+                if ($(this).css("display") === "none") {
+                    $(this).show();
+                    $(".label-hidden").eq(index).hide();
+                } else {
+                    $(this).hide();
+                    $(".label-hidden").eq(index).show();
+                }
+            });
         });
         
 

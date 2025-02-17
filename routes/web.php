@@ -145,7 +145,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/daily-report/{id}/pdf', [ReportController::class, 'generatePDF']);
     Route::get('/daily-report2/{id}/pdf', [ReportController::class, 'generatePDF2']);
     Route::get('/daily-reports/{id}/export', [ExportController::class, 'exportDailyReports'])->name('export.daily-reports');
-    Route::get('/coba/{id}/export', [ExportController::class, 'exportDailyReports2'])->name('export.coba');
+    // Route::get('/coba/{id}/export', [ExportController::class, 'exportDailyReports2'])->name('export.coba');
 
     Route::get('/report/{encryptedId}/show', [ReportController::class, 'show'])->name('report.show');
     Route::delete('/report/delete/{id}', [ReportController::class, 'deleteReport']); // Delete a deleteReport

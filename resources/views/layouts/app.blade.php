@@ -49,6 +49,14 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datepikar/flatpickr.min.css') }}">
   <!-- glight css -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/glightbox/glightbox.min.css') }}">
+  <style>
+    .input-hidden{
+      display:none;
+    }
+    .label-hidden{
+      display:block;
+    }
+  </style>
 
 </head>
 
