@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Maintenance Item
+Master Maintenance Item
 @endsection
 @section('content')
 

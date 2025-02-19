@@ -49,6 +49,8 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datepikar/flatpickr.min.css') }}">
   <!-- glight css -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/glightbox/glightbox.min.css') }}">
+  <!-- apexcharts css-->
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/apexcharts/apexcharts.css') }}">
   <style>
     .input-hidden{
       display:none;
@@ -56,6 +58,7 @@
     .label-hidden{
       display:block;
     }
+
   </style>
 
 </head>
@@ -583,6 +586,12 @@
   <script src="{{ asset('assets/js/data_table.js') }}"></script>
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/customizer.js') }}"></script>
+
+<!-- apexcharts-->
+<script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+
+<!-- js-->
+<script src="{{ asset('assets/js/line.js') }}"></script>
   <!--js-->
   <script src="{{ asset('assets/vendor/datepikar/flatpickr.js') }}"></script>
   <script src="{{ asset('assets/js/date_picker.js') }}"></script>
@@ -625,6 +634,15 @@
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ya, Saya yakin !!"
+                });
+    }
+    function konfirmasi2(){
+      return Swal.fire({
+                title: "Simpan data",
+                text: "Periksalah Kembali Sebelum Menyimpan data",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Simpan"
                 });
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Companies
+Master Companies
 @endsection
 @section('content')
 

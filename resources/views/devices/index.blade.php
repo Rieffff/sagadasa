@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Devices
+    Master Devices
 @endsection
 @section('content')
 

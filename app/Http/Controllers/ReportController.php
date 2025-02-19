@@ -143,7 +143,7 @@ class ReportController extends Controller
             'activityDetails.maintenanceLogs.maintenanceAfter.materialReplacements',
             'manPowers',
             'dailyActivities',
-        ])->orderBy('created_at','desc')->get();
+        ])->orderBy('report_date','desc')->get();
         // $data;
 
         return view('report',compact('data'));

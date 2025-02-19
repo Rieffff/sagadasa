@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Locations
+Master Locations
 @endsection
 @section('content')
 

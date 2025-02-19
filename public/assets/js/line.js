@@ -1,7 +1,61 @@
+function newChart2(Xaxis1,Xaxis2, Yaxis1){
+  // **-------Area_chart 4**
+  var options = {
+    series: [{
+    name: 'Item Status OK',
+    data: Xaxis1
+  }, {
+    name: 'Item Status Error',
+    data: Xaxis2
+  }],
+    chart: {
+    height: 350,
+    type: 'area'
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+
+  colors: ['#AECC34','#9F5255',],
+  xaxis: {
+    categories: Yaxis1
+  },
+  };
+
+  var chart = new ApexCharts(document.querySelector("#LogMaintenance"), options);
+  chart.render();
+}
+
+function newChart(data1, categories1){
+  var options = {
+    series: [{
+        name: "Activity",
+        data: data1 // Menggunakan variabel langsung
+    }],
+    chart: {
+        height: 350,
+        type: 'area',
+        zoom: { enabled: false }
+    },
+    stroke: { curve: 'straight' },
+    title: { text: '', align: 'left' },
+    colors: [getLocalStorageItem('color-primary','#7752FE'), '#78738C', '#26C450', '#E65051', '#F09E3C'],
+    xaxis: {
+        categories: categories1
+    }
+  };
+  
+  var chart = new ApexCharts(document.querySelector("#activityLine"), options);
+  return chart.render();
+}
+// mee on top
 var options = {
   series: [{
     name: "Desktops",
-    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+    data: [10, 41, 35]
   }],
   chart: {
     height: 350,
@@ -21,11 +75,11 @@ var options = {
   colors: [getLocalStorageItem('color-primary','#7752FE'), '#78738C', '#26C450', '#E65051', '#F09E3C'],
 
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: ['Jan', 'Feb', 'Mar'],
   }
 };
 
-var chart = new ApexCharts(document.querySelector("#line1"), options);
+var chart = new ApexCharts(document.querySelector("#line123123124123421"), options);
 chart.render();
 //   **------ line chart 2**
 var options = {

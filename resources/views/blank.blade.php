@@ -31,9 +31,30 @@ Dashboard
     <!-- Blank start -->
     <div class="row">
         <!-- Default Card start -->
-        <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
+         
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                <h5>Activity</h5>
+                </div>
+                <div class="card-body">
+                <div id="activityLine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                <h5>Activity</h5>
+                </div>
+                <div class="card-body">
+                <div id="LogMaintenance"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
             <h5>Default Card</h5>
             </div>
             <div class="card-body">
@@ -51,7 +72,7 @@ Dashboard
             <div class="card-footer">
             <p class="float-start text-secondary p-t-10 mb-0">1 days Ago</p>
 
-            <a href="#" class="float-end fw-bold"> Read More </a>
+            <a href="#" class="float-end fw-bold"> Read More  </a>
             </div>
 
         </div>
@@ -64,3 +85,27 @@ Dashboard
 </main>
 
 @endsection
+@push('item-scripts')
+<script>
+    // var data1 = {{ $data[0] ?? 0 }};
+    // var data2 = {{ $data[1] ?? 0 }};
+    // var data3 = {{ $data[2] ?? 0 }};
+
+    // var month1 = "{{ $dbMonth[0] ?? '' }}";
+    // var month2 = "{{ $dbMonth[1] ?? '' }}";
+    // var month3 = "{{ $dbMonth[2] ?? '' }}";
+    var dataSeries = JSON.parse('{!! json_encode($data) !!}');
+    var categories = JSON.parse('{!! json_encode($dbMonth) !!}');
+    var locationNames = JSON.parse('{!! json_encode($deviceName) !!}');
+    var totalOk = JSON.parse('{!! json_encode($totalOk) !!}');
+    var totalError = JSON.parse('{!! json_encode($totalError) !!}');
+    
+
+    newChart(dataSeries,categories);
+    newChart2(totalOk,totalError,locationNames);
+
+
+
+    
+</script>
+@endpush

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Report
+Show Report Data
 @endsection
 @section('content')
 
@@ -10,7 +10,7 @@ Report
     <!-- Breadcrumb start -->
     <div class="row m-1">
         <div class="col-12 ">
-            <h4 class="main-title">Data Table</h4>
+            <h4 class="main-title">@yield('title')</h4>
             <ul class="app-line-breadcrumbs mb-3">
                 <li class="">
                 <a href="{{ route('dashboard') }}" class="f-s-14 f-w-500"> 
@@ -20,7 +20,7 @@ Report
                 </a>
                 </li>
                 <li class="active">
-                <a href="#" class="f-s-14 f-w-500">Data Table</a>
+                <a href="#" class="f-s-14 f-w-500">@yield('title')</a>
                 </li>
             </ul>
         </div>
@@ -31,10 +31,8 @@ Report
         <div class="col-12">
         <div class="card ">
             <div class="card-header">
-            <h5>Default Datatable</h5>
-            <p>DataTables has most features enabled by default, so all you need to do to use it with your own
-                tables is to call the construction function: <code>$().DataTable();</code>. </p>
-                <a href="{{ url('/daily-report2/1/pdf') }}" target="_blank"><button class="btn btn-primary"><i class="ph-duotone  ph-file-pdf"></i></button></a>
+            <h5>@yield('title')</h5>
+                <!-- <a href="{{ url('/daily-report2/1/pdf') }}" target="_blank"><button class="btn btn-primary"><i class="ph-duotone  ph-file-pdf"></i></button></a> -->
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">

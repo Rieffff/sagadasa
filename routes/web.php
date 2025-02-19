@@ -18,28 +18,32 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TechnicianReportController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\DashboardController;
 
 
 
 
-// Route::get('/', function () {
-//     return view('welcome');
+// Route::get('/coba', function () {
+//     return view('cobaForm');
 // });
 // Route::get('/form', function () {
 //     return view('maintenance.form');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('blank');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    Route::get('/home', function(){return view('blank');})->name('dashboard');
+
     Route::get('/report', [ReportController::class, 'daily'])->name('report.index');
     Route::get('/pdf', function(){return view('pdf');})->name('report.pdf');
 
@@ -138,6 +142,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [PhotoController::class, 'destroy']); // Delete a photo
     });
     Route::post('/daily-reports', [DailyReportController::class, 'storeTransaction'])->name('daily-reports.store');
+    Route::put('/reports/update/{id}', [DailyReportController::class, 'UpdateField']);
+    Route::put('/log/update/{id}', [DailyReportController::class, 'LogUpdateField']);
+    Route::put('/logdetail/update/{id}', [DailyReportController::class, 'LogDetailUpdateField']);
+    // Route::delete('/log/delete/{id}', [DailyReportController::class, 'LogDeleteField']);
+    // Route::delete('/logafter/delete/{id}', [DailyReportController::class, 'LogAfterDeleteField']);
     Route::get('/daily-report', [DailyReportController::class, 'create'])->name('daily-report.index');
     Route::post('/technician-reports', [TechnicianReportController::class, 'store'])->name('technician.reports.store');
 

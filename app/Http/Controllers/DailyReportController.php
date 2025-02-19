@@ -318,4 +318,78 @@ class DailyReportController extends Controller
 
         return response()->json(['data' => $device]);
     }
+
+    public function UpdateField(Request $request, $id){
+
+        // dd($request);
+        $reports = DailyReport::findOrFail($id);
+
+        if ($request->SetField === "work_reason") {
+            $reports->work_reason = $request->FieldData;
+        }elseif($request->SetField === "service_data"){
+            $reports->service_data = $request->FieldData;
+        }
+
+        $reports->save();
+
+        // return view('cobaForm');
+        return response()->json(['data' => $request->SetField]);
+    }
+    public function LogDetailUpdateField(Request $request, $id){
+
+        // dd($request);
+        
+        if ($request->SetField === "logDetail") {
+            $reports = MaintenanceLogDetail::findOrFail($id);
+            $reports->status = $request->FieldData;
+        }elseif($request->SetField === "logAfterDetail"){
+            $reports = MaintenanceLogAfterDetail::findOrFail($id);
+            $reports->status = $request->FieldData;
+        }
+
+        $reports->save();
+
+        // return view('cobaForm');
+        return response()->json(['data' => $request->SetField]);
+    }
+
+    public function LogUpdateField(Request $request, $id){
+
+        // dd($request);
+       
+
+        if ($request->SetField === "description") {
+            $reports = MaintenanceLog::findOrFail($id);
+            $reports->description = $request->FieldData;
+            $reports->save();
+
+        }elseif($request->SetField === "after_description"){
+            $reports = MaintenanceLogAfter::findOrFail($id);
+            $reports->description = $request->FieldData;
+            $reports->save();
+        }
+
+        // return view('cobaForm');
+        return response()->json(['data' => $request->SetField]);
+    }
+
+    public function LogDeleteField($id){
+
+        // dd($request);
+        $log = MaintenanceLog::findOrFail($id);
+        $log->delete();
+
+        return response()->json(['message' => 'Contractor deleted successfully']);
+    }
+
+    public function LogAfterDeleteField($id){
+
+        // dd($request);
+        $log = MaintenanceLogAfter::findOrFail($id);
+        $log->delete();
+
+        return response()->json(['message' => 'Contractor deleted successfully']);
+    }
+
+
 }
