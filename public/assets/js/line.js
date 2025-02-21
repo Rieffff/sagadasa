@@ -1,3 +1,64 @@
+function widgetActivityChart(activityData){
+  
+var options = {
+  series: [{
+    name: "Activity",
+    data: activityData
+  }],
+  chart: {
+    width: 140,
+    height: 120,
+    type: 'line',
+    offsetY: 0,
+    zoom: {
+      enabled: false
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    width: 3,
+    curve: 'straight'
+  },
+  colors: ['#A2D2DF'],
+  xaxis: {
+    show: false,
+    labels: {
+      show: false
+    },
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    }
+  },
+  yaxis: {
+    show: false,
+  },
+  grid: {
+    show: false,
+    xaxis: {
+      lines: {
+        show: false
+      }
+    },
+    yaxis: {
+      lines: {
+        show: false
+      }
+    },
+  },
+  tooltip: {
+    enabled: false,
+  }
+};
+
+var chart = new ApexCharts(document.querySelector("#activityChart"), options);
+chart.render();
+}
+
 function newChart2(Xaxis1,Xaxis2, Yaxis1){
   // **-------Area_chart 4**
   var options = {

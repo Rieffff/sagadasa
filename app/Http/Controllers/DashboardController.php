@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DailyReport;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Device;
 use App\Models\DailyActivityDetail;
 use App\Models\MaintenanceLog;
@@ -100,9 +101,22 @@ class DashboardController extends Controller
         // $deviceNames = array_column($deviceData, 'deviceName');
         // $totalOk = array_column($deviceData, 'totalOk');
         // $totalError = array_column($deviceData, 'totalError');
+        $sum = 0;
+        for($i = 0; $i < count($data); $i++){
+            $sum += $data[$i];
+        }
+
+        $device = Device::all()->count();
+        $location = Location::all()->count();
+        $user = User::where('position','Technician')->count();
+        $rowReport = DailyReport::all()->count();
+        $sesUser = Auth::User()->name;
+
+        // dd($user);
 
 
-        return view('blank', compact('data', 'dbMonth','deviceName', 'totalOk', 'totalError'));
+
+        return view('blank', compact('rowReport','sesUser','data', 'dbMonth','deviceName', 'totalOk', 'totalError','sum','device','user','location'));
 
     }
 }

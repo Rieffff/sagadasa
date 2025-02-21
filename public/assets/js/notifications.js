@@ -84,3 +84,15 @@ document.getElementById("toastbtn").onclick = function() {
       }).showToast();
 
     });
+
+    function loginNotification(user){
+      Toastify({
+        text: "Welcome  Back "+ user +" !",
+        duration: 6000,
+        gravity: "centerToast",
+        position: "center",
+        style: {
+          background: "rgb(var(--success),1)",
+        }
+      }).showToast();
+    }
