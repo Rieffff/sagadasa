@@ -97,7 +97,7 @@ class DashboardController extends Controller
                 $totalError[] = $row->totalError;
             }
         }else{
-            $deviceName = 'Null' ;
+            $deviceName = 'NULL' ;
             $totalOk = 0;
             $totalError = 0;
             
@@ -118,8 +118,29 @@ class DashboardController extends Controller
         $rowReport = DailyReport::all()->count();
         $sesUser = Auth::User()->name;
 
-        $company = Company::all();
-        $contractor = Contractor::all();
+        $Datacompany = Company::all();
+        if ($Datacompany->count() <1) {
+            $company = [
+                'address' => "No data available !!",
+                'contact' => "No data available !!",
+                'company_name' => "No data available !!",
+                'logo' =>"no_image.jpg"
+            ];
+        }else{
+            $company = $Datacompany;
+        }
+        $Datacontractor = Contractor::all();
+
+        if ($Datacontractor->count() <1) {
+            $contractor = [
+                'address' => "No data available !!",
+                'contact_information' => "No data available !!",
+                'contractor_name' => "No data available !!",
+                'logo' =>"no_image.jpg"
+            ];
+        }else{
+            $contractor = $Datacontractor;
+        }
 
         // dd($user);
 

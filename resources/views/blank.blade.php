@@ -175,7 +175,11 @@ Dashboard
                 <h5>Activity</h5>
                 </div>
                 <div class="card-body">
-                <div id="activityLine"></div>
+                @if($data === [0,0,0,0])
+                    <p class="text-center text-secondary"> No data Available !!</p>
+                @else
+                    <div id="activityLine"></div>
+                @endif
                 </div>
             </div>
         </div>
@@ -185,7 +189,11 @@ Dashboard
                 <h5>Status Maintenance Item</h5>
                 </div>
                 <div class="card-body">
-                <div id="LogMaintenance"></div>
+                @if($deviceName === "NULL")
+                  <p class="text-center text-secondary"> No data Available !!</p>
+                @else
+                  <div id="LogMaintenance"></div>
+                @endif
                 </div>
             </div>
         </div>
