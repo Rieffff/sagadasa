@@ -32,7 +32,9 @@ Master Contractors
         <div class="card ">
             <div class="card-header">
                 <h5> @yield('title')</h5>
-                <!-- <button class="btn btn-primary" id="add-contractor">Add Contractor</button> -->
+                @if($rowContractor < 1)
+                <button class="btn btn-primary" id="add-contractor">Add Contractor</button>
+                @endif
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">

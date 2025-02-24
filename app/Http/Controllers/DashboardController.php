@@ -112,11 +112,14 @@ class DashboardController extends Controller
         $rowReport = DailyReport::all()->count();
         $sesUser = Auth::User()->name;
 
+        $company = Company::all();
+        $contractor = Contractor::all();
+
         // dd($user);
 
 
 
-        return view('blank', compact('rowReport','sesUser','data', 'dbMonth','deviceName', 'totalOk', 'totalError','sum','device','user','location'));
+        return view('blank', compact('contractor','company','rowReport','sesUser','data', 'dbMonth','deviceName', 'totalOk', 'totalError','sum','device','user','location'));
 
     }
 }

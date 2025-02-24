@@ -61,7 +61,23 @@
     .label-hidden{
       display:block;
     }
-
+    .digital-clock {
+      margin: auto;
+      /* position: absolute; */
+      margin-top:auto;
+      margin-bottom:auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      /* color: #ffffff; */
+      /* border: 2px solid #999; */
+      border-radius: 4px;
+      text-align: center;
+      /* font: 30px/35px 'DIGITAL', Helvetica; */
+      /* background: linear-gradient(90deg, #000, #555); */
+      font-size: calc(1em + 1vw);
+    }
   </style>
 
 </head>

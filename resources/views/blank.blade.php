@@ -11,7 +11,7 @@ Dashboard
     <!-- Breadcrumb start -->
     <div class="row m-1">
         <div class="col-12 ">
-            <h4 class="main-title">Blank</h4>
+            <h4 class="main-title">@yield('title')</h4>
             <ul class="app-line-breadcrumbs mb-3">
                 <li class="">
                 <a href="#" class="f-s-14 f-w-500">
@@ -21,7 +21,7 @@ Dashboard
                 </a>
                 </li>
                 <li class="active">
-                <a href="#" class="f-s-14 f-w-500">Blank</a>
+                <a href="#" class="f-s-14 f-w-500">@yield('title')</a>
                 </li>
             </ul>
         </div>
@@ -94,23 +94,26 @@ Dashboard
         <!-- Ecommerce card start -->
         <div class="col-lg-12 col-xxl-4">
             <div class="row">
-                <div class="col-sm-4">
+                @foreach($company as $row)
+                <div class="col-sm-5">
                     <div class="card eshop-cards">
                         <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <span class="bg-warning h-40 w-40 d-flex-center b-r-15 f-s-18">
-                            <i class="ph-bold  ph-user"></i>
-                            </span>
+                            <div class="h-60 w-60 d-flex-center b-r-10 overflow-hidden me-2 text-bg-light simple-table-avtar">
+                                <a href="{{asset('assets/images/logo/'.$row->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/'.$row->logo)}}" alt="" class="img-fluid"></a>
+                            </div>
+                            
                             <div class="dropdown">
-                            <a class="text-warning " href="{{route('user.index')}}">
-                                User
+                            <a class="text-secondary " href="{{route('companies.index')}}">
+                            <i class="ph-duotone  ph-map-pin-line"></i> {{ $row->address }}
                             </a>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="flex-shrink-0 align-self-end">
-                            <p class="f-s-16 mb-0">Technician</p>
-                            <h5>{{$user}}</h5>
+                          
+                                <h5>{{$row->company_name}}</h5>
+                                <p class="f-s-16 mb-0"> {{ $row->contact }}</p>
                             </div>
                             <div class="visits-chart">
                             <div id="visitsChart"></div>
@@ -119,23 +122,36 @@ Dashboard
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                @endforeach
+                <div class="col-sm-2 col-4 m-auto">
+                    <div class="card eshop-cards card-dark">
+                        <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="flex-shrink-0 align-self-end">
+                                <div class="digital-clock text-light">00:00:00</div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                @foreach($contractor as $rows)
+                <div class="col-sm-5">
                     <div class="card eshop-cards">
                         <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <span class="bg-secondary h-40 w-40 d-flex-center b-r-15 f-s-18">
-                            <i class="ph-duotone  ph-map-pin-line"></i>
-                            </span>
+                            <div class="h-60 w-60 d-flex-center b-r-10 overflow-hidden me-2 text-bg-light simple-table-avtar">
+                                <a href="{{asset('assets/images/logo/'.$rows->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/'.$rows->logo)}}" alt="" class="img-fluid"></a>
+                            </div>
                             <div class="dropdown">
-                            <a class="text-secondary " href="{{route('locations.index')}}">
-                                location
+                            <a class="text-secondary " href="{{route('master-contractors.index')}}">
+                                {{ $rows->address }}
                             </a>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center position-relative">
                             <div class="flex-shrink-0 align-self-end">
-                            <p class="f-s-16 mb-0">Location</p>
-                            <h5>{{$location}}</h5>
+                                <h5>{{$rows->contractor_name}}</h5>
+                                <p class="f-s-16 mb-0">{{$rows->contact_information}}</p>
                             </div>
                             <div class="order-chart">
                             <div id="orderChart"></div>
@@ -144,30 +160,7 @@ Dashboard
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card eshop-cards">
-                        <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <span class="bg-primary h-40 w-40 d-flex-center b-r-15 f-s-18">
-                            <i class="ph-bold  ph-pulse"></i>
-                            </span>
-                            <div class="">
-                            <a class="text-primary " href="{{route('devices.index')}}">
-                                Device
-                            </a>
-                           
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="flex-shrink-0 align-self-end">
-                            <p class="f-s-16 mb-0">Devices</p>
-
-                            <h5>{{$device}}</h5>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <!-- Ecommerce card end -->
@@ -196,22 +189,14 @@ Dashboard
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-            <h5>Default Card</h5>
+            <h5>About Me</h5>
             </div>
             <div class="card-body">
             <h6>Where does it come from ?</h6>
-            <p class="text-secondary"> Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-                roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
-                McClinton, a Latin professor at Hampered-Sydney College in Virginia, looked up one of the more
-                obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the
-                word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections
-                1.10.32 and 1.10.33 of "de Minibus Bono rum et Malo rum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of ethics, very popular during the
-                Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
-                section 1.10.32 </p>
+            <p class="text-secondary"> </p>
             </div>
             <div class="card-footer">
             <p class="float-start text-secondary p-t-10 mb-0">1 days Ago</p>
@@ -250,9 +235,40 @@ Dashboard
     newChart2(totalOk,totalError,locationNames);
 
     
-        loginNotification('{!! json_encode($sesUser) !!}');
+    loginNotification('{!! json_encode($sesUser) !!}');
     
+    $(document).ready(function() {
+        clockUpdate();
+        setInterval(clockUpdate, 1000);
+        })
 
+        function clockUpdate() {
+        var date = new Date();
+        $('.digital-clock');
+        function addZero(x) {
+            if (x < 10) {
+            return x = '0' + x;
+            } else {
+            return x;
+            }
+        }
+
+        function twelveHour(x) {
+            if (x > 12) {
+            return x = x - 12;
+            } else if (x == 0) {
+            return x = 12;
+            } else {
+            return x;
+            }
+        }
+
+        var h = addZero(twelveHour(date.getHours()));
+        var m = addZero(date.getMinutes());
+        var s = addZero(date.getSeconds());
+
+        $('.digital-clock').text(h + ':' + m + ':' + s)
+        }
     
 </script>
 @endpush

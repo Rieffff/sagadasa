@@ -32,7 +32,9 @@ Master Companies
         <div class="card ">
             <div class="card-header">
             <h5> @yield('title')</h5>
-            <!-- <button class="btn btn-primary mb-3" id="createcompany">Add company</button> -->
+            @if($rowCompany < 1)
+            <button class="btn btn-primary mb-3" id="createcompany">Add company</button>
+            @endif
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">

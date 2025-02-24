@@ -10,7 +10,8 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return view('companies.index');
+        $rowCompany = Company::all()->count();
+        return view('companies.index',compact('rowCompany'));
     }
 
     public function show($id)

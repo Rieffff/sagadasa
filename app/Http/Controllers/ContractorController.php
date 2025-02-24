@@ -10,7 +10,8 @@ class ContractorController extends Controller
 {
     public function index()
     {
-        return view('contractors.index');
+        $rowContractor = Contractor::all()->count();
+        return view('contractors.index',compact('rowContractor'));
     }
 
     public function list()
