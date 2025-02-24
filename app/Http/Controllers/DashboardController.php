@@ -120,7 +120,7 @@ class DashboardController extends Controller
 
         $Datacompany = Company::all();
         if ($Datacompany->count() <1) {
-            $company = [
+            $company[0] = [
                 'address' => "No data available !!",
                 'contact' => "No data available !!",
                 'company_name' => "No data available !!",
@@ -132,7 +132,7 @@ class DashboardController extends Controller
         $Datacontractor = Contractor::all();
 
         if ($Datacontractor->count() <1) {
-            $contractor = [
+            $contractor[0] = [
                 'address' => "No data available !!",
                 'contact_information' => "No data available !!",
                 'contractor_name' => "No data available !!",
