@@ -327,7 +327,7 @@ $(document).ready(function() {
                     setTimeout(function(){
                         window.location.replace("/report");
                     }, 2000);
-                    pesan("Terhempas","Data berhasil di hapus","success");
+                    pesan("Terhapus","Data berhasil di hapus","success");
                 }
             });
         }});

@@ -116,7 +116,7 @@ Master Contractors
                         return `
                         <div class="d-flex align-items-center ">
                             <div class="h-30 w-30 d-flex-center b-r-50 overflow-hidden me-2 text-bg-secondary simple-table-avtar">
-                                <a href="{{asset('assets/images/logo/${row.logo}')}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/${row.logo}')}}" alt="" class="img-fluid"></a>
+                                <a href="{{asset('storage/logos/${row.logo}')}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('storage/logos/${row.logo}')}}" alt="" class="img-fluid"></a>
                             </div>
                             <p>${row.contractor_name}</p>
                         </div>
@@ -129,8 +129,12 @@ Master Contractors
                     data: null,
                     render: function(data, type, row) {
                         return `
+                        @can('edit master data')
                             <button class="btn btn-light-success icon-btn b-r-4 edit-contractor" id="edit-contractor" data-id="${row.id}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
+                        @endcan
+                        @can('delete master data')
                             <button class="btn btn-light-danger icon-btn b-r-4 delete-contractor" data-id="${row.id}"><i class="ph-duotone  ph-trash"></i></button>
+                        @endcan
                         `;
                     }
                 }
@@ -212,7 +216,7 @@ Master Contractors
                     },
                     success: function() {
                         table.ajax.reload();
-                        pesan("Terhempas","Device berhasil di hapus","success");
+                        pesan("Terhapus","Device berhasil di hapus","success");
                     }
                 });
             }

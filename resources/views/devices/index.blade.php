@@ -32,7 +32,9 @@
         <div class="card ">
             <div class="card-header">
             <h5> @yield('title')</h5>
+            @can('add master data')
             <button class="btn btn-primary mb-3" id="createDevice">Add Device</button>
+            @endcan
             <!-- <button class="btn btn-warning mb-3" id="refreshTable">Refresh Data</button> -->
             </div>
             <div class="card-body p-0">

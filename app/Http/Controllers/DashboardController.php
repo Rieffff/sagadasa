@@ -89,11 +89,17 @@ class DashboardController extends Controller
 
         // Grouping berdasarkan device_id
         // dd($reportStatus);
-        foreach ($reportStatus as $row) {
-        
-               $deviceName[] = $row->device_name;
-               $totalOk[] = $row->totalOk;
-               $totalError[] = $row->totalError;
+        if ($reportStatus->count() > 0) {
+            # code...
+            foreach ($reportStatus as $row) {
+                $deviceName[] = $row->device_name;
+                $totalOk[] = $row->totalOk;
+                $totalError[] = $row->totalError;
+            }
+        }else{
+            $deviceName = 'Null' ;
+            $totalOk = 0;
+            $totalError = 0;
             
         }
         // Konversi hasil ke array untuk Blade

@@ -114,7 +114,7 @@ Master Companies
                         return `
                         <div class="d-flex align-items-center ">
                             <div class="h-30 w-30 d-flex-center b-r-50 overflow-hidden me-2 text-bg-secondary simple-table-avtar">
-                                <a href="{{asset('assets/images/logo/${row.logo}')}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/${row.logo}')}}" alt="" class="img-fluid"></a>
+                                <a href="{{asset('storage/logos/${row.logo}')}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('storage/logos/${row.logo}')}}" alt="" class="img-fluid"></a>
                             </div>
                             <p>${row.company_name}</p>
                         </div>
@@ -219,7 +219,7 @@ Master Companies
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            pesan("Terhempas","Device berhasil di hapus","success");
+                            pesan("Terhapus","Device berhasil di hapus","success");
                             table.ajax.reload();
                         },
                         error: function () {

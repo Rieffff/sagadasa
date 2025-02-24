@@ -42,6 +42,7 @@
                     <th>NO</th>
                     <th>Name</th>
                     <th>position</th>
+                    <th>email</th>
                     <th>contact</th>
                     <th>Actions</th>
                     </tr>
@@ -52,9 +53,10 @@
                     <td>{{$row->index}}</td>
                     <td>{{$row->name}}</td>
                     <td>{{$row->position}}</td>
-                    <td>{{$row->contact}}</td>
+                    <td>@can('manage users'){{$row->email}}@endcan</td>
+                    <td><a href="https:wa.me/{{$row->contact}}" target="blank"><button type="button" class="btn btn-whatsapp icon-btn b-r-22"><i class="ti ti-brand-whatsapp text-white"></i></button> {{$row->contact}}</a></td>
                     <td> 
-                    @if(auth()->user()->role != 'technician' && $row->role != 'Developer')
+                    @if(auth()->user()->role != 'technician' && $row->position != 'Developer')
                     <button class="btn btn-warning btn-sm edit-user" id="edit-user" data-id="{{$row->id}}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
                     
                     @endif
@@ -196,11 +198,11 @@
                 $('#user-id').val(data.id);
                 $('#name').val(data.name);
                 $('#labelEmail').hide();
-                $('#labelPassword').hide();
-                $('#labelShow').hide();
                 $('#email').hide();
-                $('#password').hide();
-                $('#showPassword').hide();
+                // $('#labelPassword').val(data.password);
+                // $('#labelShow').hide();
+                // $('#password').val();
+                // $('#showPassword').hide();
                 $('#position').val(data.role);
                 $('#contact').val(data.contact);
                 $('#modalTitle').text('Edit user');
@@ -219,7 +221,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        pesan("Terhempas",response.message,"success");
+                        pesan("Terhapus",response.message,"success");
                         setTimeout(function(){
                             location.reload();
                         }, 3000);

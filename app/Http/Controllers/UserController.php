@@ -22,7 +22,7 @@ class UserController extends Controller
         //
         $sesId = Auth::User()->id;
 
-        $data = User::where('id', '!=', $sesId)->get();      
+        $data = User::where('id', '!=', $sesId)->where('position','!=','Developer')->get();      
         $data = $data->map(function ($item, $key) {
             $item->index = $key + 1; // Index dimulai dari 1
             return $item;
@@ -35,7 +35,7 @@ class UserController extends Controller
 
        
         $data = User::findOrFail($id);
-
+        // dd($data);
         return response()->json($data);
     }
 
@@ -98,12 +98,14 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        // dd($request);
         $request->validate([
-            'name' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
             'contact' => 'required|string|max:50',
         ]);
+
+
         if ($request->position === 'technician') {
             $position = "Technician";
         }elseif($request->position === 'supervisor'){
@@ -121,6 +123,17 @@ class UserController extends Controller
             'contact' => $request->contact,
         ]);
         
+        if ($request->password != '') {
+            $request->validate([
+                'password' => 'required|string|max:255|min:8',
+            ]);
+            $User = DB::table('users')
+            ->where('id', $request->id)
+            ->Update([
+                'password' => Hash::make($request->password),
+            ]);
+            # code...
+        }
         return response()->json(['message' => 'User created successfully', 'data' => $User]);
     }
 

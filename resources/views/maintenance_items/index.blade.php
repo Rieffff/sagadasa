@@ -32,7 +32,9 @@ Master Maintenance Item
         <div class="card ">
             <div class="card-header">
             <h5> @yield('title')</h5>
+            @can('add master data')
             <button class="btn btn-primary" id="add-maintenance-item">Add maintenance item</button>
+            @endcan
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
@@ -101,8 +103,12 @@ Master Maintenance Item
                     data: null,
                     render: function(data, type, row) {
                         return `
+                        @can('edit master data')
                             <button class="btn btn-light-success icon-btn b-r-4 edit-maintenance-item" id="edit-maintenance-item" data-id="${row.id}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
+                        @endcan
+                        @can('delete master data')
                             <button class="btn btn-light-danger icon-btn b-r-4 delete-maintenance-item" data-id="${row.id}"><i class="ph-duotone  ph-trash"></i></button>
+                        @endcan
                         `;
                     }
                 }
@@ -161,7 +167,7 @@ Master Maintenance Item
                     },
                     success: function() {
                         table.ajax.reload();
-                        pesan("Terhempas","Device berhasil di hapus","success");
+                        pesan("Terhapus","Device berhasil di hapus","success");
                     }
                 });
             }});

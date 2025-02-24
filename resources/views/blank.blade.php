@@ -100,7 +100,7 @@ Dashboard
                         <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="h-60 w-60 d-flex-center b-r-10 overflow-hidden me-2 text-bg-light simple-table-avtar">
-                                <a href="{{asset('assets/images/logo/'.$row->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/'.$row->logo)}}" alt="" class="img-fluid"></a>
+                                <a href="{{asset('storage/logos/'.$row->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('storage/logos/'.$row->logo)}}" alt="" class="img-fluid"></a>
                             </div>
                             
                             <div class="dropdown">
@@ -140,7 +140,7 @@ Dashboard
                         <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="h-60 w-60 d-flex-center b-r-10 overflow-hidden me-2 text-bg-light simple-table-avtar">
-                                <a href="{{asset('assets/images/logo/'.$rows->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('assets/images/logo/'.$rows->logo)}}" alt="" class="img-fluid"></a>
+                                <a href="{{asset('storage/logos/'.$rows->logo)}}" class="glightbox" data-glightbox="type: image; zoomable: true;" target="blank"><img src="{{asset('storage/logos/'.$rows->logo)}}" alt="" class="img-fluid"></a>
                             </div>
                             <div class="dropdown">
                             <a class="text-secondary " href="{{route('master-contractors.index')}}">

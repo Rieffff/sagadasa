@@ -32,7 +32,9 @@ Master Locations
         <div class="card ">
             <div class="card-header">
             <h5> @yield('title')</h5>
+            @can('add master data')
             <button class="btn btn-primary" id="add-location">Add location</button>
+            @endcan
             </div>
             <div class="card-body p-0">
             <div class="app-datatable-default overflow-auto">
@@ -165,7 +167,7 @@ Master Locations
                     },
                     success: function() {
                         table.ajax.reload();
-                        pesan("Terhempas","Device berhasil di hapus","success");
+                        pesan("Terhapus","Device berhasil di hapus","success");
                     }
                     });
                 }});
