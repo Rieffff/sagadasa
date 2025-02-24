@@ -104,7 +104,7 @@ Master Companies
         const table = $('#companies-table').DataTable({
             columnDefs: [{ width: '20%', targets: 4 }],
           ajax: {
-                    url: '/companies/list'
+                    url: '/companies/list',                 
                 },
             columns: [
                 { data: 'index', name: 'index', searchable: false},

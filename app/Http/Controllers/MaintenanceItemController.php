@@ -14,8 +14,11 @@ class MaintenanceItemController extends Controller
         return view('maintenance_items.index');
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         $data = MaintenanceItem::all(); 
         $data = $data->map(function ($item, $key) {
             $item->index = $key + 1; // Index dimulai dari 1
@@ -23,8 +26,11 @@ class MaintenanceItemController extends Controller
         });
         return response()->json(['data' => $data]);
     }
-    public function show($id)
+    public function show($id,Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         
         $MaintenanceItem = MaintenanceItem::findOrFail($id);
         return response()->json($MaintenanceItem);

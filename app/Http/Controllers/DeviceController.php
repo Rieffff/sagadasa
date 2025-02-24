@@ -16,8 +16,11 @@ class DeviceController extends Controller
         return view('devices.index', compact('locations'));
     }
     
-    public function fetchDevices()
+    public function fetchDevices(Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         $data = Device::with('location')->get();
         $data = $data->map(function ($item, $key) {
             $item->index = $key + 1; // Index dimulai dari 1
@@ -25,8 +28,11 @@ class DeviceController extends Controller
         });
         return response()->json(['data' => $data]);
     }
-    public function show($id)
+    public function show($id,Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         
         $data = Device::with('location')->findOrFail($id);
         return response()->json($data);

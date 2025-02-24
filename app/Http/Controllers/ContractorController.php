@@ -14,8 +14,11 @@ class ContractorController extends Controller
         return view('contractors.index',compact('rowContractor'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         $data = Contractor::all();
 
         // Tambahkan kolom index manual
@@ -27,8 +30,11 @@ class ContractorController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function show($id)
+    public function show($id,Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         $contractor = Contractor::findOrFail($id);
         return response()->json($contractor);
     }

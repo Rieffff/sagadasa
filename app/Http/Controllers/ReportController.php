@@ -191,6 +191,8 @@ class ReportController extends Controller
 
     public function encryptId(Request $request)
     {
+        
+        // if (!$request->ajax()) return abort(403, 'Bad Face WKWKWK !!');
         $encryptedId = Crypt::encryptString($request->id);
         return response()->json(['encryptedId' => $encryptedId]);
     }

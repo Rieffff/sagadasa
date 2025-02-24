@@ -31,11 +31,17 @@ class UserController extends Controller
     }
 
     
-    public function show($id){
+    public function show($id,Request $request){
+        
+        if (!$request->ajax()) return abort(403, 'Bad Face WKWKWK !!');
+        
 
        
         $data = User::findOrFail($id);
         // dd($data);
+        if (!$data) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
         return response()->json($data);
     }
 

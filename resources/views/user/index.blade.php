@@ -194,19 +194,22 @@
         $(document).on('click', '.edit-user', function() {
             var id = $(this).data('id');
             var url = "/user/show/" + id;
-            $.get(url , function(data) {
-                $('#user-id').val(data.id);
-                $('#name').val(data.name);
-                $('#labelEmail').hide();
-                $('#email').hide();
-                // $('#labelPassword').val(data.password);
-                // $('#labelShow').hide();
-                // $('#password').val();
-                // $('#showPassword').hide();
-                $('#position').val(data.role);
-                $('#contact').val(data.contact);
-                $('#modalTitle').text('Edit user');
-                $('#userModal').modal('show');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    $('#user-id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#labelEmail').hide();
+                    $('#email').hide();
+                    $('#position').val(data.role);
+                    $('#contact').val(data.contact);
+                    $('#modalTitle').text('Edit user');
+                    $('#userModal').modal('show');
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
+                }
             });
         });
 

@@ -14,20 +14,25 @@ class CompanyController extends Controller
         return view('companies.index',compact('rowCompany'));
     }
 
-    public function show($id)
+    public function show($id,Request $request)
     {
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         $data = Company::findOrFail($id);
         return response()->json($data);
     }
 
-    public function fetch()
+    public function fetch(Request $request)
     {
         $data = Company::all();
         $data = $data->map(function ($item, $key) {
             $item->index = $key + 1; // Index dimulai dari 1
             return $item;
         });
-
+        if (!$request->ajax()) {
+            return abort(402, 'URL tidak di temukan !!');
+        }
         return response()->json(['data' => $data]);
     }
 

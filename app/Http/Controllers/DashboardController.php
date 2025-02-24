@@ -89,6 +89,9 @@ class DashboardController extends Controller
 
         // Grouping berdasarkan device_id
         // dd($reportStatus);
+        // if ($reportStatus->isEmpty()) {
+        //     abort(404, 'Data tidak ditemukan.');
+        // }
         if ($reportStatus->count() > 0) {
             # code...
             foreach ($reportStatus as $row) {
@@ -118,29 +121,10 @@ class DashboardController extends Controller
         $rowReport = DailyReport::all()->count();
         $sesUser = Auth::User()->name;
 
-        $Datacompany = Company::all();
-        if ($Datacompany->count() <1) {
-            $company[0] = [
-                'address' => "No data available !!",
-                'contact' => "No data available !!",
-                'company_name' => "No data available !!",
-                'logo' =>"no_image.jpg"
-            ];
-        }else{
-            $company = $Datacompany;
-        }
-        $Datacontractor = Contractor::all();
-
-        if ($Datacontractor->count() <1) {
-            $contractor[0] = [
-                'address' => "No data available !!",
-                'contact_information' => "No data available !!",
-                'contractor_name' => "No data available !!",
-                'logo' =>"no_image.jpg"
-            ];
-        }else{
-            $contractor = $Datacontractor;
-        }
+        $company = Company::all();
+        $contractor = Contractor::all();
+        $company = $company->isEmpty() ? [['id' => 0, 'company_name' => 'No Data Available !!', 'address' => 'No Data Available !!','contact' => 'No Data Available !!','logo' => 'No Data Available !!']] : $company;
+        $contractor = $contractor->isEmpty() ? [['id' => 0, 'contractor_name' => 'No Data Available !!', 'address' => 'No Data Available !!','contact_information' => 'No Data Available !!','logo' => 'No Data Available !!']] : $contractor;
 
         // dd($user);
 
