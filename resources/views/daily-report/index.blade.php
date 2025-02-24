@@ -214,7 +214,7 @@ Daily Report
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="device_id">Device</label>
-                                            <select name="deviceReguler[]" class="form-control form-select deviceReguler0">
+                                            <select name="deviceReguler[]" class="form-control form-select deviceReguler0" required>
                                                 <!-- Isi opsi device dengan data dari controller -->
                                             </select>
                                         </div>
@@ -226,7 +226,7 @@ Daily Report
                                             <h6 class="text-center">Before</h6>
                                             <div class="mb-3">
                                                 <label>Photos Before Maintenance</label>
-                                                <input type="file" class="form-control" name="photosBefore[]">
+                                                <input type="file" class="form-control" name="photosBefore[]" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>Description of Maintenance</label>
@@ -252,7 +252,7 @@ Daily Report
                                             <h6 class="text-center">After</h6>
                                             <div class="mb-3">
                                                 <label>Photos After Maintenance</label>
-                                                <input type="file" class="form-control" name="photosAfter[]">
+                                                <input type="file" class="form-control" name="photosAfter[]" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label>Description of Error After Maintenance</label>

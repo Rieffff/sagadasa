@@ -54,13 +54,13 @@
                     <td>{{$row->position}}</td>
                     <td>{{$row->contact}}</td>
                     <td> 
-                    @if(auth()->user()->role != 'technician')
+                    @if(auth()->user()->role != 'technician' && $row->role != 'Developer')
                     <button class="btn btn-warning btn-sm edit-user" id="edit-user" data-id="{{$row->id}}"><i class="ph-duotone  ph-pencil-simple-line"></i></button>
                     
                     @endif
                     @if($row->role === 'technician' && auth()->user()->role != 'technician')
                     <button class="btn btn-danger btn-sm delete-user" data-id="{{$row->id}}"><i class="ph-duotone  ph-trash"></i></button>
-                    @elseif($row->role === 'supervisor' && auth()->user()->role === 'admin')
+                    @elseif($row->role === 'supervisor' && auth()->user()->role === 'admin' )
                     <button class="btn btn-danger btn-sm delete-user" data-id="{{$row->id}}"><i class="ph-duotone  ph-trash"></i></button>
 
                     @endif

@@ -17,6 +17,7 @@
             </a>
           </li>
           @can('manage users')
+          @endcan
           <li class="no-sub" href="#user">
             <a class=""  href="{{ route('user.index') }}">
               <i class="ph-duotone  ph-user"></i> User
@@ -35,6 +36,8 @@
               <li><a href="{{ route('maintenance_items.index') }}">Maintenance Item</a></li>
             </ul>
           </li>
+          
+          
           @endcan
           <li>
             <a class="" data-bs-toggle="collapse" href="#dashboard2" aria-expanded="false">
@@ -46,9 +49,6 @@
               <!-- <li><a href="{{ route('daily_reports.index') }}">Daily Report simple</a></li> -->
             </ul>
           </li>
-          
-          
-          @endcan
           <li class="no-sub">
             <a class="" href="{{ route('report.index') }}">
               <i class="ph-duotone  ph-files"></i> Report
